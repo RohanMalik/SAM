@@ -19,7 +19,7 @@ public class AttendanceFragment extends Fragment {
     TabLayout tabLayout;
     AttendanceViewPagerAdapter adapter;
     CharSequence titles[] = {"History", "Attendance", "Random"};
-    int numTabs = 3;
+    int numTabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

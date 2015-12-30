@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
-import com.monkeybusiness.jaaar.Fragment.ClassHistoryFragment;
-import com.monkeybusiness.jaaar.Fragment.RandomFragment;
 
 /**
  * Created by rohanmalik on 29/12/15.
@@ -30,14 +28,14 @@ public class AttendanceViewPagerAdapter extends BaseViewPagerFragmentStatAdapter
                 AttendanceFragment attendanceFragment = AttendanceFragment.getInstance();
 
                 return attendanceFragment;
-            case 1:
-            //    ClassHistoryFragment classHistoryFragment = new ClassHistoryFragment();
-                ClassHistoryFragment classHistoryFragment =ClassHistoryFragment.getInstance();
-                return classHistoryFragment;
-            case 2:
-              //  RandomFragment randomFragment = new RandomFragment();
-                RandomFragment randomFragment = RandomFragment.getInstance();
-                return randomFragment;
+//            case 1:
+//            //    ClassHistoryFragment classHistoryFragment = new ClassHistoryFragment();
+//                ClassHistoryFragment classHistoryFragment =ClassHistoryFragment.getInstance();
+//                return classHistoryFragment;
+//            case 2:
+//              //  RandomFragment randomFragment = new RandomFragment();
+//                RandomFragment randomFragment = RandomFragment.getInstance();
+//                return randomFragment;
         }
         return null;
     }
