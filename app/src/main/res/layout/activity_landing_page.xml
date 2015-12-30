@@ -37,11 +37,11 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <FrameLayout
-                android:id="@+id/fragmentContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            <!--<FrameLayout-->
+                <!--android:id="@+id/fragmentContainer"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
         </android.support.design.widget.CoordinatorLayout>
             <RelativeLayout
                 android:id="@+id/main_layout"
@@ -57,6 +57,8 @@
                     android:id="@+id/dashboard_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/primary"
+                    app:titleTextColor="@color/white"
                     app:layout_scrollFlags="scroll|enterAlways"
                     />
 
@@ -85,8 +87,16 @@
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:layout_below="@id/tab_layout"/>
+                    android:layout_below="@id/tab_layout"
+                   >
 
+                <FrameLayout
+                    android:id="@+id/fragmentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                   />
+                </android.support.v4.view.ViewPager>
             </RelativeLayout>
 
 

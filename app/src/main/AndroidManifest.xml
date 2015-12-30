@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.LandingPageActivity"
-            android:theme="@style/AppTheme.Dark"/>
+            android:theme="@style/AppTheme"
+            />
 
 
     </application>
