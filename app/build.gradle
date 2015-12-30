@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.monkeybusiness.jaaar"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+productFlavors {
+}
+}
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:design:23.1.0'
+
+    //Font
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0@aar'
+
+    //Injections & validations
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+
+    //Network
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+
+    //Others
+    compile 'com.binaryfork:spanny:1.0.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //Custom views
+    compile 'com.wdullaer:materialdatetimepicker:2.0.2'
+
+    //Utils
+    compile 'net.danlew:android.joda:2.9.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'net.danlew:android.joda:2.9.1'
+
+}

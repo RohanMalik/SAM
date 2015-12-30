@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/mainGroup"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/my_class"
+            android:checked="true"
+            android:icon="@drawable/my_claa_icon_color"
+            android:title="My Class"/>
+
+        <item
+            android:id="@+id/test"
+            android:checked="false"
+            android:icon="@drawable/test_icon"
+            android:title="Test"/>
+        <item
+            android:id="@+id/calender"
+            android:checked="false"
+            android:icon="@drawable/calender_icon"
+            android:title="Calender"/>
+        <item
+            android:id="@+id/notifications"
+            android:checked="false"
+            android:icon="@drawable/notification_icon"
+            android:title="Notifications"/>
+
+
+
+    </group>
+
+</menu>

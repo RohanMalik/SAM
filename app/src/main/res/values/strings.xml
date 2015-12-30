@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">JAAAR</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="openDrawer"> </string>
+    <string name="closeDrawer"> </string>
+</resources>
