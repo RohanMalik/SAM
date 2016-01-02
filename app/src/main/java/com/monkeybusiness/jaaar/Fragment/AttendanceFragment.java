@@ -2,12 +2,15 @@ package com.monkeybusiness.jaaar.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.monkeybusiness.jaaar.Adapter.AttendanceSlidePagerAdapter;
 import com.monkeybusiness.jaaar.Adapter.AttendanceViewPagerAdapter;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.utils.DepthPageTransformer;
 
 import butterknife.ButterKnife;
 
@@ -17,11 +20,12 @@ import butterknife.ButterKnife;
 public class AttendanceFragment extends Fragment {
 
 
-    AttendanceViewPagerAdapter adapter;
     CharSequence titles[] = {"History", "Attendance", "Random"};
     int numTabs = 3;
 
+    ViewPager viewPagerAttd;
 
+    AttendanceSlidePagerAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +33,19 @@ public class AttendanceFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_attendance, container, false);
         ButterKnife.bind(this, rootView);
+
+        viewPagerAttd = (ViewPager) rootView.findViewById(R.id.viewPagerAttd);
+
+        adapter = new AttendanceSlidePagerAdapter(getActivity().getSupportFragmentManager(),30);
+
+        viewPagerAttd.setPageTransformer(true,new DepthPageTransformer());
+        viewPagerAttd.setAdapter(adapter);
 //
 //        tabLayout.addTab(tabLayout.newTab().setText("Attendance"));
 //        tabLayout.addTab(tabLayout.newTab().setText("History"));

@@ -17,4 +17,10 @@
 
     <color name="accent_light">#00838F</color>
     <color name="black_semi_transparent">#B2000000</color>
+
+    <color name="normal_color_tab">#004D40</color>
+
+    <color name="normal_absent_button">#D50000</color>
+
+    <color name="background_color">#EEEEEE</color>
 </resources>
