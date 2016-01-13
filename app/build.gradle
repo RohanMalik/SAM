@@ -55,4 +55,8 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'net.danlew:android.joda:2.9.1'
 
+    //calendar
+    compile 'com.github.tibolte:agendacalendarview:1.0.3'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
+
 }

@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 
 import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
+import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.MyClassFragment;
 import com.monkeybusiness.jaaar.R;
 
@@ -55,9 +56,10 @@ public class LandingPageActivity extends AppCompatActivity {
 
         setupToolBar();
         setupNavDrawer();
+
         fragment = new MyClassFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+        fragmentTransaction.add(R.id.fragmentContainer, fragment);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("My Class");
     }
@@ -86,9 +88,16 @@ public class LandingPageActivity extends AppCompatActivity {
                     case R.id.test:
 
                         return true;
+
                     case R.id.calender:
+                        fragment = new MyCalendarFragment();
+                        getSupportActionBar().setTitle("My Calendar");
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                        fragmentTransaction.commit();
 
                         return true;
+
                     case R.id.notifications:
 
                         return true;
@@ -135,5 +144,12 @@ public class LandingPageActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        getSupportFragmentManager().popBackStack();
     }
 }

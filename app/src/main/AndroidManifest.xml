@@ -22,8 +22,7 @@
         <activity android:name=".Activity.LandingPageActivity"
             android:theme="@style/AppTheme"
             />
-
-
+        <activity android:name=".Activity.DayViewActivity"/>
     </application>
 
 </manifest>

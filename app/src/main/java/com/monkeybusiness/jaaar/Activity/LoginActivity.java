@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         Intent i = new Intent(LoginActivity.this, LandingPageActivity.class);
         startActivity(i);
+        finish();
         // Log.d(TAG, "Login");
 
 //        if (!validate()) {

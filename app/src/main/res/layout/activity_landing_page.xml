@@ -80,7 +80,14 @@
                     android:layout_height="match_parent"
                     android:layout_below="@+id/dashboard_toolbar"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                   />
+                    />
+
+                <View
+                    android:id="@+id/view_shadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/dashboard_toolbar"
+                    android:background="@drawable/shadow_down"/>
             </RelativeLayout>
 
 
