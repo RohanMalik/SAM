@@ -2,8 +2,11 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.MenuItem;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -27,10 +30,19 @@ public class DayViewActivity extends AppCompatActivity implements WeekView.Event
 
     WeekView weekView;
 
+    Toolbar dayView_toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day_view_calendar);
+
+        dayView_toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
+
+        setSupportActionBar(dayView_toolbar);
+        getSupportActionBar().setTitle("01 JAN 2016");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         weekView = (WeekView) findViewById(R.id.weekView);
 
@@ -198,5 +210,18 @@ public class DayViewActivity extends AppCompatActivity implements WeekView.Event
 
     protected String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

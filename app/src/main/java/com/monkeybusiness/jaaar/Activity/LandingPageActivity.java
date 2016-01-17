@@ -60,6 +60,7 @@ public class LandingPageActivity extends AppCompatActivity {
         fragment = new MyClassFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("My Class");
     }
@@ -83,6 +84,7 @@ public class LandingPageActivity extends AppCompatActivity {
                         getSupportActionBar().setTitle("My Attendance");
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                        fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.test:
@@ -90,12 +92,12 @@ public class LandingPageActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.calender:
-                        fragment = new MyCalendarFragment();
-                        getSupportActionBar().setTitle("My Calendar");
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
-                        fragmentTransaction.commit();
-
+                                fragment = new MyCalendarFragment();
+                                getSupportActionBar().setTitle("My Calendar");
+                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
                         return true;
 
                     case R.id.notifications:
@@ -150,6 +152,6 @@ public class LandingPageActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        getSupportFragmentManager().popBackStack();
+//        getSupportFragmentManager().popBackStack();
     }
 }

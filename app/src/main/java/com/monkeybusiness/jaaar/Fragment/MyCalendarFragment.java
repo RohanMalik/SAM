@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,8 @@ import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
+import com.melnykov.fab.FloatingActionButton;
+import com.monkeybusiness.jaaar.Activity.AddEventActivity;
 import com.monkeybusiness.jaaar.Activity.DayViewActivity;
 import com.monkeybusiness.jaaar.Activity.LandingPageActivity;
 import com.monkeybusiness.jaaar.R;
@@ -32,11 +35,17 @@ import java.util.Locale;
 /**
  * Created by rakesh on 13/1/16.
  */
-public class MyCalendarFragment extends Fragment{
+public class MyCalendarFragment extends Fragment implements View.OnClickListener{
 
     View rootView;
     AgendaCalendarView agendaCalendarView;
     TextView textViewCurrentDate;
+
+    FloatingActionButton fabAdd;
+
+    List<CalendarEvent> eventList = new ArrayList<>();
+    Calendar minDate;
+    Calendar maxDate;
 
     @Nullable
     @Override
@@ -45,6 +54,7 @@ public class MyCalendarFragment extends Fragment{
         rootView = inflater.inflate(R.layout.fragment_calendar,container,false);
 
         initialization();
+
         return rootView;
     }
 
@@ -53,45 +63,55 @@ public class MyCalendarFragment extends Fragment{
         agendaCalendarView = (AgendaCalendarView) rootView.findViewById(R.id.agenda_calendar_view);
         textViewCurrentDate = (TextView) rootView.findViewById(R.id.textViewCurrentDate);
 
-        Calendar minDate = Calendar.getInstance();
-        Calendar maxDate = Calendar.getInstance();
+        fabAdd = (FloatingActionButton) rootView.findViewById(R.id.fabAdd);
+
+        fabAdd.setOnClickListener(this);
+
+        minDate = Calendar.getInstance();
+        maxDate = Calendar.getInstance();
 
         minDate.add(Calendar.MONTH, -2);
         minDate.set(Calendar.DAY_OF_MONTH, 1);
         maxDate.add(Calendar.YEAR, 1);
 
-        List<CalendarEvent> eventList = new ArrayList<>();
         mockList(eventList);
 
-        agendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPickerController() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onDaySelected(DayItem dayItem) {
+            public void run() {
+                agendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPickerController() {
+                    @Override
+                    public void onDaySelected(DayItem dayItem) {
 
-                Log.d("MyCalendar", "day " + dayItem.getDate() + " value " + dayItem.getValue() + " " + dayItem.getMonth());
+                        Log.d("MyCalendar", "day " + dayItem.getDate() + " value " + dayItem.getValue() + " " + dayItem.getMonth());
+                        Intent dayViewIntent = new Intent(getActivity().getApplicationContext(), DayViewActivity.class);
+                        getActivity().startActivity(dayViewIntent);
 
-                Intent dayViewIntent = new Intent(getActivity(), DayViewActivity.class);
-                startActivity(dayViewIntent);
 // /                ((LandingPageActivity) getActivity()).getSupportActionBar().setTitle("My Attendance");
 //                FragmentTransaction fragmentTransaction = ((LandingPageActivity) getActivity()).getSupportFragmentManager().beginTransaction();
 //                fragmentTransaction.add(R.id.fragmentContainer, new DayViewCalendarFragment());
 //                fragmentTransaction.commit();
+                    }
+
+                    @Override
+                    public void onEventSelected(CalendarEvent event) {
+
+                    }
+                });
+
+
+                Calendar c = Calendar.getInstance();
+                Log.d("MyCalendar", "Current time => " + c.getTime());
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+                String formattedDate = dateFormat.format(c.getTime());
+
+
+                textViewCurrentDate.setText(formattedDate);
+                agendaCalendarView.addEventRenderer(new DrawableEventRenderer());
             }
+        },170);
 
-            @Override
-            public void onEventSelected(CalendarEvent event) {
-
-            }
-        });
-
-        Calendar c = Calendar.getInstance();
-        Log.d("MyCalendar","Current time => " + c.getTime());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        String formattedDate = dateFormat.format(c.getTime());
-
-
-        textViewCurrentDate.setText(formattedDate);
-        agendaCalendarView.addEventRenderer(new DrawableEventRenderer());
     }
 
     private void mockList(List<CalendarEvent> eventList) {
@@ -120,5 +140,16 @@ public class MyCalendarFragment extends Fragment{
         DrawableCalendarEvent event3 = new DrawableCalendarEvent("Visit of Harpa", "", "Dalvík",
                 ContextCompat.getColor(getActivity(), R.color.blue_dark), startTime3, endTime3, false, R.drawable.common_ic_googleplayservices);
         eventList.add(event3);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.fabAdd:
+                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

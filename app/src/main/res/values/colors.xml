@@ -3,6 +3,7 @@
     <color name="primary">#00897B</color>
     <color name="primary_dark">#00796B</color>
     <color name="primary_darker">#00695C</color>
+    <color name="ripple">#00695C</color>
     <color name="accent">#FFFFFF</color>
 
     <color name="black">#000000</color>
