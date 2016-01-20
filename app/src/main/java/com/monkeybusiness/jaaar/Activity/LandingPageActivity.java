@@ -21,6 +21,7 @@ import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.MyClassFragment;
+import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
 
 import butterknife.Bind;
@@ -88,7 +89,12 @@ public class LandingPageActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.test:
-
+                        fragment = new TestListFragment();
+                        getSupportActionBar().setTitle("My Test");
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                         return true;
 
                     case R.id.calender:

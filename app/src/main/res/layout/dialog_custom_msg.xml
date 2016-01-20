@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:splitMotionEvents="false">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:splitMotionEvents="false">
+
+        <LinearLayout
+            android:id="@+id/rl1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:splitMotionEvents="false">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textColorHint="#fff"
+                android:hint="Enter Subject Name"/>
+
+            <Button
+                android:id="@+id/buttonCreateTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create"
+                android:textColor="#fff"
+                android:background="@color/blue_dark"
+                android:layout_marginBottom="10dp"
+                android:elevation="5dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</FrameLayout>
