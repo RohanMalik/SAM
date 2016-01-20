@@ -26,38 +26,37 @@ public class MyClassFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_my_class,container,false);
 
-
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Attendance"));
+            tabLayout.addTab(tabLayout.newTab().setText("Attendance"));
         tabLayout.addTab(tabLayout.newTab().setText("History"));
         tabLayout.addTab(tabLayout.newTab().setText("Random"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        final ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.pager);
-        final PagerAdapter adapter = new AttendancePagerAdapter
+        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.pager);
+        PagerAdapter adapter = new AttendancePagerAdapter
                 (getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
-        tabLayout.setSelectedTabIndicatorHeight(10);
-        tabLayout.setTabTextColors(getResources().getColor(R.color.normal_color_tab),getResources().getColor(R.color.white));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
+//        tabLayout.setSelectedTabIndicatorHeight(10);
+//        tabLayout.setTabTextColors(getResources().getColor(R.color.normal_color_tab),getResources().getColor(R.color.white));
+//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                viewPager.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
         return rootView;
     }

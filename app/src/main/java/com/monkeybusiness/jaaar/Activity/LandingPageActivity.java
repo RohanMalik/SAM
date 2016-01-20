@@ -58,12 +58,11 @@ public class LandingPageActivity extends AppCompatActivity {
         setupToolBar();
         setupNavDrawer();
 
-        fragment = new MyClassFragment();
+        fragment = new AttendanceFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, fragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        getSupportActionBar().setTitle("My Class");
+        getSupportActionBar().setTitle("My Attendance");
     }
 
     private void setupToolBar() {
@@ -81,13 +80,14 @@ public class LandingPageActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.my_class:
-                        fragment = new MyClassFragment();
+                        fragment = new AttendanceFragment();
                         getSupportActionBar().setTitle("My Attendance");
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                         return true;
+
                     case R.id.test:
                         fragment = new TestListFragment();
                         getSupportActionBar().setTitle("My Test");

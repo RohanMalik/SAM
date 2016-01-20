@@ -20,19 +20,15 @@ import butterknife.ButterKnife;
 public class AttendanceFragment extends Fragment {
 
 
-    CharSequence titles[] = {"History", "Attendance", "Random"};
-    int numTabs = 3;
-
     ViewPager viewPagerAttd;
 
     AttendanceSlidePagerAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +42,7 @@ public class AttendanceFragment extends Fragment {
 
         viewPagerAttd.setPageTransformer(true,new DepthPageTransformer());
         viewPagerAttd.setAdapter(adapter);
-//
+
 //        tabLayout.addTab(tabLayout.newTab().setText("Attendance"));
 //        tabLayout.addTab(tabLayout.newTab().setText("History"));
 //        tabLayout.addTab(tabLayout.newTab().setText("Random"));

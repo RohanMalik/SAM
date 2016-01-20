@@ -21,7 +21,11 @@
 
     <color name="normal_color_tab">#004D40</color>
 
-    <color name="normal_absent_button">#D50000</color>
+    <color name="normal_absent_button">#D32F2F</color>
+
+    <color name="absent_button">#EF5350</color>
+
+    <color name="normal_present_button">#009688</color>
 
     <color name="background_color">#EEEEEE</color>
 
