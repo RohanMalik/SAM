@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.monkeybusiness.jaaar.Fragment.AttendanceReviewFragment;
 import com.monkeybusiness.jaaar.Fragment.RandomFragment;
 import com.monkeybusiness.jaaar.Fragment.StudentAttendanceCardFargment;
 
@@ -23,7 +24,14 @@ public class AttendanceSlidePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new StudentAttendanceCardFargment();
+        if (position==5)
+        {
+            return AttendanceReviewFragment.newInstance(position);
+        }
+        else
+        {
+            return StudentAttendanceCardFargment.newInstance(position);
+        }
     }
 
     @Override

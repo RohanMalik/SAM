@@ -19,10 +19,17 @@ import android.widget.FrameLayout;
 
 import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
+import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.MyClassFragment;
+import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
 import com.monkeybusiness.jaaar.Fragment.TestListFragment;
+import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,6 +65,16 @@ public class LandingPageActivity extends AppCompatActivity {
         setupToolBar();
         setupNavDrawer();
 
+        ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
+
+        studentAttdDatas.add(new StudentAttdData("Rohan Malik","10th","1","", Arrays.asList("1", "0", "1", "0", "1")));
+        studentAttdDatas.add(new StudentAttdData("Jaspreet Arora", "10th", "2", "", Arrays.asList("0", "0", "0", "0", "1")));
+        studentAttdDatas.add(new StudentAttdData("Ravi Kumar", "10th", "3", "", Arrays.asList("1", "0", "1", "1", "1")));
+        studentAttdDatas.add(new StudentAttdData("Salman Khan", "10th", "4", "", Arrays.asList("1", "0", "0", "0", "1")));
+        studentAttdDatas.add(new StudentAttdData("Shahrukh Khan", "10th", "5", "", Arrays.asList("1", "0", "0", "0", "0")));
+
+        MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
+
         fragment = new AttendanceFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, fragment);
@@ -79,9 +96,25 @@ public class LandingPageActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 switch (item.getItemId()) {
-                    case R.id.my_class:
+                    case R.id.my_attd:
                         fragment = new AttendanceFragment();
                         getSupportActionBar().setTitle("My Attendance");
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        return true;
+                    case R.id.my_class:
+                        fragment = new FriendsActivity();
+                        getSupportActionBar().setTitle("My Class");
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        return true;
+                    case R.id.my_remarks:
+                        fragment = new RemarksFragment();
+                        getSupportActionBar().setTitle("My Remarks");
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
                         fragmentTransaction.addToBackStack(null);

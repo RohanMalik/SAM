@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/rakesh/AndroidStudioProjects/rohan/JAAAR/SAM/SlidingMenu/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <declare-styleable name="SlidingMenu"><attr format="reference" name="viewAbove"/><attr format="reference" name="viewBehind"/><attr format="dimension" name="behindOffset"/><attr format="dimension" name="behindWidth"/><attr format="float" name="behindScrollScale"/><attr name="aboveTouchMode"><enum name="margin" value="0"/><enum name="fullscreen" value="1"/></attr><attr name="behindTouchMode"><enum name="margin" value="0"/><enum name="fullscreen" value="1"/></attr><attr format="reference" name="shadowDrawable"/><attr format="dimension" name="shadowWidth"/><attr format="boolean" name="behindFadeEnabled"/><attr format="float" name="behindFadeDegree"/></declare-styleable>
+    <!-- From: file:/home/rakesh/AndroidStudioProjects/rohan/JAAAR/SAM/SlidingMenu/res/values/dimen.xml -->
+    <eat-comment/>
+    <dimen name="menu_header_line">3dp</dimen>
+    <dimen name="menu_header_padding_top">8dp</dimen>
+    <dimen name="menu_icon_side">40dp</dimen>
+    <dimen name="menu_item_padding">10dp</dimen>
+</resources>

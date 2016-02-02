@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import com.monkeybusiness.jaaar.Adapter.AttendanceSlidePagerAdapter;
 import com.monkeybusiness.jaaar.Adapter.AttendanceViewPagerAdapter;
+import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.utils.DepthPageTransformer;
 
 import butterknife.ButterKnife;
@@ -36,12 +38,35 @@ public class AttendanceFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_attendance, container, false);
         ButterKnife.bind(this, rootView);
 
+        MasterClass.getInstance().setAttendanceFragment(this);
+
         viewPagerAttd = (ViewPager) rootView.findViewById(R.id.viewPagerAttd);
 
-        adapter = new AttendanceSlidePagerAdapter(getActivity().getSupportFragmentManager(),30);
+        adapter = new AttendanceSlidePagerAdapter(getActivity().getSupportFragmentManager(),6);
 
         viewPagerAttd.setPageTransformer(true,new DepthPageTransformer());
         viewPagerAttd.setAdapter(adapter);
+
+        viewPagerAttd.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==5)
+                {
+                    ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapter.getItem(position);
+                    reviewAttdInterface.onResumeFragment();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
 //        tabLayout.addTab(tabLayout.newTab().setText("Attendance"));
 //        tabLayout.addTab(tabLayout.newTab().setText("History"));

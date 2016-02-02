@@ -5,10 +5,22 @@
         android:id="@+id/mainGroup"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/my_attd"
+            android:checked="true"
+            android:icon="@drawable/my_claa_icon_color"
+            android:title="My Attendance"/>
+
+        <item
             android:id="@+id/my_class"
             android:checked="true"
             android:icon="@drawable/my_claa_icon_color"
             android:title="My Class"/>
+
+        <item
+            android:id="@+id/my_remarks"
+            android:checked="true"
+            android:icon="@drawable/my_claa_icon_color"
+            android:title="My Remarks"/>
 
         <item
             android:id="@+id/test"
@@ -25,9 +37,6 @@
             android:checked="false"
             android:icon="@drawable/notification_icon"
             android:title="Notifications"/>
-
-
-
     </group>
 
 </menu>
