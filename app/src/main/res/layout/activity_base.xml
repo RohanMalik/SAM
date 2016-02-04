@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
-    android:layout_width="wrap_content"
+    android:layout_width="270dp"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -50,10 +50,9 @@
                 android:layout_below="@+id/profile_image"
                 android:layout_marginTop="16dp"
                 android:gravity="left"
-                fontFamily="fonts/OpenSans-Bol.ttf"
                 android:paddingBottom="4dp"
                 android:singleLine="true"
-                android:text=""
+                android:text="Teacher"
                 android:textColor="#FFF"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -66,12 +65,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
+            android:layout_marginTop="8dp"
             android:gravity="left">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/my_claa_icon_color"
                 />
 
@@ -79,7 +79,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dashboard"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayoutAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="left">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/my_claa_icon_color"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Attendance"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -93,9 +119,9 @@
             android:gravity="left">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/my_claa_icon_color"
                 />
 
@@ -103,7 +129,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Class"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -117,9 +144,9 @@
             android:gravity="left">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/my_claa_icon_color"
 
                 />
@@ -128,7 +155,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Test"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -142,9 +170,9 @@
             android:gravity="left">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/my_claa_icon_color"
                 />
 
@@ -152,7 +180,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Calender"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearlayoutRemarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="left">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/my_claa_icon_color"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remarks"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -166,9 +221,9 @@
             android:gravity="left">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
                 android:src="@drawable/my_claa_icon_color"
                 />
 
@@ -176,11 +231,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Notifications"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
-
 
 
     </LinearLayout>

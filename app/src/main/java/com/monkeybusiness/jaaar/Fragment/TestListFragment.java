@@ -18,13 +18,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.Adapter.TestListAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
+import com.monkeybusiness.jaaar.utils.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -39,10 +42,8 @@ import java.util.List;
 /**
  * Created by rakesh on 18/1/16.
  */
-public class TestListFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class TestListFragment extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
-
-    View rootView;
     FloatingActionButton fabAddTest;
 
     ListView listViewTest;
@@ -62,40 +63,70 @@ public class TestListFragment extends Fragment implements View.OnClickListener, 
 
     Dialog dialog;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    RelativeLayout relativeLayoutMenu;
+    TextView textViewActionTitle;
 
-        rootView = inflater.inflate(R.layout.fragment_test_list,container,false);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_test_list);
+
+        Utils.classFlag = 3;
 
         initialization();
 
         testDatas.add(new TestData("01 Jan 2015", "11:00", "Chemistry"));
-        testDatas.add(new TestData("01 Jan 2015","11:00","Chemistry"));
-        testDatas.add(new TestData("01 Jan 2015","11:00","Chemistry"));
-        testDatas.add(new TestData("01 Jan 2015", "11:00", "Chemistry"));
-        testDatas.add(new TestData("01 Jan 2015", "11:00", "Chemistry"));
+        testDatas.add(new TestData("01 Jan 2015","11:00","Maths"));
+        testDatas.add(new TestData("01 Jan 2015","11:00","Physics"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "Hindi"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "English"));
 
-        return rootView;
     }
+
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//
+//        rootView = inflater.inflate(R.layout.fragment_test_list,container,false);
+//
+//        initialization();
+//
+//        testDatas.add(new TestData("01 Jan 2015", "11:00", "Chemistry"));
+//        testDatas.add(new TestData("01 Jan 2015","11:00","Maths"));
+//        testDatas.add(new TestData("01 Jan 2015","11:00","Physics"));
+//        testDatas.add(new TestData("01 Jan 2015", "11:00", "Hindi"));
+//        testDatas.add(new TestData("01 Jan 2015", "11:00", "English"));
+//
+//        return rootView;
+//    }
 
     public void initialization()
     {
 
-        fabAddTest = (FloatingActionButton) rootView.findViewById(R.id.fabAddTest);
-        listViewTest = (ListView) rootView.findViewById(R.id.listViewTest);
+        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
+        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
-        testListAdapter = new TestListAdapter(getActivity(),testDatas);
+        fabAddTest = (FloatingActionButton) findViewById(R.id.fabAddTest);
+        listViewTest = (ListView) findViewById(R.id.listViewTest);
+
+        testListAdapter = new TestListAdapter(this,testDatas);
 
         listViewTest.setAdapter(testListAdapter);
 
         fabAddTest.setOnClickListener(this);
+        relativeLayoutMenu.setOnClickListener(this);
+        textViewActionTitle.setOnClickListener(this);
+
+        textViewActionTitle.setText("Test");
     }
 
     @Override
     public void onClick(View v) {
-
+        super.onClick(v);
         switch (v.getId()) {
+            case R.id.relativeLayoutMenu:
+                toggle();
+                break;
             case R.id.fabAddTest:
                 showDateDialog();
                 break;
@@ -103,7 +134,7 @@ public class TestListFragment extends Fragment implements View.OnClickListener, 
 
                 subject = autoCompleteTextView.getText().toString();
                 if (subject.isEmpty()) {
-                    Toast.makeText(getActivity(), "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
                 } else
                 {
                     testDatas.add(new TestData(date,time,subject));
@@ -123,7 +154,7 @@ public class TestListFragment extends Fragment implements View.OnClickListener, 
                 now.get(Calendar.MINUTE),
                 false
         );
-        tpd.show(getActivity().getFragmentManager(), "Timepickerdialog");
+        tpd.show(this.getFragmentManager(), "Timepickerdialog");
     }
 
     public void showDateDialog()
@@ -135,7 +166,7 @@ public class TestListFragment extends Fragment implements View.OnClickListener, 
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+        dpd.show(this.getFragmentManager(), "Datepickerdialog");
     }
 
     @Override
@@ -168,12 +199,12 @@ public class TestListFragment extends Fragment implements View.OnClickListener, 
         arrayList.add("SST");
         arrayList.add("Hindi");
 
-        dialog = new Dialog(getActivity());
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom_msg);
         autoCompleteTextView = (AutoCompleteTextView) dialog.findViewById(R.id.autoCompleteSubject);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,arrayList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
         autoCompleteTextView.setAdapter(adapter);
 
         Button buttonCreateTest = (Button) dialog.findViewById(R.id.buttonCreateTest);

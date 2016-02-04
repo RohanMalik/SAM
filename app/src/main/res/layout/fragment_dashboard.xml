@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:background="@color/background_color">
 
-    <ImageView
-        android:id="@+id/imageViewProfilePic"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_tmp_usr_placeholder"
-        />
+    <include layout="@layout/toolbar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name : Rohan Malik"
-        android:textSize="20dp"
-        android:layout_marginTop="50dp"/>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Class : 10th A"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email : rohan.malik@mail.com"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"/>
+        <com.monkeybusiness.jaaar.Services.CircleImageView
+            android:id="@+id/imageViewProfilePic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_tmp_usr_placeholder"
+            />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Attendance Taken For Today"
-        android:textSize="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name : Rohan Malik"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"/>
 
-    <Button
-        android:id="@+id/buttonTakeAttd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Take Attendance"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class : 10th A"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"/>
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email : rohan.malik@mail.com"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Attendance Taken For Today"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/buttonTakeAttd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take Attendance"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

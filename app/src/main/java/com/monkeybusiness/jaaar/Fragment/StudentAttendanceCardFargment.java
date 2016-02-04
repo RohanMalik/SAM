@@ -9,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.github.florent37.hollyviewpager.HollyViewPagerBus;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by rakesh on 1/1/16.
@@ -39,10 +44,15 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 
     AttendanceFragment attendanceFragment;
 
-    public static StudentAttendanceCardFargment newInstance(int page) {
+    ObservableScrollView scrollView;
+
+    public static StudentAttendanceCardFargment newInstance(int page,String title) {
 
         StudentAttendanceCardFargment studentAttendanceCardFargment = new StudentAttendanceCardFargment();
         studentAttendanceCardFargment.studentAttdData = MasterClass.getInstance().getStudentAttdDatas().get(page);
+        Bundle args = new Bundle();
+        args.putString("title",title);
+        studentAttendanceCardFargment.setArguments(args);
         return studentAttendanceCardFargment;
     }
 
@@ -66,6 +76,8 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         textViewTitle = (TextView) rootView.findViewById(R.id.textViewTitle);
         textViewClass = (TextView) rootView.findViewById(R.id.textViewClass);
         textViewRollNo = (TextView) rootView.findViewById(R.id.textViewRollNo);
+
+        scrollView = (ObservableScrollView) rootView.findViewById(R.id.scrollView);
 
         buttonAbsent = (Button) rootView.findViewById(R.id.buttonAbsent);
 
@@ -120,9 +132,17 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         {
             case R.id.buttonAbsent:
                 toggleAttd(buttonAbsent);
-                attendanceFragment.viewPagerAttd.setCurrentItem(attendanceFragment.viewPagerAttd.getCurrentItem()+1);
+//                attendanceFragment.viewPagerAttd.setCurrentItem(attendanceFragment.viewPagerAttd.getCurrentItem()+1);
                 break;
         }
+    }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
     }
 
     public void toggleAttd(Button button)

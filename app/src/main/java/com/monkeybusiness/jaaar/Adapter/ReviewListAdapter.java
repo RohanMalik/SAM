@@ -60,7 +60,7 @@ public class ReviewListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return studentAttdDatas.size();
+        return 10;
     }
 
     @Override
@@ -93,8 +93,8 @@ public class ReviewListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.textViewNameListView.setText(""+studentAttdDatas.get(position).getsName());
-        viewHolder.textViewRollnoListView.setText(""+studentAttdDatas.get(position).getsRollNo());
+//        viewHolder.textViewNameListView.setText(""+studentAttdDatas.get(position).getsName());
+//        viewHolder.textViewRollnoListView.setText(""+studentAttdDatas.get(position).getsRollNo());
 
         return view;
     }

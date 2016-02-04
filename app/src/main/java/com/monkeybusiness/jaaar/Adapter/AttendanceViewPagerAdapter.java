@@ -27,10 +27,10 @@ public class AttendanceViewPagerAdapter extends BaseViewPagerFragmentStatAdapter
         switch (position) {
             case 0:
              //   AttendanceFragment attendanceFragment = new AttendanceFragment();
-                AttendanceFragment attendanceFragment = new AttendanceFragment();
-
-
-                return attendanceFragment;
+//                AttendanceFragment attendanceFragment = new AttendanceFragment();
+//
+//
+//                return attendanceFragment;
             case 1:
             //    ClassHistoryFragment classHistoryFragment = new ClassHistoryFragment();
                 ClassHistoryFragment classHistoryFragment =ClassHistoryFragment.getInstance();
@@ -48,7 +48,7 @@ public class AttendanceViewPagerAdapter extends BaseViewPagerFragmentStatAdapter
 
         switch (position){
             case 0:
-                ((AttendanceFragment) fragment).getFragmentManager();
+//                ((AttendanceFragment) fragment).getFragmentManager();
 
         }
     }

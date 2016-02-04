@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.monkeybusiness.jaaar">
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
@@ -25,8 +26,20 @@
         <activity
             android:name=".Activity.LandingPageActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activity.DayViewActivity" />
+        <!--<activity android:name=".Activity.DayViewActivity" />-->
         <activity android:name=".Activity.AddEventActivity"></activity>
+        <activity
+            android:name=".Activity.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Fragment.AttendanceFragment"></activity>
+
+        <activity android:name=".Activity.DashboardActivity"></activity>
+
+        <activity android:name=".Fragment.FriendsActivity"></activity>
+        <activity android:name=".Fragment.TestListFragment"></activity>
+
+        <activity android:name=".Fragment.RemarksFragment"></activity>
+
     </application>
 
 </manifest>

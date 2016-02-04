@@ -24,8 +24,8 @@ public class AttendancePagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                AttendanceFragment tab1 = new AttendanceFragment();
-                return tab1;
+//                AttendanceFragment tab1 = new AttendanceFragment();
+//                return tab1;
             case 1:
                 ClassHistoryFragment tab2 = new ClassHistoryFragment();
                 return tab2;

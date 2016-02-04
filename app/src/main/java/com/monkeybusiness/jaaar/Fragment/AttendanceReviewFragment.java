@@ -11,13 +11,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.florent37.hollyviewpager.HollyViewPagerBus;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.monkeybusiness.jaaar.Adapter.ReviewListAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.utils.NonScrollListView;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -26,12 +31,14 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
 
     View rootView;
-    ListView listViewReviewAttd;
+    NonScrollListView listViewReviewAttd;
     ReviewListAdapter reviewListAdapter;
 
     Button buttonSubmit;
 
-    public static AttendanceReviewFragment newInstance(int page) {
+    ObservableScrollView scrollView;
+
+    public static AttendanceReviewFragment newInstance(int page,String title) {
 
         AttendanceReviewFragment attendanceReviewFragment = new AttendanceReviewFragment();
         return attendanceReviewFragment;
@@ -51,7 +58,10 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
     {
         buttonSubmit = (Button) rootView.findViewById(R.id.buttonSubmit);
 
-        listViewReviewAttd = (ListView) rootView.findViewById(R.id.listViewReviewAttd);
+        listViewReviewAttd = (NonScrollListView) rootView.findViewById(R.id.listViewReviewAttd);
+
+        scrollView = (ObservableScrollView) rootView.findViewById(R.id.scrollView);
+
         reviewListAdapter = new ReviewListAdapter(getActivity());
         listViewReviewAttd.setAdapter(reviewListAdapter);
 
@@ -76,5 +86,12 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
                 submitAttd();
                 break;
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
     }
 }

@@ -11,13 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.DemoDataFlipImageViewer;
 import com.monkeybusiness.jaaar.objectClasses.Friend;
+import com.monkeybusiness.jaaar.utils.Utils;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
 
@@ -28,31 +31,55 @@ import java.util.List;
 /**
  * @author Yalantis
  */
-public class FriendsActivity extends Fragment {
+public class FriendsActivity extends BaseActivity {
 
+    RelativeLayout relativeLayoutMenu;
+    TextView textViewActionTitle;
 
-    View rootView;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friends);
 
-        rootView = inflater.inflate(R.layout.activity_friends,container,false);
-        final ListView friends = (ListView) rootView.findViewById(R.id.friends);
+        Utils.classFlag = 2;
+        final ListView friends = (ListView) findViewById(R.id.friends);
+
+        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
+        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+
+        relativeLayoutMenu.setOnClickListener(this);
+        textViewActionTitle.setOnClickListener(this);
+
+        textViewActionTitle.setText("My Class");
 
         FlipSettings settings = new FlipSettings.Builder().defaultPage(1).build();
-        friends.setAdapter(new FriendsAdapter(getActivity(), DemoDataFlipImageViewer.friends, settings));
+        friends.setAdapter(new FriendsAdapter(this, DemoDataFlipImageViewer.friends, settings));
         friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend f = (Friend) friends.getAdapter().getItem(position);
 
-                Toast.makeText(getActivity(), f.getNickname(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(FriendsActivity.this, f.getNickname(), Toast.LENGTH_SHORT).show();
             }
         });
-        return rootView;
     }
 
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return rootView;
+//    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId())
+        {
+            case R.id.relativeLayoutMenu:
+                toggle();
+                break;
+        }
+    }
 
     class FriendsAdapter extends BaseFlipAdapter<Friend> {
 
@@ -80,10 +107,10 @@ public class FriendsActivity extends Fragment {
 
             if (convertView == null) {
                 holder = new FriendsHolder();
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.friends_merge_page, parent, false);
+                convertView = getLayoutInflater().inflate(R.layout.friends_merge_page, parent, false);
                 holder.leftAvatar = (ImageView) convertView.findViewById(R.id.first);
                 holder.rightAvatar = (ImageView) convertView.findViewById(R.id.second);
-                holder.infoPage = getActivity().getLayoutInflater().inflate(R.layout.friends_info, parent, false);
+                holder.infoPage = getLayoutInflater().inflate(R.layout.friends_info, parent, false);
                 holder.nickName = (TextView) holder.infoPage.findViewById(R.id.nickname);
 
                 for (int id : IDS_INTEREST)

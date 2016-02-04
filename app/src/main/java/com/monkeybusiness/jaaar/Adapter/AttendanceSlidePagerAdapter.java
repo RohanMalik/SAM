@@ -24,14 +24,15 @@ public class AttendanceSlidePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position==5)
-        {
-            return AttendanceReviewFragment.newInstance(position);
-        }
-        else
-        {
-            return StudentAttendanceCardFargment.newInstance(position);
-        }
+//        if (position==5)
+//        {
+//            return AttendanceReviewFragment.newInstance(position);
+//        }
+//        else
+//        {
+//            return StudentAttendanceCardFargment.newInstance(position);
+//        }
+        return null;
     }
 
     @Override
