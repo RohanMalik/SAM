@@ -2,7 +2,8 @@
     android:id="@+id/root"
     android:layout_width="270dp"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background_color_navdrawer">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="270dp"
@@ -24,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@color/primary"/>
+                android:src="@color/primary_dark"/>
 
 
             <com.monkeybusiness.jaaar.Services.CircleImageView
@@ -33,12 +34,12 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="24dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginBottom="40dp"
                 android:src="@drawable/ic_tmp_usr_placeholder"
-                app:border_color="#FF000000"
+                app:border_color="@color/primary"
+                app:border_width="2dp"
                 android:clickable="true"/>
 
             <TextView
@@ -47,8 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/profile_image"
                 android:layout_alignStart="@+id/profile_image"
-                android:layout_below="@+id/profile_image"
                 android:layout_marginTop="16dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
                 android:gravity="left"
                 android:paddingBottom="4dp"
                 android:singleLine="true"
@@ -58,6 +60,11 @@
                 android:textStyle="bold"/>
 
         </RelativeLayout>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/shadow_down"/>
 
         <LinearLayout
             android:id="@+id/linearlayoutDashboard"
@@ -68,11 +75,11 @@
             android:layout_marginTop="8dp"
             android:gravity="left">
 
-            <ImageView
+            <com.monkeybusiness.jaaar.Services.CircleImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/ic_tmp_usr_placeholder"
                 />
 
             <TextView
@@ -80,7 +87,8 @@
                 android:layout_height="wrap_content"
                 android:text="Dashboard"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -97,7 +105,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/test_icon"
                 />
 
             <TextView
@@ -105,7 +113,8 @@
                 android:layout_height="wrap_content"
                 android:text="Attendance"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -122,7 +131,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/notification_icon"
                 />
 
             <TextView
@@ -130,7 +139,9 @@
                 android:layout_height="wrap_content"
                 android:text="My Class"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -147,7 +158,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/test_icon"
 
                 />
 
@@ -156,7 +167,8 @@
                 android:layout_height="wrap_content"
                 android:text="Test"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -173,7 +185,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/calender_icon"
                 />
 
             <TextView
@@ -181,7 +193,8 @@
                 android:layout_height="wrap_content"
                 android:text="Calender"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -199,7 +212,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/test_icon"
                 />
 
             <TextView
@@ -207,7 +220,8 @@
                 android:layout_height="wrap_content"
                 android:text="Remarks"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -224,7 +238,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/my_claa_icon_color"
+                android:src="@drawable/notification_icon"
                 />
 
             <TextView
@@ -232,7 +246,8 @@
                 android:layout_height="wrap_content"
                 android:text="Notifications"
                 android:textSize="16sp"
-                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"/>
         </LinearLayout>

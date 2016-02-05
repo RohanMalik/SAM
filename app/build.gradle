@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
     compileSdkVersion 23
@@ -10,6 +12,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -18,8 +21,13 @@ android {
         }
     }
 
-productFlavors {
-}
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    productFlavors {
+    }
 }
 repositories {
     jcenter()
@@ -51,7 +59,7 @@ dependencies {
     //calendar
     compile 'com.github.alamkanak:android-week-view:1.2.6'
     //floatingButton
-    compile 'com.melnykov:floatingactionbutton:1.3.0'
+//    compile 'com.melnykov:floatingactionbutton:1.3.0'
     //progressbutton
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     //circleDrawable
@@ -66,4 +74,14 @@ dependencies {
 //holly view pager
     compile 'com.github.florent37:hollyviewpager:1.0.1'
     compile 'com.github.ksoichiro:android-observablescrollview:1.5.2'
+
+    //agenda
+    compile 'se.emilsjolander:stickylistheaders:2.5.2'
+    compile 'pl.charmas.android:android-reactive-location:0.6@aar'
+    compile 'io.reactivex:rxjava:1.0.16'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.google.guava:guava:19.0'
+
+    //material
+    compile 'com.github.rey5137:material:1.2.2'
 }

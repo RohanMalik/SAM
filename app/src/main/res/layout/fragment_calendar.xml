@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:agendaCalendar="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/textViewCurrentDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="01/02/2016"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@color/primary_lighter"
+        android:textColor="@android:color/white"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
+
+    <FrameLayout
+        android:layout_below="@+id/textViewCurrentDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.monkeybusiness.jaaar.agendacalendarview.AgendaCalendarView
+            android:id="@+id/agenda_calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            agendaCalendar:agendaCurrentDayTextColor="@color/theme_primary"
+            agendaCalendar:calendarColor="@color/theme_primary"
+            agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
+            agendaCalendar:calendarDayTextColor="@color/theme_text_icons"
+            agendaCalendar:calendarHeaderColor="@color/theme_primary_dark"
+            agendaCalendar:calendarPastDayTextColor="@color/theme_light_primary"
+            agendaCalendar:fabColor="@color/theme_accent" />
+
+        <com.rey.material.widget.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:fab_elevation="5dp"
+            app:fab_iconSize="24dp"
+            app:fab_iconSrc="@drawable/add_button"
+            app:fab_backgroundColor="@color/primary"
+            app:fab_animDuration="1000"
+            app:rd_rippleAnimDuration="500"
+            app:rd_rippleColor="@color/primary_lighter"
+            app:rd_enable="true"
+            />
+
+    </FrameLayout>
+
+</LinearLayout>

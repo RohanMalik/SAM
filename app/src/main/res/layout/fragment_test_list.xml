@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,16 +18,22 @@
 
         </ListView>
 
-        <com.melnykov.fab.FloatingActionButton
+        <com.rey.material.widget.FloatingActionButton
             android:id="@+id/fabAddTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/add_button"
-            fab:fab_colorNormal="@color/primary"
-            fab:fab_colorPressed="@color/primary_dark"
-            fab:fab_colorRipple="@color/ripple" />
+            app:fab_elevation="5dp"
+            app:fab_iconSize="24dp"
+            app:fab_iconSrc="@drawable/add_button"
+            app:fab_backgroundColor="@color/primary"
+            app:fab_animDuration="1000"
+            app:rd_rippleAnimDuration="500"
+            app:rd_rippleColor="@color/primary_lighter"
+            app:rd_enable="true"
+            />
+
 
     </FrameLayout>
 

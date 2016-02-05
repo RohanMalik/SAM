@@ -1,60 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background_color">
 
     <include layout="@layout/toolbar"/>
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:background="@color/background_color"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
 
-        <com.monkeybusiness.jaaar.Services.CircleImageView
-            android:id="@+id/imageViewProfilePic"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_tmp_usr_placeholder"
-            />
+            <com.monkeybusiness.jaaar.Services.CircleImageView
+                android:id="@+id/imageViewProfilePic"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:border_color="@color/primary"
+                app:border_width="2dp"
+                app:border_overlay="true"
+                android:src="@drawable/ic_tmp_usr_placeholder"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name : Rohan Malik"
-            android:textSize="20dp"
-            android:layout_marginTop="50dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name : Rohan Malik"
+                android:textSize="20dp"
+                android:layout_marginTop="50dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class : 10th A"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class : 10th A"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email : rohan.malik@mail.com"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email : rohan.malik@mail.com"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Attendance Taken For Today"
-            android:textSize="20dp"/>
+            <com.rey.material.widget.CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Attendance Taken For Today"
+                android:textSize="20dp"
+                app:cbd_tickColor="#fff"
+                app:cbd_strokeColor="@color/primary"/>
 
-        <Button
-            android:id="@+id/buttonTakeAttd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Take Attendance"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"/>
+            <com.rey.material.widget.Button
+                android:id="@+id/buttonTakeAttd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take Attendance"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                app:rd_enable="true"
+                android:background="@color/primary"
+                android:elevation="5dp"
+                android:textColor="#fff"
+                android:padding="12dp"
+                app:rd_rippleAnimDuration="500"
+                app:rd_rippleColor="@color/primary_lighter"/>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+
+</LinearLayout>

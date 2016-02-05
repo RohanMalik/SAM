@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
+import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
 import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
@@ -116,20 +117,18 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     toggle();
                 }
                 break;
-//            case R.id.linearLayoutNotificationMenu:
-//
-//                updateUI(4);
-//
-//                if (Utils.classFlag != 4) {
-//                    Intent intent = new Intent(BaseActivity.this, NotificationsActivity.class);
-//                    startActivity(intent);
-//                    finish();
+            case R.id.linearlayoutCalender:
+
+                if (Utils.classFlag != 4) {
+                    Intent intent = new Intent(BaseActivity.this, MyCalendarFragment.class);
+                    startActivity(intent);
+                    finish();
 //                    overridePendingTransition(R.anim.slide_in_right,
 //                            R.anim.slide_out_left);
-//                } else {
-//                    toggle();
-//                }
-//                break;
+                } else {
+                    toggle();
+                }
+                break;
 //
             case R.id.linearlayoutRemarks:
                 if (Utils.classFlag != 5) {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
-    >
+    android:background="@color/background_color">
 
     <include layout="@layout/toolbar"/>
 
@@ -25,8 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="2"
+                android:background="@drawable/non_border_simple_corner"
                 android:hint="Start typing Name"
-                android:padding="8dp"
+                android:padding="4dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -42,20 +44,28 @@
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
                 android:gravity="top|left"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/border_highlighted_btn_wallet"/>
 
-            <Button
+            <com.rey.material.widget.Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:padding="8dp"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="SUBMIT"/>
+                android:text="SUBMIT"
+                android:background="@color/primary"
+                android:elevation="5dp"
+                android:textColor="#fff"
+                android:padding="12dp"
+                app:rd_rippleAnimDuration="500"
+                app:rd_rippleColor="@color/primary_lighter"
+                app:rd_enable="true"
+                />
+
         </LinearLayout>
     </ScrollView>
 

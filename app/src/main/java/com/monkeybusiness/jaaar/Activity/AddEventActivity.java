@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -19,7 +20,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
-public class AddEventActivity extends AppCompatActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener {
+public class AddEventActivity extends BaseActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener {
 
     EditText input_event_name;
     EditText input_event_desc;
@@ -27,14 +28,15 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
     TextView textViewFrom;
     TextView textViewTo;
 
-    Toolbar dayView_toolbar;
-
     ActionProcessButton buttonAddEvent;
+
+    RelativeLayout relativeLayoutMenu;
+    TextView textViewActionTitle;
 
     boolean fromTo;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
@@ -43,12 +45,6 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
 
     public void initialization()
     {
-
-        dayView_toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
-
-        setSupportActionBar(dayView_toolbar);
-        getSupportActionBar().setTitle("01 JAN 2016");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         input_event_name = (EditText) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
@@ -60,6 +56,14 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
 
         buttonAddEvent.setMode(ActionProcessButton.Mode.ENDLESS);
 
+        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
+        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+
+        textViewActionTitle.setText("ADD EVENT");
+
+        relativeLayoutMenu.setOnClickListener(this);
+        textViewActionTitle.setOnClickListener(this);
+
         buttonAddEvent.setOnClickListener(this);
         textViewFrom.setOnClickListener(this);
         textViewTo.setOnClickListener(this);
@@ -67,7 +71,7 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
+        super.onClick(v);
         switch (v.getId())
         {
             case R.id.textViewFrom:
@@ -88,7 +92,10 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
                     public void run() {
                         buttonAddEvent.setProgress(100);
                     }
-                },2000);
+                }, 2000);
+                break;
+            case R.id.relativeLayoutMenu:
+                toggle();
                 break;
         }
     }
