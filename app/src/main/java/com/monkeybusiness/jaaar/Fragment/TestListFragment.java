@@ -2,21 +2,12 @@ package com.monkeybusiness.jaaar.Fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +23,6 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,15 +46,18 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
 
     DateFormat dateFormat;
 
-
     String date,time;
 
     String subject;
+    String topic;
 
-    Dialog dialog;
+    Dialog subjectDialog;
+    Dialog topicDialog;
 
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
+
+    boolean nextButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,13 +66,15 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
 
         Utils.classFlag = 3;
 
+        toggleLayouts(linearlayoutTest,textViewTest);
+
         initialization();
 
-        testDatas.add(new TestData("01 Jan 2015", "11:00", "Chemistry"));
-        testDatas.add(new TestData("01 Jan 2015","11:00","Maths"));
-        testDatas.add(new TestData("01 Jan 2015","11:00","Physics"));
-        testDatas.add(new TestData("01 Jan 2015", "11:00", "Hindi"));
-        testDatas.add(new TestData("01 Jan 2015", "11:00", "English"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "Maths", "GEOMETRY"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "Maths","Trigonometry"));
+        testDatas.add(new TestData("01 Jan 2015","11:00","Maths","TRIGONOMETRY"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "Maths","ALGEBRA"));
+        testDatas.add(new TestData("01 Jan 2015", "11:00", "Maths","NUMBER SYSTEMS"));
 
     }
 
@@ -131,15 +126,30 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
                 showDateDialog();
                 break;
             case R.id.buttonCreateTest:
-
-                subject = autoCompleteTextView.getText().toString();
-                if (subject.isEmpty()) {
-                    Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
-                } else
+                if (nextButton)
                 {
-                    testDatas.add(new TestData(date,time,subject));
-                    testListAdapter.notifyDataSetChanged();
-                    dialog.dismiss();
+                    subject = autoCompleteTextView.getText().toString();
+                    if (subject.isEmpty()) {
+                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
+                    } else
+                    {
+                        subjectDialog.dismiss();
+                        nextButton = false;
+                        showTopicDialog();
+
+                    }
+                }
+                else
+                {
+                    topic = autoCompleteTextView.getText().toString();
+                    if (topic.isEmpty()) {
+                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
+                    } else
+                    {
+                        testDatas.add(new TestData(date,time,subject,topic));
+                        testListAdapter.notifyDataSetChanged();
+                        topicDialog.dismiss();
+                    }
                 }
                 break;
         }
@@ -154,6 +164,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
                 now.get(Calendar.MINUTE),
                 false
         );
+        tpd.setAccentColor(getResources().getColor(R.color.primary));
         tpd.show(this.getFragmentManager(), "Timepickerdialog");
     }
 
@@ -166,6 +177,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
+        dpd.setAccentColor(getResources().getColor(R.color.primary));
         dpd.show(this.getFragmentManager(), "Datepickerdialog");
     }
 
@@ -190,6 +202,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
         showTimeDialog();
     }
 
+    Button buttonNext;
     public void showSubjectDialog()
     {
         List<String> arrayList  = new ArrayList<>();
@@ -199,20 +212,52 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
         arrayList.add("SST");
         arrayList.add("Hindi");
 
-        dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_custom_msg);
-        autoCompleteTextView = (AutoCompleteTextView) dialog.findViewById(R.id.autoCompleteSubject);
+        nextButton = true;
+
+        subjectDialog = new Dialog(this);
+        subjectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        subjectDialog.setContentView(R.layout.dialog_custom_msg);
+        autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
         autoCompleteTextView.setAdapter(adapter);
 
-        Button buttonCreateTest = (Button) dialog.findViewById(R.id.buttonCreateTest);
+        buttonNext = (Button) subjectDialog.findViewById(R.id.buttonCreateTest);
+
+        buttonNext.setText("Next");
+        buttonNext.setOnClickListener(this);
+        subjectDialog.setCancelable(true);
+        subjectDialog.setCanceledOnTouchOutside(true);
+        subjectDialog.show();
+    }
+
+    Button buttonCreateTest;
+
+    public void showTopicDialog()
+    {
+        List<String> arrayList  = new ArrayList<>();
+        arrayList.add("GEOMETRY");
+        arrayList.add("PROBABILITY");
+        arrayList.add("TRIGONOMETRY");
+        arrayList.add("ALGEBRA");
+        arrayList.add("NUMBER SYSTEMS");
+
+        topicDialog = new Dialog(this);
+        topicDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        topicDialog.setContentView(R.layout.dialog_custom_msg);
+        autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setHint("Enter Topic Name");
+
+        buttonCreateTest = (Button) topicDialog.findViewById(R.id.buttonCreateTest);
 
         buttonCreateTest.setOnClickListener(this);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+        topicDialog.setCancelable(true);
+        topicDialog.setCanceledOnTouchOutside(true);
+        topicDialog.show();
     }
 
 }

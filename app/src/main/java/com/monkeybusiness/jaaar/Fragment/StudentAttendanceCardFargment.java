@@ -103,7 +103,7 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 
         if (studentAttdData.getsCurrentAttd().equals("0"))
         {
-            buttonAbsent.setText("PRESENT");
+            buttonAbsent.setText("MARK PRESENT");
             buttonAbsent.setBackgroundColor(getResources().getColor(R.color.primary));
         }
 
@@ -147,17 +147,17 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 
     public void toggleAttd(Button button)
     {
-        if (button.getText().toString().equalsIgnoreCase("absent"))
+        if (button.getText().toString().equalsIgnoreCase("mark absent"))
         {
             studentAttdData.setsCurrentAttd("0");
-            button.setText("PRESENT");
-            button.setBackgroundColor(getResources().getColor(R.color.primary));
+            button.setText("MARK PRESENT");
+            button.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
         }
         else
         {
             studentAttdData.setsCurrentAttd("1");
-            button.setText("ABSENT");
-            button.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
+            button.setText("MARK ABSENT");
+            button.setBackgroundColor(getResources().getColor(R.color.primary));
         }
     }
 }

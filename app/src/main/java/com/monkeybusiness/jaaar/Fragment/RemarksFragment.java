@@ -39,6 +39,7 @@ public class RemarksFragment extends BaseActivity{
 
         Utils.classFlag = 5;
 
+        toggleLayouts(linearlayoutRemarks,textViewRemarks);
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 

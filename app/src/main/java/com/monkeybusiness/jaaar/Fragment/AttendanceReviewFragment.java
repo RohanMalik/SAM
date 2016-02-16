@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +18,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.utils.NonScrollListView;
+import com.rey.material.widget.Button;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
     NonScrollListView listViewReviewAttd;
     ReviewListAdapter reviewListAdapter;
 
-    Button buttonSubmit;
+     Button buttonSubmit;
 
     ObservableScrollView scrollView;
 

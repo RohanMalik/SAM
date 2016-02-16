@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,10 @@ public class AttendanceFragment extends BaseActivity {
         MasterClass.getInstance().setAttendanceFragment(this);
 
         Utils.classFlag = 1;
+
+        toggleLayouts(linearlayoutAttendance,textViewAttendance);
+
+
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
         studentAttdDatas.add(new StudentAttdData("Rohan Malik", "10th", "1", "", Arrays.asList("1", "0", "1", "0", "1")));
@@ -75,8 +80,10 @@ public class AttendanceFragment extends BaseActivity {
         hollyViewPager.setConfigurator(new HollyViewPagerConfigurator() {
             @Override
             public float getHeightPercentForPage(int page) {
+
+//                Log.d("attendancePager","Height : "+((page+4)%10)/10f);
 //                return ((page+4)%10)/10f;
-                return 5;
+                return 0.5f;
             }
 
         });
@@ -101,7 +108,14 @@ public class AttendanceFragment extends BaseActivity {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return "TITLE 123";
+                if (position!=5)
+                {
+                    return "Roll No. "+(position+1);
+                }
+                else
+                {
+                    return "Submit";
+                }
             }
         });
 

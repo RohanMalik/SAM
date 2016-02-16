@@ -56,6 +56,7 @@ public class TestListAdapter extends BaseAdapter {
             viewHolder.subjectName = (TextView) view.findViewById(R.id.subjectName);
             viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);
             viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewTime);
+            viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
 
             view.setTag(viewHolder);
         }
@@ -67,6 +68,7 @@ public class TestListAdapter extends BaseAdapter {
         viewHolder.textViewTime.setText(testDatas.get(position).getTime());
         viewHolder.textViewDate.setText(testDatas.get(position).getDate());
         viewHolder.subjectName.setText(testDatas.get(position).getSubjectName());
+        viewHolder.topicName.setText(testDatas.get(position).getTopicName());
 
         return view;
     }
@@ -76,6 +78,7 @@ public class TestListAdapter extends BaseAdapter {
         TextView subjectName;
         TextView textViewDate;
         TextView textViewTime;
+        TextView topicName;
     }
 
 }

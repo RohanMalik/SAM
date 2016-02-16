@@ -41,6 +41,7 @@ public class FriendsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
+        toggleLayouts(linearlayoutMyclass,textViewMyclass);
         Utils.classFlag = 2;
         final ListView friends = (ListView) findViewById(R.id.friends);
 
@@ -84,7 +85,7 @@ public class FriendsActivity extends BaseActivity {
     class FriendsAdapter extends BaseFlipAdapter<Friend> {
 
         private final int PAGES = 3;
-        private int[] IDS_INTEREST = {R.id.interest_1, R.id.interest_2, R.id.interest_3, R.id.interest_4, R.id.interest_5,R.id.interest_6, R.id.interest_7, R.id.interest_8, R.id.interest_9, R.id.interest_10, R.id.interest_11, R.id.interest_12};
+        private int[] IDS_INTEREST = {R.id.interest_1, R.id.interest_2, R.id.interest_3, R.id.interest_4, R.id.interest_5,R.id.interest_6};
 
         public FriendsAdapter(Context context, List<Friend> items, FlipSettings settings) {
             super(context, items, settings);

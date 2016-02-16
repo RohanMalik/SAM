@@ -16,7 +16,7 @@
         android:gravity="center"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:background="@color/primary_lighter"
+        android:background="@color/primary_dark"
         android:textColor="@android:color/white"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"/>
@@ -30,11 +30,11 @@
             android:id="@+id/agenda_calendar_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            agendaCalendar:agendaCurrentDayTextColor="@color/theme_primary"
-            agendaCalendar:calendarColor="@color/theme_primary"
+            agendaCalendar:agendaCurrentDayTextColor="@color/primary"
+            agendaCalendar:calendarColor="@color/primary"
             agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
             agendaCalendar:calendarDayTextColor="@color/theme_text_icons"
-            agendaCalendar:calendarHeaderColor="@color/theme_primary_dark"
+            agendaCalendar:calendarHeaderColor="@color/primary_dark"
             agendaCalendar:calendarPastDayTextColor="@color/theme_light_primary"
             agendaCalendar:fabColor="@color/theme_accent" />
 

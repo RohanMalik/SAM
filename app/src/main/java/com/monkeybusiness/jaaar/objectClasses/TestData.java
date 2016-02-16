@@ -8,12 +8,14 @@ public class TestData
     String date;
     String time;
     String subjectName;
+    String topicName;
 
-    public TestData(String date,String time,String subjectName)
+    public TestData(String date,String time,String subjectName,String topicName)
     {
         this.date = date;
         this.time = time;
         this.subjectName = subjectName;
+        this.topicName = topicName;
     }
 
     public String getDate() {
@@ -38,5 +40,13 @@ public class TestData
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 }

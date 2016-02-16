@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.monkeybusiness.jaaar.Activity.AddEventActivity"
     android:descendantFocusability="beforeDescendants"
@@ -16,7 +16,8 @@
     <ScrollView
         android:layout_below="@+id/dashboard_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,29 +121,19 @@
 
             </LinearLayout>
 
-            <com.dd.processbutton.iml.ActionProcessButton
+            <com.rey.material.widget.Button
                 android:id="@+id/buttonAddEvent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_height="40dp"
                 android:text="ADD EVENT"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
                 android:layout_margin="16dp"
-                custom:pb_colorComplete="@color/green_complete"
-                custom:pb_colorNormal="@color/sub_tab"
-                custom:pb_colorPressed="@color/blue_pressed"
-                custom:pb_colorProgress="@color/purple_progress"
-                custom:pb_textComplete="Success"
-                custom:pb_textProgress="Loading"
-                custom:pb_textError="Error"
-                custom:pb_colorError="@color/red_error" />
-
-
+                android:textSize="16sp"
+                android:background="@drawable/non_border_simple_button_corner"
+                android:elevation="5dp"
+                android:textColor="#fff"
+                app:rd_enable="true"
+                app:rd_rippleColor="@color/primary"/>
         </LinearLayout>
 
     </ScrollView>
-
-
-
 </LinearLayout>

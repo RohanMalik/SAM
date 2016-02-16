@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@android:color/transparent"
     android:layout_width="match_parent"
@@ -9,8 +9,15 @@
         style="@style/TextView.Nickname"
         android:id="@+id/nickname" />
 
+    <com.monkeybusiness.jaaar.utils.FontTextView
+        android:id="@+id/className"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:text="CLASS 10th"/>
+
     <LinearLayout
-        android:layout_below="@+id/nickname"
         android:id="@+id/interestsPrimary"
         style="@style/LinearLayout.Interests"
         android:gravity="center">
@@ -53,51 +60,4 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_below="@+id/interestsPrimary"
-        android:id="@+id/interestsSecondary"
-        android:layout_marginTop="5dp"
-        style="@style/LinearLayout.Interests"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/interest_7"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-        <ImageView
-            android:id="@+id/interest_8"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-        <ImageView
-            android:id="@+id/interest_9"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-        <ImageView
-            android:id="@+id/interest_10"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-        <ImageView
-            android:id="@+id/interest_11"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-        <ImageView
-            android:id="@+id/interest_12"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"/>
-
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

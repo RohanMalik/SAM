@@ -55,6 +55,7 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
         setContentView(R.layout.fragment_calendar);
 
         Utils.classFlag = 4;
+        toggleLayouts(linearlayoutCalender,textViewCalendar);
         initialization();
     }
 //

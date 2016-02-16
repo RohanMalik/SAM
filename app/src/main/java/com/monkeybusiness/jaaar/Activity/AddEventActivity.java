@@ -12,9 +12,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import com.dd.processbutton.iml.ActionProcessButton;
 import com.monkeybusiness.jaaar.R;
+import com.rey.material.widget.Button;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -28,7 +27,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     TextView textViewFrom;
     TextView textViewTo;
 
-    ActionProcessButton buttonAddEvent;
+    Button buttonAddEvent;
 
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
@@ -49,12 +48,10 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         input_event_name = (EditText) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
 
-        buttonAddEvent = (ActionProcessButton) findViewById(R.id.buttonAddEvent);
+        buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
 
         textViewFrom = (TextView) findViewById(R.id.textViewFrom);
         textViewTo = (TextView) findViewById(R.id.textViewTo);
-
-        buttonAddEvent.setMode(ActionProcessButton.Mode.ENDLESS);
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
@@ -86,13 +83,6 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 super.onBackPressed();
                 break;
             case R.id.buttonAddEvent:
-                buttonAddEvent.setProgress(1);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        buttonAddEvent.setProgress(100);
-                    }
-                }, 2000);
                 break;
             case R.id.relativeLayoutMenu:
                 toggle();

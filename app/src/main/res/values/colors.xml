@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#007888</color>
-    <color name="primary_dark">#004b55</color>
+    <color name="primary">#00bcd4</color>
+    <color name="primary_dark">#3EC4E7</color>
     <color name="primary_lighter">#008fa1</color>
     <color name="ripple">#00695C</color>
     <color name="accent">#FFFFFF</color>
+
+    <color name="background_attd">#007888</color>
+
+    <!--<color name="primary">#00bcd4</color>-->
+    <!--<color name="primary_dark">#3EC4E7</color>-->
+    <!--<color name="primary_lighter">#008fa1</color>-->
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
@@ -27,8 +33,9 @@
 
     <color name="normal_present_button">#009688</color>
 
-    <color name="background_color">#dad5d5</color>
+    <!--<color name="background_color">#dad5d5</color>-->
 
+    <color name="background_color">#e4dede</color>
     <color name="background_color_navdrawer">#007888</color>
 
     <color name="orange_dark">#E64A19</color>
@@ -50,6 +57,11 @@
     <color name="orange">#ff8c6a</color>
 
     <color name="border_color">#959595</color>
+
+    <color name="login_button_color">#EF3F32</color>
+    <color name="login_button_ripple_color">#F38C84</color>
+
+
 
     <color name="calendar_future_days_bg">#FFFFFF</color>
     <color name="calendar_past_days_bg">#F5F5F5</color>
