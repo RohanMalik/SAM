@@ -1,29 +1,12 @@
 package com.monkeybusiness.jaaar.Activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 
-import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
-import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
-import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
-import com.monkeybusiness.jaaar.Fragment.MyClassFragment;
-import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
-import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
@@ -40,12 +23,11 @@ import butterknife.ButterKnife;
 public class LandingPageActivity extends BaseActivity {
 
 
+    public Fragment fragment = null;
     @Bind(R.id.dashboard_toolbar)
     Toolbar dashboardToolbar;
     @Bind(R.id.fragmentContainer)
     FrameLayout fragmentContainer;
-
-    public Fragment fragment = null;
     FragmentTransaction fragmentTransaction;
 
     @Override
@@ -59,7 +41,7 @@ public class LandingPageActivity extends BaseActivity {
 
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
-        studentAttdDatas.add(new StudentAttdData("Rohan Malik","10th","1","", Arrays.asList("1", "0", "1", "0", "1")));
+        studentAttdDatas.add(new StudentAttdData("Rohan Malik", "10th", "1", "", Arrays.asList("1", "0", "1", "0", "1")));
         studentAttdDatas.add(new StudentAttdData("Jaspreet Arora", "10th", "2", "", Arrays.asList("0", "0", "0", "0", "1")));
         studentAttdDatas.add(new StudentAttdData("Ravi Kumar", "10th", "3", "", Arrays.asList("1", "0", "1", "1", "1")));
         studentAttdDatas.add(new StudentAttdData("Salman Khan", "10th", "4", "", Arrays.asList("1", "0", "0", "0", "1")));

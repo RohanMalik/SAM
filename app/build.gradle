@@ -84,4 +84,5 @@ dependencies {
 
     //material
     compile 'com.github.rey5137:material:1.2.2'
+    compile 'com.kbeanie:image-chooser-library:1.5.2@aar'
 }

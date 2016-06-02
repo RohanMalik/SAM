@@ -1,35 +1,46 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
-import com.rey.material.widget.Button;
+import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.LoginRequestObject;
+import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.Session;
+import com.monkeybusiness.jaaar.objectClasses.loginResponseData.LoginResponse;
+import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.dialogBox.CommonDialog;
+import com.monkeybusiness.jaaar.utils.preferences.Prefs;
+import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.FloatingActionButton;
+
+import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Header;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class LoginActivity extends AppCompatActivity {
 
 
+    final String TAG = "LoginActivity.java";
     @Bind(R.id.input_email)
     EditText inputEmail;
     @Bind(R.id.input_password)
@@ -86,8 +97,16 @@ public class LoginActivity extends AppCompatActivity {
                 .beginConfig()
                 .withBorder(4) /* thickness in px */
                 .endConfig()
-                .buildRoundRect("", Color.WHITE,10);
+                .buildRoundRect("", Color.WHITE, 10);
 
+        String verifiedUser = Prefs.with(this).getString(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
+
+        if (verifiedUser.equalsIgnoreCase(Constants.VERIFIED))
+        {
+            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 //        linearLayoutMain.setBackgroundDrawable(drawable);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -99,9 +118,81 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-        startActivity(i);
-        finish();
+//        Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
+//        startActivity(i);
+//        finish();
+
+        ProgressDialog dialog = ProgressDialog.show(this, "Please wait", "Verifying...",true);
+
+        LoginRequestObject loginRequestObject = new LoginRequestObject();
+
+        Session session = new Session();
+        session.setUsername(inputEmail.getText().toString());
+
+        loginRequestObject.setSession(session);
+        loginRequestObject.setPassword(inputPassword.getText().toString());
+
+//        String ssn = "{\"session\":{\"username\":\"bytedreams\"},\"password\":\"bytedreams\"}";
+        Log.d(TAG, "JSON : " + new Gson().toJson(loginRequestObject));
+        String jsonObject = new Gson().toJson(loginRequestObject);
+
+        try {
+            TypedInput in = new TypedByteArray("application/json", jsonObject.getBytes("UTF-8"));
+            String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
+            String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+
+            RestClient.getApiServicePojo(xCookies,aCookies).apiCallLogin(in, new Callback<LoginResponse>() {
+                @Override
+                public void success(LoginResponse loginResponse, Response response) {
+                    Log.d(TAG, "Response : " + new Gson().toJson(loginResponse));
+                    dialog.dismiss();
+                    boolean isXcookies = true;
+                    for (Header header : response.getHeaders()) {
+                        if (header.getName().equalsIgnoreCase("set-cookie")) {
+                            if (isXcookies)
+                            {
+                                Prefs.with(getApplicationContext()).save(PrefsKeys.X_COOKIES, header.getValue().replaceAll("; path=/", ""));
+                                Log.e("Cookies", "==" + header.getValue().replaceAll("; path=/", ""));
+                                isXcookies = false;
+                            }
+                            else
+                            {
+                                Prefs.with(getApplicationContext()).save(PrefsKeys.A_COOKIES, header.getValue().replaceAll("; path=/; HttpOnly", ""));
+                                Log.e("Cookies", "==" + header.getValue().replaceAll("; path=/; HttpOnly", ""));
+                                break;
+                            }
+                        }
+                    }
+
+                    if (loginResponse!=null)
+                    {
+                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes"))
+                        {
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.VERIFIED);
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.LOGIN_RESPONSE_DATA,loginResponse);
+                            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            new CommonDialog(LoginActivity.this).Show(loginResponse.getResponseMetadata().getMessage());
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
+                        }
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    dialog.dismiss();
+                    Log.d(TAG, "Error : " + error.toString());
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
         // Log.d(TAG, "Login");
 
 //        if (!validate()) {

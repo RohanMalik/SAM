@@ -216,7 +216,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
 
         subjectDialog = new Dialog(this);
         subjectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        subjectDialog.setContentView(R.layout.dialog_custom_msg);
+        subjectDialog.setContentView(R.layout.dialog_custom_msg_test);
         autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
@@ -244,7 +244,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
 
         topicDialog = new Dialog(this);
         topicDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        topicDialog.setContentView(R.layout.dialog_custom_msg);
+        topicDialog.setContentView(R.layout.dialog_custom_msg_test);
         autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);

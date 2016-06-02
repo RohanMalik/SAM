@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMainStudent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <com.monkeybusiness.jaaar.Services.CircleImageView
+                    android:id="@+id/imageViewProfilePicStudent"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:src="@drawable/ic_tmp_usr_placeholder"
+                    app:border_color="@color/primary"
+                    app:border_overlay="true"
+                    app:border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/textViewNameStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Name : Rohan Malik"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/textViewClassStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Class : 10th A"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/textViewContactStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Contact No. : 1234567890"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/textViewEmailStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Email : rohan.malik@mail.com"
+                    android:textSize="20dp" />
+
+
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/buttonRemarksStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/primary"
+                    android:elevation="5dp"
+                    android:padding="12dp"
+                    android:text="Remarks"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    app:rd_enable="true"
+                    app:rd_rippleAnimDuration="500"
+                    app:rd_rippleColor="@color/primary_lighter" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBarStudent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -148,4 +148,9 @@
     <string name="wi_moon_waning_quarter">&#xf081;</string>
     <string name="wi_moon_waning_gibbous">&#xf082;</string>
     <string name="wi_night_partly_cloudy">&#xf083;</string>
+    <string name="crop__saving">Saving picture…</string>
+    <string name="crop__wait">Please wait…</string>
+    <string name="crop__pick_error">No image sources available</string>
+
+    <string name="crop__done">DONE</string>
 </resources>

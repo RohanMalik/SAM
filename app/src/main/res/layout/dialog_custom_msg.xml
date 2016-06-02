@@ -2,16 +2,24 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:splitMotionEvents="false">
+    android:splitMotionEvents="false"
+    >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
+        android:layout_height="75dp"
+        android:background="@color/theme_primary"
+        android:minHeight="150dp"
         android:splitMotionEvents="false">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shadow_down" />
 
         <LinearLayout
             android:id="@+id/rl1"
@@ -22,28 +30,23 @@
             android:orientation="vertical"
             android:splitMotionEvents="false">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteSubject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="20dp"
-                android:textColor="#fff"
-                android:textSize="18sp"
-                android:textColorHint="#fff"
-                android:hint="Enter Subject Name"/>
-
-            <Button
-                android:id="@+id/buttonCreateTest"
+            <TextView
+                android:id="@+id/textViewMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text=""
+                android:lineSpacingExtra="2dp"
                 android:textColor="#fff"
-                android:background="@color/blue_dark"
-                android:layout_marginBottom="10dp"
-                android:elevation="5dp"/>
+                android:textSize="15dp" />
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shadow_down" />
     </RelativeLayout>
 
 

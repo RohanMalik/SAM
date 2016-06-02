@@ -2,10 +2,6 @@ package com.monkeybusiness.jaaar.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,19 +9,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.DemoDataFlipImageViewer;
 import com.monkeybusiness.jaaar.objectClasses.Friend;
+import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.rey.material.widget.Button;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,15 +28,24 @@ import java.util.List;
  */
 public class FriendsActivity extends BaseActivity {
 
+    public final String TAG = "FriendsActivity";
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
+    TextDrawable drawableAbsent;
+
+    //    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return rootView;
+//    }
+    TextDrawable drawablePresent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        toggleLayouts(linearlayoutMyclass,textViewMyclass);
+        toggleLayouts(linearlayoutMyclass, textViewMyclass);
         Utils.classFlag = 2;
         final ListView friends = (ListView) findViewById(R.id.friends);
 
@@ -59,23 +63,15 @@ public class FriendsActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend f = (Friend) friends.getAdapter().getItem(position);
-
-                Toast.makeText(FriendsActivity.this, f.getNickname(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onItemClick : " + f.getNickname());
             }
         });
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return rootView;
-//    }
-
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;
@@ -85,7 +81,7 @@ public class FriendsActivity extends BaseActivity {
     class FriendsAdapter extends BaseFlipAdapter<Friend> {
 
         private final int PAGES = 3;
-        private int[] IDS_INTEREST = {R.id.interest_1, R.id.interest_2, R.id.interest_3, R.id.interest_4, R.id.interest_5,R.id.interest_6};
+//        private int[] IDS_INTEREST = {R.id.interest_1, R.id.interest_2, R.id.interest_3, R.id.interest_4, R.id.interest_5,R.id.interest_6};
 
         public FriendsAdapter(Context context, List<Friend> items, FlipSettings settings) {
             super(context, items, settings);
@@ -114,8 +110,11 @@ public class FriendsActivity extends BaseActivity {
                 holder.infoPage = getLayoutInflater().inflate(R.layout.friends_info, parent, false);
                 holder.nickName = (TextView) holder.infoPage.findViewById(R.id.nickname);
 
-                for (int id : IDS_INTEREST)
-                    holder.interests.add((ImageView) holder.infoPage.findViewById(id));
+//                for (int id : IDS_INTEREST)
+//                    holder.interests.add((ImageView) holder.infoPage.findViewById(id));
+
+                holder.buttonViewRemarks = (Button) holder.infoPage.findViewById(R.id.buttonViewRemarks);
+                holder.buttonViewProfile = (Button) holder.infoPage.findViewById(R.id.buttonViewProfile);
 
                 convertView.setTag(holder);
             } else {
@@ -145,17 +144,30 @@ public class FriendsActivity extends BaseActivity {
         private void fillHolder(FriendsHolder holder, Friend friend) {
             if (friend == null)
                 return;
-            Iterator<ImageView> iViews = holder.interests.iterator();
-            Iterator<String> iInterests = friend.getInterests().iterator();
-            while (iViews.hasNext() && iInterests.hasNext())
-                if (iInterests.next().equalsIgnoreCase("A"))
-                {
-                    iViews.next().setImageDrawable(drawableAbsent);
-                }else {
-                    iViews.next().setImageDrawable(drawablePresent);
-                }
+//            Iterator<ImageView> iViews = holder.interests.iterator();
+//            Iterator<String> iInterests = friend.getInterests().iterator();
+//            while (iViews.hasNext() && iInterests.hasNext())
+//                if (iInterests.next().equalsIgnoreCase("A"))
+//                {
+//                    iViews.next().setImageDrawable(drawableAbsent);
+//                }else {
+//                    iViews.next().setImageDrawable(drawablePresent);
+//                }
             holder.infoPage.setBackgroundColor(getResources().getColor(friend.getBackground()));
             holder.nickName.setText(friend.getNickname());
+            holder.buttonViewProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "View Profile : " + friend.getNickname());
+                }
+            });
+
+            holder.buttonViewRemarks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "View Remarks : " + friend.getNickname());
+                }
+            });
         }
 
         class FriendsHolder {
@@ -163,12 +175,12 @@ public class FriendsActivity extends BaseActivity {
             ImageView rightAvatar;
             View infoPage;
 
-            List<ImageView> interests = new ArrayList<>();
+            //            List<ImageView> interests = new ArrayList<>();
             TextView nickName;
+
+            Button buttonViewRemarks;
+            Button buttonViewProfile;
         }
     }
-
-    TextDrawable drawableAbsent;
-    TextDrawable drawablePresent;
 
 }
