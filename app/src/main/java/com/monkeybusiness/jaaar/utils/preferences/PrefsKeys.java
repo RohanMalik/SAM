@@ -17,6 +17,12 @@ public class PrefsKeys {
 
     public static final String CHECK_LOGIN_DATA = "checkLoginData";
 
+    public static final String LECTURE_RESPONSE_DATA = "lectureResponseData";
+
+    public static final String STUDENT_LIST_RESPONSE_DATA = "studentListResponseData";
+
+    public static final String STUDENT_DETAILS_RESPONSE_DATA = "studentDetailsResponseData";
+
     public static final String PROFILE_DATA = "profileData";
 
     public static final String LOCATION_FLAG = "locationFlag";

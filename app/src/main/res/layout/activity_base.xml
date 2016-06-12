@@ -139,7 +139,7 @@
                 android:id="@+id/textViewMyclass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Class"
+                android:text="My Lectures"
                 android:textSize="16sp"
 
                 android:textColor="#000"

@@ -8,12 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+//import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.Spinner;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -31,6 +34,8 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
+
+    Spinner spinner;
 
     boolean fromTo;
 
@@ -55,6 +60,15 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.example_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
         textViewActionTitle.setText("ADD EVENT");
 

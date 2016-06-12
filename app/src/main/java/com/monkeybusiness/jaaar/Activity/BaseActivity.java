@@ -115,7 +115,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 if (Utils.classFlag != 2) {
 
                     toggleLayouts(linearlayoutMyclass,textViewMyclass);
-                    Intent intent = new Intent(BaseActivity.this, FriendsActivity.class);
+                    Intent intent = new Intent(BaseActivity.this, MyLecturesActivity.class);
                     startActivity(intent);
                     finish();
 //                    overridePendingTransition(R.anim.slide_in_right,
@@ -129,7 +129,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 if (Utils.classFlag != 3) {
 
                     toggleLayouts(linearlayoutTest,textViewTest);
-                    Intent intent = new Intent(BaseActivity.this, TestListFragment.class);
+                    Intent intent = new Intent(BaseActivity.this, TestActivity.class);
                     startActivity(intent);
                     finish();
 //                    overridePendingTransition(R.anim.slide_in_right,

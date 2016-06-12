@@ -83,4 +83,6 @@
     <color name="theme_accent">#FFEB3B</color>
     <color name="theme_text_icons">#FFFFFF</color>
 
+    <color name="background_color_lecture">#EBEBEB</color>
+
 </resources>

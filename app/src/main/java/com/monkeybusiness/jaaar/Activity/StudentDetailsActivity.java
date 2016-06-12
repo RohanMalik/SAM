@@ -11,16 +11,19 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.kbeanie.imagechooser.exceptions.ChooserException;
-
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.Services.CircleImageView;
 import com.monkeybusiness.jaaar.cropImageUtils.Crop;
+import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
+import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -28,6 +31,10 @@ import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by rakesh on 4/2/16.
@@ -70,6 +77,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 //        toggleLayouts(linearlayoutDashboard, textViewDashboard);
 
         initialization();
+
+        Intent intent = getIntent();
+        int studentId = intent.getIntExtra(Constants.STUDENT_ID,0);
+
+        getStudentDetailsServerCall(studentId);
     }
 
     public void initialization() {
@@ -253,35 +265,24 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
     }
 
-//    private void dashBoardServerCall() {
-//
-//        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-//        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
-//
-//        RestClient.getApiServicePojo(xCookies,aCookies).apiCallCheckLogin(new Callback<CheckLoginResponse>() {
-//            @Override
-//            public void success(CheckLoginResponse checkLoginResponse, Response response) {
-//                Log.d(TAG,"Response : "+new Gson().toJson(checkLoginResponse));
-//
-//                if (checkLoginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes"))
-//                {
-//                    Prefs.with(StudentDetailsActivity.this).save(PrefsKeys.CHECK_LOGIN_DATA,checkLoginResponse);
-//                    setUIData();
-//                }
-//                else
-//                {
-//                    Intent intent = new Intent(StudentDetailsActivity.this,LoginActivity.class);
-//                    startActivity(intent);
-//                    Prefs.with(StudentDetailsActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
-//                    finish();
-//                }
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.d(TAG,"Response-err : "+error.toString());
-//            }
-//        });
-//    }
+
+    private void getStudentDetailsServerCall(int studentId) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+
+        RestClient.getApiServicePojo(xCookies,aCookies).apiCallGetStudentDetails(String.valueOf(studentId), new Callback<StudentsDetailsResponseData>() {
+            @Override
+            public void success(StudentsDetailsResponseData studentsDetailsResponseData, Response response) {
+                Log.d(TAG,"Response : "+new Gson().toJson(studentsDetailsResponseData));
+                Prefs.with(StudentDetailsActivity.this).save(PrefsKeys.STUDENT_DETAILS_RESPONSE_DATA,studentsDetailsResponseData);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG,"error : "+error.toString());
+            }
+        });
+    }
 
 }

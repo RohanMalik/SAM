@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.monkeybusiness.jaaar.Activity.AddEventActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_below="@+id/dashboard_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:theme="@style/TextLabel">
+                <AutoCompleteTextView android:id="@+id/input_event_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Event Name"
+                    android:textSize="25sp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:theme="@style/TextLabel">
+                <EditText android:id="@+id/input_event_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:textSize="20sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <com.rey.material.widget.Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sub_tab"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/right_arrow"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sub_tab"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:30 PM"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sub_tab"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/right_arrow"/>
+
+                <TextView
+                    android:id="@+id/textViewTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3:30 PM"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sub_tab"
+                    />
+
+            </LinearLayout>
+
+            <com.rey.material.widget.Button
+                android:id="@+id/buttonAddEvent"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="ADD EVENT"
+                android:layout_margin="16dp"
+                android:textSize="16sp"
+                android:background="@drawable/non_border_simple_button_corner"
+                android:elevation="5dp"
+                android:textColor="#fff"
+                app:rd_enable="true"
+                app:rd_rippleColor="@color/primary"/>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

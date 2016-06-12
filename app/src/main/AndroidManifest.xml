@@ -4,17 +4,14 @@
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -28,42 +25,34 @@
             android:name=".Activity.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark">
-
-        </activity>
-        <activity
-            android:name=".Activity.LandingPageActivity"
-            android:theme="@style/AppTheme" />
-        <!--<activity android:name=".Activity.DayViewActivity" />-->
-        <activity android:name=".Activity.AddEventActivity"></activity>
-        <activity
-            android:name=".Activity.BaseActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Fragment.AttendanceFragment"></activity>
-
-        <activity android:name=".Activity.DashboardActivity"></activity>
-
-        <activity android:name=".Fragment.FriendsActivity"></activity>
-        <activity android:name=".Fragment.TestListFragment"></activity>
-
-        <activity android:name=".Fragment.RemarksFragment"></activity>
-
-
-        <activity android:name=".Fragment.MyCalendarFragment"></activity>
-
-        <activity android:name=".Fragment.DayViewActivity"></activity>
-
-        <activity android:name=".Activity.StudentDetailsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".Activity.LandingPageActivity"
+            android:theme="@style/AppTheme" />
+        <!-- <activity android:name=".Activity.DayViewActivity" /> -->
+        <activity android:name=".Activity.AddEventActivity" />
+        <activity
+            android:name=".Activity.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Fragment.AttendanceFragment" />
+        <activity android:name=".Activity.DashboardActivity" />
+        <activity android:name=".Fragment.FriendsActivity" />
+        <activity android:name=".Fragment.TestListFragment" />
+        <activity android:name=".Fragment.RemarksFragment" />
+        <activity android:name=".Fragment.MyCalendarFragment" />
+        <activity android:name=".Fragment.DayViewActivity" />
+        <activity android:name=".Activity.StudentDetailsActivity"></activity>
         <activity
             android:name=".cropImageUtils.CropImageActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".Activity.TestActivity" />
+        <activity android:name=".Activity.MyLecturesActivity"></activity>
+        <activity android:name=".Activity.AddTestActivity"></activity>
     </application>
 
 </manifest>

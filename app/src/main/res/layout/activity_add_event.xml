@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context="com.monkeybusiness.jaaar.Activity.AddEventActivity"
     android:descendantFocusability="beforeDescendants"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.monkeybusiness.jaaar.Activity.AddEventActivity">
 
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <ScrollView
-        android:layout_below="@+id/dashboard_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/dashboard_toolbar"
         android:fillViewport="true">
 
         <LinearLayout
@@ -24,100 +24,149 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <com.rey.material.widget.Spinner
+                android:id="@+id/input_event_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:theme="@style/TextLabel">
-                <EditText android:id="@+id/input_event_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Event Name"
-                    android:textSize="25sp"/>
-            </android.support.design.widget.TextInputLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:outlineProvider="paddedBounds" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
                 android:theme="@style/TextLabel">
-                <EditText android:id="@+id/input_event_desc"
+
+                <EditText
+                    android:id="@+id/input_event_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"
                     android:textSize="20sp" />
             </android.support.design.widget.TextInputLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="24dp">
+                android:layout_marginLeft="24dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="From"
-                    android:textSize="18sp"
                     android:layout_gravity="center"
+                    android:text="Date"
+                    android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/right_arrow"
-                    android:visibility="invisible"/>
+                    android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/textViewDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="To"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="48dp"
                     android:layout_gravity="center"
+                    android:text="1 Jan 2016"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="30dp"
                     android:textColor="@color/sub_tab"
-                    />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewFrom"
+                    android:id="@+id/textViewMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3:30 PM"
-                    android:textSize="18sp"
                     android:layout_gravity="center"
+                    android:text="Max Marks "
+                    android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    />
+                    android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/right_arrow"/>
+                <EditText
+                    android:id="@+id/editTextMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="Enter Marks"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/sub_tab"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textViewTo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3:30 PM"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="16dp"
                     android:layout_gravity="center"
+                    android:text="Min Marks "
+                    android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    />
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="Enter Marks"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/sub_tab"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Duration"
+                    android:layout_weight="1"
+                    android:textColor="@color/sub_tab"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editTextDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Duration"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/sub_tab"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -125,14 +174,14 @@
                 android:id="@+id/buttonAddEvent"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="ADD EVENT"
                 android:layout_margin="16dp"
-                android:textSize="16sp"
                 android:background="@drawable/non_border_simple_button_corner"
                 android:elevation="5dp"
+                android:text="CREATE TEST"
                 android:textColor="#fff"
+                android:textSize="16sp"
                 app:rd_enable="true"
-                app:rd_rippleColor="@color/primary"/>
+                app:rd_rippleColor="@color/primary" />
         </LinearLayout>
 
     </ScrollView>

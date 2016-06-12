@@ -153,4 +153,10 @@
     <string name="crop__pick_error">No image sources available</string>
 
     <string name="crop__done">DONE</string>
+
+    <string-array name="example_array">
+        <item>Personal</item>
+        <item>Class</item>
+        <item>Lecture</item>
+    </string-array>
 </resources>

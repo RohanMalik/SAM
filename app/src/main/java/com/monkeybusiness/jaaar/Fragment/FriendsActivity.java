@@ -1,6 +1,7 @@
 package com.monkeybusiness.jaaar.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
+import com.monkeybusiness.jaaar.Activity.StudentDetailsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.DemoDataFlipImageViewer;
 import com.monkeybusiness.jaaar.objectClasses.Friend;
+import com.monkeybusiness.jaaar.objectClasses.studentsResponse.StudentsListResponseData;
+import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.preferences.Prefs;
+import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
 
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * @author Yalantis
@@ -57,13 +69,26 @@ public class FriendsActivity extends BaseActivity {
 
         textViewActionTitle.setText("My Class");
 
+        Intent intent = getIntent();
+        int lectureId = intent.getIntExtra(Constants.LECTURE_ID,0);
+
+        getStudentListServerCall(lectureId);
+
         FlipSettings settings = new FlipSettings.Builder().defaultPage(1).build();
         friends.setAdapter(new FriendsAdapter(this, DemoDataFlipImageViewer.friends, settings));
         friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend f = (Friend) friends.getAdapter().getItem(position);
-                Log.d(TAG, "onItemClick : " + f.getNickname());
+
+                StudentsListResponseData studentsListResponseData = Prefs.with(FriendsActivity.this).getObject(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,StudentsListResponseData.class);
+
+                if (studentsListResponseData!=null)
+                {
+                    Intent intent = new Intent(FriendsActivity.this, StudentDetailsActivity.class);
+                    intent.putExtra(Constants.STUDENT_ID,studentsListResponseData.getData().getStudents().get(0).getId());
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -181,6 +206,26 @@ public class FriendsActivity extends BaseActivity {
             Button buttonViewRemarks;
             Button buttonViewProfile;
         }
+    }
+
+    public void getStudentListServerCall(int gradeId) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudents(String.valueOf(gradeId), new Callback<StudentsListResponseData>() {
+
+            @Override
+            public void success(StudentsListResponseData studentsListResponseData, Response response) {
+                Log.d("LectureAdapter", "Response : " + new Gson().toJson(studentsListResponseData));
+                Prefs.with(FriendsActivity.this).save(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,studentsListResponseData);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("LectureAdapter", "error : " + error.toString());
+            }
+        });
     }
 
 }
