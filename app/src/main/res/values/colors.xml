@@ -85,4 +85,9 @@
 
     <color name="background_color_lecture">#EBEBEB</color>
 
+
+    <color name="personal_event_color">#2196F3</color>
+    <color name="batch_event_color">#00BCD4</color>
+    <color name="lecture_event_color">#4CAF50</color>
+
 </resources>

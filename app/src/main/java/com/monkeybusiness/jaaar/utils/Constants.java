@@ -15,4 +15,8 @@ public class Constants {
     public static final String PENDING_TEST = "save";
     public static final String COMPLETED_TEST = "submit";
 
+    public static final String PERSONAL = "personal";
+    public static final String BATCH = "batch";
+    public static final String LECTURE = "lecture";
+
 }

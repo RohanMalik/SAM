@@ -1,8 +1,10 @@
 package com.monkeybusiness.jaaar.retrofit;
 
 
+import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
+import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
@@ -59,4 +61,10 @@ public interface ApiService {
 
     @GET("/search/students")
     void apiCallSearchStudent(@Query("search_text") String searchText,Callback<SearchStudentData> callback);
+
+    @GET("/events")
+    void apiCallGetEvents(@Query("from_time") String fromTime,@Query("to_time") String toTime,Callback<EventResponseData> callback);
+
+    @POST("/events")
+    void apiCallPostEvent(@Body TypedInput eventPostObject,Callback<AddEventResponseData> callback);
 }
