@@ -1,10 +1,13 @@
 package com.monkeybusiness.jaaar.retrofit;
 
 
+import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
+import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.objectClasses.loginResponseData.LoginResponse;
+import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.SearchStudentData;
 import com.monkeybusiness.jaaar.objectClasses.studentsResponse.StudentsListResponseData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.TestListResponse;
 
@@ -49,5 +52,11 @@ public interface ApiService {
     void apiCallTestList(Callback<TestListResponse> callback);
 
     @POST("/lectures/{lecture_id}/tests")
-    void apiCallPostTest(@Path("lecture_id") String lectureId,@Body TypedInput testPostObject, Callback<String> callback);
+    void apiCallPostTest(@Path("lecture_id") String lectureId,@Body TypedInput testPostObject, Callback<AddTestResponse> callback);
+
+    @POST("/remarks")
+    void apiCallSendRemarks(@Body TypedInput remarksPostObject, Callback<AddRemarksResponseData> callback);
+
+    @GET("/search/students")
+    void apiCallSearchStudent(@Query("search_text") String searchText,Callback<SearchStudentData> callback);
 }

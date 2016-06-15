@@ -104,7 +104,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
         fabAddTest = (FloatingActionButton) findViewById(R.id.fabAddTest);
         listViewTest = (ListView) findViewById(R.id.listViewTest);
 
-        testListAdapter = new TestListAdapter(this,testDatas);
+//        testListAdapter = new TestListAdapter(this,testDatas);
 
         listViewTest.setAdapter(testListAdapter);
 

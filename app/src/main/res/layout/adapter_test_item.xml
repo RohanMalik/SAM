@@ -16,18 +16,6 @@
             android:text="Chemistry"
             android:textSize="20dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" - "
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/subjectName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chemistry"
-            android:textSize="20dp"/>
     </LinearLayout>
 
 
@@ -41,14 +29,13 @@
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01 Jan 2016"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:text="8:30 AM"/>
+            android:text=""/>
 
 
     </LinearLayout>

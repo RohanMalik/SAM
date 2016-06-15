@@ -10,4 +10,9 @@ public class Constants {
 
     public static final String LECTURE_ID = "lectureId";
     public static final String STUDENT_ID = "studentId";
+
+    public static final String UPCOMING = "new";
+    public static final String PENDING_TEST = "save";
+    public static final String COMPLETED_TEST = "submit";
+
 }

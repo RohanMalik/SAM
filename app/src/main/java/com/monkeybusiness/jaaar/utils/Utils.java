@@ -3,7 +3,9 @@ package com.monkeybusiness.jaaar.utils;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
+import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
 import java.util.ArrayList;
@@ -43,5 +45,18 @@ public class Utils {
             }
         }
         return stringArrayList;
+    }
+
+    public static void failureDialog(Context context,String title,String msg) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle(title);
+        alert.setMessage(msg);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alert.show();
+
     }
 }

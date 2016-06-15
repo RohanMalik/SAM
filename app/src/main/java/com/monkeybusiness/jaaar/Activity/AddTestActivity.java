@@ -1,11 +1,15 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,10 +17,13 @@ import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.AddTestObject.AddTestObject;
 import com.monkeybusiness.jaaar.objectClasses.AddTestObject.Test;
+import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.Lecture;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
+import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
@@ -26,6 +33,7 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +46,7 @@ import retrofit.mime.TypedInput;
 
 //import android.widget.Spinner;
 
-public class AddTestActivity extends BaseActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
+public class AddTestActivity extends BaseActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = "AddTestActivity";
     Spinner input_event_name;
@@ -51,6 +59,10 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
 
+    EditText editTextMax;
+    EditText editTextMin;
+    EditText editTextDuration;
+
     boolean fromTo;
 
     LectureResponseData lectureResponseData;
@@ -62,20 +74,16 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         initialization();
 
-        lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA,LectureResponseData.class);
+        lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA, LectureResponseData.class);
 
-        if (lectureResponseData != null)
-        {
+        if (lectureResponseData != null) {
             setUiData();
-        }
-        else
-        {
+        } else {
             lectureServerCall();
         }
     }
 
-    public void initialization()
-    {
+    public void initialization() {
 
         input_event_name = (Spinner) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
@@ -88,7 +96,13 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
-        textViewActionTitle.setText("ADD EVENT");
+        editTextMax = (EditText) findViewById(R.id.editTextMax);
+        editTextMin = (EditText) findViewById(R.id.editTextMin);
+        ;
+        editTextDuration = (EditText) findViewById(R.id.editTextDuration);
+        ;
+
+        textViewActionTitle.setText("ADD TEST");
 
         relativeLayoutMenu.setOnClickListener(this);
         textViewActionTitle.setOnClickListener(this);
@@ -98,13 +112,11 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    public void setUiData()
-    {
-        lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA,LectureResponseData.class);
+    public void setUiData() {
+        lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA, LectureResponseData.class);
 
         ArrayList<String> lectureList = new ArrayList<>();
-        for (Lecture lecture : lectureResponseData.getData().getLectures())
-        {
+        for (Lecture lecture : lectureResponseData.getData().getLectures()) {
             lectureList.add(lecture.getLectureName());
         }
 
@@ -120,16 +132,15 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.textViewDate:
                 showDateDialog();
-                 break;
+                break;
             case android.R.id.home:
                 super.onBackPressed();
                 break;
             case R.id.buttonAddEvent:
-                Log.d(TAG,"List Selection : "+input_event_name.getSelectedItem());
+                Log.d(TAG, "List Selection : " + input_event_name.getSelectedItem());
                 addTestServerCall();
                 break;
             case R.id.relativeLayoutMenu:
@@ -138,8 +149,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    public void showTimeDialog()
-    {
+    public void showTimeDialog() {
         Calendar now = Calendar.getInstance();
         TimePickerDialog tpd = TimePickerDialog.newInstance(
                 AddTestActivity.this,
@@ -150,11 +160,10 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
 
-    public void showDateDialog()
-    {
+    public void showDateDialog() {
         Calendar now = Calendar.getInstance();
 
-        DatePickerDialog dpd = DatePickerDialog.newInstance(AddTestActivity.this,now.get(Calendar.YEAR),
+        DatePickerDialog dpd = DatePickerDialog.newInstance(AddTestActivity.this, now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH));
 
@@ -167,16 +176,17 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
 
-        Log.d("AddEvnt","h: "+hourOfDay+" m: "+minute+"h1: "+hourOfDay);
+        Log.d("AddEvnt", "h: " + hourOfDay + " m: " + minute + "h1: " + hourOfDay);
 
         date.setHours(hourOfDay);
         date.setMinutes(minute);
+
+        setDateToTextView();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 super.onBackPressed();
                 break;
@@ -184,81 +194,105 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
-    public void lectureServerCall()
-    {
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+    public void lectureServerCall() {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        RestClient.getApiServicePojo(xCookies,aCookies).apiCallLectures(new Callback<LectureResponseData>() {
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallLectures(new Callback<LectureResponseData>() {
             @Override
             public void success(LectureResponseData lectureResponseData, Response response) {
-                com.monkeybusiness.jaaar.utils.Log.d(TAG,"Response : "+new Gson().toJson(lectureResponseData));
-                Prefs.with(AddTestActivity.this).save(PrefsKeys.LECTURE_RESPONSE_DATA,lectureResponseData);
+                com.monkeybusiness.jaaar.utils.Log.d(TAG, "Response : " + new Gson().toJson(lectureResponseData));
+                Prefs.with(AddTestActivity.this).save(PrefsKeys.LECTURE_RESPONSE_DATA, lectureResponseData);
                 setUiData();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                com.monkeybusiness.jaaar.utils.Log.d(TAG,"error : ");
+                com.monkeybusiness.jaaar.utils.Log.d(TAG, "error : ");
             }
         });
     }
 
-    public void addTestServerCall()
-    {
+    public void addTestServerCall() {
+
+
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(date.getYear(),date.getMonth(),date.getDate(),date.getHours(),date.getMinutes());
+        if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date")) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
 
-        String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId()+"";
-        String testDate = ISO8601.fromCalendar(calendar);
-        String testName = input_event_name.getSelectedItem().toString();
-        String desc = input_event_desc.getText().toString();
-        String maxMarks = "100";
-        String minMarks = "35";
-        String duration = "60";
+            String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId() + "";
+            String testDate = ISO8601.fromCalendar(calendar);
+            String testName = input_event_name.getSelectedItem().toString();
+            String desc = input_event_desc.getText().toString();
+            String maxMarks = editTextMax.getText().toString();
+            String minMarks = editTextMin.getText().toString();
+            String duration = editTextDuration.getText().toString();
 
-        Log.d(TAG,"Actual : "+new Gson().toJson(date)+"   testDate : "+ testDate);
+            Log.d(TAG, "Actual : " + new Gson().toJson(date) + "   testDate : " + testDate);
 
-        AddTestObject addTestObject = new AddTestObject();
+            AddTestObject addTestObject = new AddTestObject();
 
 
-        Test test = new Test();
+            Test test = new Test();
 
-        test.setDescription(desc);
-        test.setDurationMinutes(duration);
-        test.setMaxMarks(maxMarks);
-        test.setMinMarks(minMarks);
-        test.setTestDate(testDate);
-        test.setTestName(testName);
+            test.setDescription(desc);
+            test.setDurationMinutes(duration);
+            test.setMaxMarks(maxMarks);
+            test.setMinMarks(minMarks);
+            test.setTestDate(testDate);
+            test.setTestName(testName);
 
-        addTestObject.setTest(test);
+            addTestObject.setTest(test);
 
-        String addTestJson = new Gson().toJson(addTestObject);
+            String addTestJson = new Gson().toJson(addTestObject);
 
-        Log.d(TAG,"AddTest : "+addTestJson);
+            Log.d(TAG, "AddTest : " + addTestJson);
 
-        try {
-            TypedInput typedInput = new TypedByteArray("application/json",addTestJson.getBytes("UTF-8"));
+            ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Adding Test...", false);
 
-            RestClient.getApiService(xCookies,aCookies).apiCallPostTest(lectureId, typedInput, new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    Log.d(TAG,"Response : "+s);
-                }
+            try {
+                TypedInput typedInput = new TypedByteArray("application/json", addTestJson.getBytes("UTF-8"));
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Log.d(TAG,"error : "+error.toString());
-                }
-            });
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+                RestClient.getApiServicePojo(xCookies, aCookies).apiCallPostTest(lectureId, typedInput, new Callback<AddTestResponse>() {
+                    @Override
+                    public void success(AddTestResponse addTestResponse, Response response) {
+                        Log.d(TAG, "Response : " + new Gson().toJson(addTestResponse));
+
+                        progressDialog.dismiss();
+                        if (addTestResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(AddTestActivity.this);
+                            alert.setTitle("Test Added");
+                            alert.setMessage("You Have successfully created test.");
+                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            alert.show();
+                        } else {
+                            Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "error : " + error.toString());
+                        Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Utils.failureDialog(this,"Warning","Please select date");
         }
-
     }
+
+
 
     int month;
     int year;
@@ -267,7 +301,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-        Log.d(TAG,"Date : "+year+": "+monthOfYear+":"+dayOfMonth);
+        Log.d(TAG, "Date : " + year + ": " + monthOfYear + ":" + dayOfMonth);
         month = monthOfYear;
         this.year = year;
         day = dayOfMonth;
@@ -278,5 +312,21 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         date.setMonth(monthOfYear);
 
         showTimeDialog();
+    }
+
+    public void setDateToTextView() {
+        Log.d(TAG, "Date : " + date.toString());
+
+        Date formatDate = new Date();
+        formatDate.setDate(date.getDate());
+        formatDate.setMonth(date.getMonth());
+        formatDate.setYear(date.getYear() - 1900);
+
+        formatDate.setHours(date.getHours());
+        formatDate.setMinutes(date.getMinutes());
+
+        SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+
+        textViewDate.setText(format.format(formatDate));
     }
 }

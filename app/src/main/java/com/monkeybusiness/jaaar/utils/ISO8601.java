@@ -30,7 +30,7 @@ public final class ISO8601 {
         } catch (IndexOutOfBoundsException e) {
             throw new ParseException("Invalid length", 0);
         }
-        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(s);
+        Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.mmZ").parse(s);
         calendar.setTime(date);
         return calendar;
     }

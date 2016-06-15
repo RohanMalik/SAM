@@ -19,10 +19,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.AddTestActivity;
 import com.monkeybusiness.jaaar.Adapter.TestListAdapter;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.interfaces.TestFragmentListner;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
+import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.rey.material.widget.FloatingActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -37,8 +40,9 @@ import java.util.List;
 /**
  * Created by rakesh on 2/6/16.
  */
-public class UpcomingTest extends Fragment implements View.OnClickListener,DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class UpcomingTest extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, TestFragmentListner {
 
+    private static final String TAG = "UpcomingTest";
     String title;
     int pageNo;
 
@@ -106,7 +110,7 @@ public class UpcomingTest extends Fragment implements View.OnClickListener,DateP
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabAddTest:
-                Intent intent = new Intent(getContext(),AddTestActivity.class);
+                Intent intent = new Intent(getContext(), AddTestActivity.class);
                 startActivity(intent);
                 break;
             case R.id.buttonCreateTest:
@@ -219,14 +223,26 @@ public class UpcomingTest extends Fragment implements View.OnClickListener,DateP
         mDate.set(year, monthOfYear, dayOfMonth);
         date = dateFormat.format(mDate.getTime());
 
-        Log.d("TestListFrag","DateSet : "+date);
+        Log.d("TestListFrag", "DateSet : " + date);
         showTimeDialog();
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        time = hourOfDay+":"+minute;
-        Log.d("TestListFrag","timeSet");
+        time = hourOfDay + ":" + minute;
+        Log.d("TestListFrag", "timeSet");
         showSubjectDialog();
+    }
+
+    @Override
+    public void onResumeFragment(Context context, List<Test> tests) {
+        Log.d(TAG, "OnResumeFragment context : " + context);
+
+        for (Test test : tests) {
+            Log.d(TAG, "Test : " + new Gson().toJson(test));
+        }
+
+        testListAdapter = new TestListAdapter(context, tests);
+        listViewTest.setAdapter(testListAdapter);
     }
 }
