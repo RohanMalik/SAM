@@ -8,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.agendacalendarview.utils.Utils;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.monkeybusiness.jaaar.utils.ISO8601;
+import com.monkeybusiness.jaaar.utils.Utils;
 
 import java.text.ParseException;
 import java.util.List;
@@ -25,8 +25,7 @@ public class TestListAdapter extends BaseAdapter {
     LayoutInflater inflater;
     List<Test> testDatas;
 
-    public TestListAdapter(Context context,List<Test> testDatas)
-    {
+    public TestListAdapter(Context context, List<Test> testDatas) {
         this.context = context;
         this.testDatas = testDatas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,9 +52,8 @@ public class TestListAdapter extends BaseAdapter {
         View view = convertView;
         ViewHolder viewHolder;
 
-        if (view==null)
-        {
-            view = inflater.inflate(R.layout.adapter_test_item,parent,false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.adapter_test_item, parent, false);
             viewHolder = new ViewHolder();
 //            viewHolder.subjectName = (TextView) view.findViewById(R.id.subjectName);
 //            viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);
@@ -63,28 +61,20 @@ public class TestListAdapter extends BaseAdapter {
             viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
 
             view.setTag(viewHolder);
-        }
-        else
-        {
+        } else {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        try {
-            viewHolder.textViewTime.setText(ISO8601.toCalendar(testDatas.get(position).getTestDate()).getTime().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
+        viewHolder.textViewTime.setText(Utils.formatDateAndTime(testDatas.get(position).getTestDate()));
 //        viewHolder.textViewDate.setText(testDatas.get(position).getDate());
         viewHolder.topicName.setText(testDatas.get(position).getTestName());
 
         return view;
     }
 
-    public class ViewHolder
-    {
+    public class ViewHolder {
         TextView subjectName;
-//        TextView textViewDate;
+        //        TextView textViewDate;
         TextView textViewTime;
         TextView topicName;
     }

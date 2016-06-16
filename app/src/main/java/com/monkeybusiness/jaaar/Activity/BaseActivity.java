@@ -16,7 +16,10 @@ import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
 import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.preferences.Prefs;
+import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.RippleManager;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -167,6 +170,11 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     toggle();
                 }
                 break;
+            case R.id.linearlayoutNotification:
+                Prefs.with(this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
+                Intent intent = new Intent(this,LoginActivity.class);
+                startActivity(intent);
+                finish();
 //            case R.id.linearLayoutContactUsMenu:
 //
 //                updateUI(6);

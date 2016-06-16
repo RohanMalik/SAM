@@ -245,14 +245,14 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/notification_icon"
+                android:background="@drawable/sign_out"
                 />
 
             <TextView
                 android:id="@+id/textViewNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notifications"
+                android:text="Sign Out"
                 android:textSize="16sp"
                 android:textColor="#000"
                 android:textStyle="bold"

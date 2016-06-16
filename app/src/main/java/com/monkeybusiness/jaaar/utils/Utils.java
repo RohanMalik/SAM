@@ -8,7 +8,13 @@ import android.content.pm.PackageInfo;
 import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
+import com.google.gson.Gson;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -57,6 +63,31 @@ public class Utils {
             }
         });
         alert.show();
+    }
 
+    public static String formatDateAndTime(String isoDate)
+    {
+        try {
+            Calendar calendar = ISO8601.toCalendar(isoDate);
+//            Log.d("calendar","calendar : "+new Gson().toJson(calendar));
+
+            Date date = new Date();
+            date.setYear(calendar.get(Calendar.YEAR)-1900);
+            date.setMonth(calendar.get(Calendar.MONTH));
+            date.setDate(calendar.get(Calendar.DAY_OF_MONTH));
+            date.setHours(calendar.get(Calendar.HOUR_OF_DAY));
+            date.setMinutes(calendar.get(Calendar.MINUTE));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm, EEE dd MMM yyyy");
+//            Log.d("calendar","date : "+dateFormat.format(date));
+
+            String dateAndTime = dateFormat.format(date);
+
+            return dateAndTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

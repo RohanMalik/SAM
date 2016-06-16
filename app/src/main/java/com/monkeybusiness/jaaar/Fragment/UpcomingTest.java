@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.TestFragmentListner;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.rey.material.widget.FloatingActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -244,5 +246,19 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
 
         testListAdapter = new TestListAdapter(context, tests);
         listViewTest.setAdapter(testListAdapter);
+        listViewTest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                com.monkeybusiness.jaaar.utils.Log.d(TAG,"position ; "+position);
+                Intent intent = new Intent(context,AddTestActivity.class);
+                intent.putExtra(Constants.TEST_ID,tests.get(position).getId());
+                intent.putExtra(Constants.LECTURE_ID,tests.get(position).getLecture().getLectureName());
+                intent.putExtra(Constants.DATE,tests.get(position).getTestDate());
+                intent.putExtra(Constants.MIN_MARKS,tests.get(position).getMinMarks());
+                intent.putExtra(Constants.MAX_MARKS,tests.get(position).getMaxMarks());
+                intent.putExtra(Constants.DURATION,tests.get(position).getDurationMinutes());
+                startActivity(intent);
+            }
+        });
     }
 }

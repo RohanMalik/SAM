@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -67,6 +68,8 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
     LectureResponseData lectureResponseData;
 
+    Intent intent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +79,14 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA, LectureResponseData.class);
 
+        intent = getIntent();
         if (lectureResponseData != null) {
             setUiData();
+            lectureServerCall();
         } else {
             lectureServerCall();
         }
+
     }
 
     public void initialization() {
@@ -120,13 +126,28 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             lectureList.add(lecture.getLectureName());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, lectureList);
+        if (!lectureList.isEmpty())
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, lectureList);
 // Specify the layout to use when the list of choices appears
 //        adapter.setDropDownViewResource(android.R.layout.expandable_list_content);
 // Apply the adapter to the spinner
-        input_event_name.setAdapter(adapter);
+            input_event_name.setAdapter(adapter);
+        }
 
+        if (intent!=null)
+        {
+            String lectureName = intent.getStringExtra(Constants.LECTURE_ID);
+
+            int pos = lectureList.indexOf(lectureName);
+            input_event_name.setSelection(pos);
+
+            textViewDate.setText(Utils.formatDateAndTime(intent.getStringExtra(Constants.DATE)));
+            editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS,0)+"");
+            editTextMax.setText(intent.getIntExtra(Constants.MAX_MARKS,0)+"");
+            editTextDuration.setText(intent.getIntExtra(Constants.DURATION,0)+"");
+        }
     }
 
     @Override
@@ -141,12 +162,101 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.buttonAddEvent:
                 Log.d(TAG, "List Selection : " + input_event_name.getSelectedItem());
-                addTestServerCall();
+                if (intent!=null)
+                {
+                    updateTestServerCall();
+                }
+                else
+                {
+                    addTestServerCall();
+                }
                 break;
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;
         }
+    }
+
+    private void updateTestServerCall() {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date")) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
+
+            String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId() + "";
+            String testDate = ISO8601.fromCalendar(calendar);
+            String testName = input_event_name.getSelectedItem().toString();
+            String desc = input_event_desc.getText().toString();
+            String maxMarks = editTextMax.getText().toString();
+            String minMarks = editTextMin.getText().toString();
+            String duration = editTextDuration.getText().toString();
+
+            Log.d(TAG, "Actual : " + new Gson().toJson(date) + "   testDate : " + testDate);
+
+            AddTestObject addTestObject = new AddTestObject();
+
+
+            Test test = new Test();
+
+            test.setDescription(desc);
+            test.setDurationMinutes(duration);
+            test.setMaxMarks(maxMarks);
+            test.setMinMarks(minMarks);
+            test.setTestDate(testDate);
+            test.setTestName(testName);
+
+            addTestObject.setTest(test);
+
+            String addTestJson = new Gson().toJson(addTestObject);
+
+            Log.d(TAG, "AddTest : " + addTestJson);
+
+            int testId = intent.getIntExtra(Constants.TEST_ID,0);
+
+            ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Adding Test...", false);
+
+            try {
+                TypedInput typedInput = new TypedByteArray("application/json", addTestJson.getBytes("UTF-8"));
+
+                RestClient.getApiServicePojo(xCookies, aCookies).apiCallPutTest(lectureId,String.valueOf(testId), typedInput, new Callback<AddTestResponse>() {
+                    @Override
+                    public void success(AddTestResponse addTestResponse, Response response) {
+                        Log.d(TAG, "Response : " + new Gson().toJson(addTestResponse));
+
+                        progressDialog.dismiss();
+                        if (addTestResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(AddTestActivity.this);
+                            alert.setTitle("Test Added");
+                            alert.setMessage("You Have successfully created test.");
+                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            alert.show();
+                        } else {
+                            Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "error : " + error.toString());
+                        progressDialog.dismiss();
+                        Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Utils.failureDialog(this,"Warning","Please select date");
+        }
+
     }
 
     public void showTimeDialog() {
@@ -325,7 +435,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         formatDate.setHours(date.getHours());
         formatDate.setMinutes(date.getMinutes());
 
-        SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
 
         textViewDate.setText(format.format(formatDate));
     }

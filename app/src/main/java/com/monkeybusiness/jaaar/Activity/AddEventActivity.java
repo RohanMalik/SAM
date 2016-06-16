@@ -167,25 +167,32 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
         if (fromTo)
         {
+
             startDate = new Date();
-            startDate.setYear(year);
+            startDate.setYear(year-1900);
             startDate.setMonth(monthOfYear);
             startDate.setDate(dayOfMonth);
 
             startDate.setHours(hourOfDay);
             startDate.setMinutes(minute);
-            textViewFrom.setText(startDate.toString());
+
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
+
+            textViewFrom.setText(format.format(startDate));
         }
         else
         {
             endDate = new Date();
-            endDate.setYear(year);
+            endDate.setYear(year-1900);
             endDate.setMonth(monthOfYear);
             endDate.setDate(dayOfMonth);
 
             endDate.setHours(hourOfDay);
             endDate.setMinutes(minute);
-            textViewTo.setText(endDate.toString());
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
+
+            textViewTo.setText(format.format(endDate));
+
         }
     }
 

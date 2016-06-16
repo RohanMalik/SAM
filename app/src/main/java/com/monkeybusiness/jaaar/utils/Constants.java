@@ -20,4 +20,10 @@ public class Constants {
     public static final String BATCH = "batch";
     public static final String LECTURE = "lecture";
 
+    public static final String TEST_ID = "testId";
+    public static final String DATE = "date";
+    public static final String MIN_MARKS = "minMarks";
+    public static final String MAX_MARKS = "maxMarks";
+    public static final String DURATION = "duration";
+
 }

@@ -18,6 +18,7 @@ import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.mime.TypedInput;
@@ -74,4 +75,7 @@ public interface ApiService {
 
     @GET("/batches/{batch_id}/student_attendances")
     void apiCallGetAttendanceDetail(@Path("batch_id") String batchId, @Query("group_by") String groupBy,@Query("page") String page,@Query("limit") String limit,Callback<String> callback);
+
+    @PUT("/lectures/{lecture_id}/tests/{test_id}")
+    void apiCallPutTest(@Path("lecture_id") String lectureId,@Path("test_id") String testId,@Body TypedInput testPostObject, Callback<AddTestResponse> callback);
 }

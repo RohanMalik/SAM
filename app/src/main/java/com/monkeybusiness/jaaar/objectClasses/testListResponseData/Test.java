@@ -37,7 +37,7 @@ public class Test {
     private String testStatus;
     @SerializedName("duration_minutes")
     @Expose
-    private Object durationMinutes;
+    private int durationMinutes;
     @SerializedName("school_id")
     @Expose
     private int schoolId;
@@ -188,14 +188,14 @@ public class Test {
     /**
      * @return The durationMinutes
      */
-    public Object getDurationMinutes() {
+    public int getDurationMinutes() {
         return durationMinutes;
     }
 
     /**
      * @param durationMinutes The duration_minutes
      */
-    public void setDurationMinutes(Object durationMinutes) {
+    public void setDurationMinutes(int durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
 

@@ -121,8 +121,8 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
                     public void onDaySelected(DayItem dayItem) {
 
                         Log.d("MyCalendar", "day " + dayItem.getDate() + " value " + dayItem.getValue() + " " + dayItem.getMonth());
-                        Intent dayViewIntent = new Intent(getApplicationContext(), DayViewActivity.class);
-                        startActivity(dayViewIntent);
+//                        Intent dayViewIntent = new Intent(getApplicationContext(), DayViewActivity.class);
+//                        startActivity(dayViewIntent);
 
 // /                ((LandingPageActivity) getActivity()).getSupportActionBar().setTitle("My Attendance");
 //                FragmentTransaction fragmentTransaction = ((LandingPageActivity) getActivity()).getSupportFragmentManager().beginTransaction();
