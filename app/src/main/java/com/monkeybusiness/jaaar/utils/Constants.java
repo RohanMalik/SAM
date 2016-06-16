@@ -9,6 +9,7 @@ public class Constants {
     public static final String VERIFIED = "1";
 
     public static final String LECTURE_ID = "lectureId";
+    public static final String BATCH_ID = "batchId";
     public static final String STUDENT_ID = "studentId";
 
     public static final String UPCOMING = "new";

@@ -46,13 +46,15 @@
         <activity android:name=".Fragment.RemarksFragment" />
         <activity android:name=".Fragment.MyCalendarFragment" />
         <activity android:name=".Fragment.DayViewActivity" />
-        <activity android:name=".Activity.StudentDetailsActivity"></activity>
+        <activity android:name=".Activity.StudentDetailsActivity" />
         <activity
             android:name=".cropImageUtils.CropImageActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.TestActivity" />
-        <activity android:name=".Activity.MyLecturesActivity"></activity>
-        <activity android:name=".Activity.AddTestActivity"></activity>
+        <activity android:name=".Activity.MyLecturesActivity" />
+        <activity android:name=".Activity.AddTestActivity" />
+        <activity android:name=".Activity.MyBatchesActivity" />
+        <activity android:name=".Activity.AttendanceDetailsActivity"></activity>
     </application>
 
 </manifest>

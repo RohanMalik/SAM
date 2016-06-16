@@ -111,7 +111,7 @@ public class PendingTestFragment extends Fragment implements TestFragmentListner
                 Intent intent = new Intent(getContext(), AddTestActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.buttonCreateTest:
+//            case R.id.buttonCreateTest:
 //                if (nextButton) {
 //                    subject = autoCompleteTextView.getText().toString();
 //                    if (subject.isEmpty()) {
@@ -132,7 +132,7 @@ public class PendingTestFragment extends Fragment implements TestFragmentListner
 //                        topicDialog.dismiss();
 //                    }
 //                }
-                break;
+//                break;
         }
     }
 }

@@ -18,6 +18,8 @@ import com.monkeybusiness.jaaar.Activity.StudentDetailsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.DemoDataFlipImageViewer;
 import com.monkeybusiness.jaaar.objectClasses.Friend;
+import com.monkeybusiness.jaaar.objectClasses.batchesData.Students;
+import com.monkeybusiness.jaaar.objectClasses.studentsResponse.Student;
 import com.monkeybusiness.jaaar.objectClasses.studentsResponse.StudentsListResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
@@ -52,6 +54,8 @@ public class FriendsActivity extends BaseActivity {
 //    }
     TextDrawable drawablePresent;
 
+    ListView friends;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,7 @@ public class FriendsActivity extends BaseActivity {
 
         toggleLayouts(linearlayoutMyclass, textViewMyclass);
         Utils.classFlag = 2;
-        final ListView friends = (ListView) findViewById(R.id.friends);
+        friends = (ListView) findViewById(R.id.friends);
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
@@ -74,19 +78,28 @@ public class FriendsActivity extends BaseActivity {
 
         getStudentListServerCall(lectureId);
 
+    }
+
+    public void setUIData(StudentsListResponseData studentsListResponseData)
+    {
+
+        List<Student> studentsList =  studentsListResponseData.getData().getStudents();
+        Log.d(TAG,"Students : "+studentsList.size());
+
         FlipSettings settings = new FlipSettings.Builder().defaultPage(1).build();
-        friends.setAdapter(new FriendsAdapter(this, DemoDataFlipImageViewer.friends, settings));
+        friends.setAdapter(new FriendsAdapter(this, studentsList, settings));
         friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Friend f = (Friend) friends.getAdapter().getItem(position);
+//                Friend f = (Friend) friends.getAdapter().getItem(position);
 
+                Log.d(TAG,"Position : "+position);
                 StudentsListResponseData studentsListResponseData = Prefs.with(FriendsActivity.this).getObject(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,StudentsListResponseData.class);
 
                 if (studentsListResponseData!=null)
                 {
                     Intent intent = new Intent(FriendsActivity.this, StudentDetailsActivity.class);
-                    intent.putExtra(Constants.STUDENT_ID,studentsListResponseData.getData().getStudents().get(0).getId());
+                    intent.putExtra(Constants.STUDENT_ID,studentsListResponseData.getData().getStudents().get(position).getId());
                     startActivity(intent);
                 }
             }
@@ -103,12 +116,12 @@ public class FriendsActivity extends BaseActivity {
         }
     }
 
-    class FriendsAdapter extends BaseFlipAdapter<Friend> {
+    class FriendsAdapter extends BaseFlipAdapter<Student> {
 
         private final int PAGES = 3;
 //        private int[] IDS_INTEREST = {R.id.interest_1, R.id.interest_2, R.id.interest_3, R.id.interest_4, R.id.interest_5,R.id.interest_6};
 
-        public FriendsAdapter(Context context, List<Friend> items, FlipSettings settings) {
+        public FriendsAdapter(Context context, List<Student> items, FlipSettings settings) {
             super(context, items, settings);
             drawableAbsent = TextDrawable.builder()
                     .beginConfig()
@@ -124,7 +137,7 @@ public class FriendsActivity extends BaseActivity {
         }
 
         @Override
-        public View getPage(int position, View convertView, ViewGroup parent, Friend friend1, Friend friend2) {
+        public View getPage(int position, View convertView, ViewGroup parent, Student friend1, Student friend2) {
             final FriendsHolder holder;
 
             if (convertView == null) {
@@ -134,6 +147,7 @@ public class FriendsActivity extends BaseActivity {
                 holder.rightAvatar = (ImageView) convertView.findViewById(R.id.second);
                 holder.infoPage = getLayoutInflater().inflate(R.layout.friends_info, parent, false);
                 holder.nickName = (TextView) holder.infoPage.findViewById(R.id.nickname);
+                holder.className = (TextView) holder.infoPage.findViewById(R.id.className);
 
 //                for (int id : IDS_INTEREST)
 //                    holder.interests.add((ImageView) holder.infoPage.findViewById(id));
@@ -149,9 +163,9 @@ public class FriendsActivity extends BaseActivity {
             switch (position) {
                 // Merged page with 2 friends
                 case 1:
-                    holder.leftAvatar.setImageResource(friend1.getAvatar());
+                    holder.leftAvatar.setImageResource(R.drawable.anastasia);
                     if (friend2 != null)
-                        holder.rightAvatar.setImageResource(friend2.getAvatar());
+                        holder.rightAvatar.setImageResource(R.drawable.irene);
                     break;
                 default:
                     fillHolder(holder, position == 0 ? friend1 : friend2);
@@ -166,7 +180,7 @@ public class FriendsActivity extends BaseActivity {
             return PAGES;
         }
 
-        private void fillHolder(FriendsHolder holder, Friend friend) {
+        private void fillHolder(FriendsHolder holder, Student friend) {
             if (friend == null)
                 return;
 //            Iterator<ImageView> iViews = holder.interests.iterator();
@@ -178,19 +192,20 @@ public class FriendsActivity extends BaseActivity {
 //                }else {
 //                    iViews.next().setImageDrawable(drawablePresent);
 //                }
-            holder.infoPage.setBackgroundColor(getResources().getColor(friend.getBackground()));
-            holder.nickName.setText(friend.getNickname());
+            holder.infoPage.setBackgroundColor(getResources().getColor(R.color.purple));
+            holder.className.setText("Roll No. "+String.valueOf(friend.getRollno()));
+            holder.nickName.setText(friend.getStudentName());
             holder.buttonViewProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "View Profile : " + friend.getNickname());
+                    Log.d(TAG, "View Profile : " + friend.getStudentName());
                 }
             });
 
             holder.buttonViewRemarks.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "View Remarks : " + friend.getNickname());
+                    Log.d(TAG, "View Remarks : " + friend.getStudentName());
                 }
             });
         }
@@ -202,6 +217,7 @@ public class FriendsActivity extends BaseActivity {
 
             //            List<ImageView> interests = new ArrayList<>();
             TextView nickName;
+            TextView className;
 
             Button buttonViewRemarks;
             Button buttonViewProfile;
@@ -219,6 +235,7 @@ public class FriendsActivity extends BaseActivity {
             public void success(StudentsListResponseData studentsListResponseData, Response response) {
                 Log.d("LectureAdapter", "Response : " + new Gson().toJson(studentsListResponseData));
                 Prefs.with(FriendsActivity.this).save(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,studentsListResponseData);
+                setUIData(studentsListResponseData);
             }
 
             @Override

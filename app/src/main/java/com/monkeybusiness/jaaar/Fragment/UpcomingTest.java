@@ -113,7 +113,7 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
                 Intent intent = new Intent(getContext(), AddTestActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.buttonCreateTest:
+//            case R.id.buttonCreateTest:
 //                if (nextButton) {
 //                    subject = autoCompleteTextView.getText().toString();
 //                    if (subject.isEmpty()) {
@@ -134,7 +134,7 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
 //                        topicDialog.dismiss();
 //                    }
 //                }
-                break;
+//                break;
         }
     }
 
@@ -175,12 +175,12 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
         subjectDialog = new Dialog(getActivity());
         subjectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         subjectDialog.setContentView(R.layout.dialog_custom_msg_test);
-        autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
+//        autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, arrayList);
         autoCompleteTextView.setAdapter(adapter);
 
-        buttonNext = (Button) subjectDialog.findViewById(R.id.buttonCreateTest);
+//        buttonNext = (Button) subjectDialog.findViewById(R.id.buttonCreateTest);
 
         buttonNext.setText("Next");
         buttonNext.setOnClickListener(this);
@@ -200,14 +200,14 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
         topicDialog = new Dialog(getActivity());
         topicDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         topicDialog.setContentView(R.layout.dialog_custom_msg_test);
-        autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
+//        autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, arrayList);
         autoCompleteTextView.setAdapter(adapter);
 
         autoCompleteTextView.setHint("Enter Topic Name");
 
-        buttonCreateTest = (Button) topicDialog.findViewById(R.id.buttonCreateTest);
+//        buttonCreateTest = (Button) topicDialog.findViewById(R.id.buttonCreateTest);
 
         buttonCreateTest.setOnClickListener(this);
         topicDialog.setCancelable(true);

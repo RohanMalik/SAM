@@ -113,7 +113,7 @@ public class TestTakenFragment extends Fragment implements TestFragmentListner,V
                 Intent intent = new Intent(getContext(), AddTestActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.buttonCreateTest:
+//            case R.id.buttonCreateTest:
 //                if (nextButton) {
 //                    subject = autoCompleteTextView.getText().toString();
 //                    if (subject.isEmpty()) {
@@ -134,7 +134,7 @@ public class TestTakenFragment extends Fragment implements TestFragmentListner,V
 //                        topicDialog.dismiss();
 //                    }
 //                }
-                break;
+//                break;
         }
     }
 }

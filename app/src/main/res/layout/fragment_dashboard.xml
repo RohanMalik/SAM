@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Contact No. : 1234567890"
-                    android:textSize="20dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/textViewEmail"
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Email : rohan.malik@mail.com"
-                    android:textSize="20dp" />
+                    android:textSize="16dp" />
 
                 <com.rey.material.widget.CheckBox
                     android:id="@+id/checkboxAttd"
@@ -75,7 +75,8 @@
                     android:text="Attendance Taken For Today"
                     android:textSize="20dp"
                     app:cbd_strokeColor="@color/primary"
-                    app:cbd_tickColor="#fff" />
+                    app:cbd_tickColor="#fff"
+                    android:visibility="gone"/>
 
                 <com.rey.material.widget.Button
                     android:id="@+id/buttonTakeAttd"

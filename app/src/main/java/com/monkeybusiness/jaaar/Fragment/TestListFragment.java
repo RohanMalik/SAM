@@ -125,33 +125,33 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
             case R.id.fabAddTest:
                 showDateDialog();
                 break;
-            case R.id.buttonCreateTest:
-                if (nextButton)
-                {
-                    subject = autoCompleteTextView.getText().toString();
-                    if (subject.isEmpty()) {
-                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
-                    } else
-                    {
-                        subjectDialog.dismiss();
-                        nextButton = false;
-                        showTopicDialog();
-
-                    }
-                }
-                else
-                {
-                    topic = autoCompleteTextView.getText().toString();
-                    if (topic.isEmpty()) {
-                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
-                    } else
-                    {
-                        testDatas.add(new TestData(date,time,subject,topic));
-                        testListAdapter.notifyDataSetChanged();
-                        topicDialog.dismiss();
-                    }
-                }
-                break;
+//            case R.id.buttonCreateTest:
+//                if (nextButton)
+//                {
+//                    subject = autoCompleteTextView.getText().toString();
+//                    if (subject.isEmpty()) {
+//                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
+//                    } else
+//                    {
+//                        subjectDialog.dismiss();
+//                        nextButton = false;
+//                        showTopicDialog();
+//
+//                    }
+//                }
+//                else
+//                {
+//                    topic = autoCompleteTextView.getText().toString();
+//                    if (topic.isEmpty()) {
+//                        Toast.makeText(this, "Please Enter Subject Name", Toast.LENGTH_SHORT).show();
+//                    } else
+//                    {
+//                        testDatas.add(new TestData(date,time,subject,topic));
+//                        testListAdapter.notifyDataSetChanged();
+//                        topicDialog.dismiss();
+//                    }
+//                }
+//                break;
         }
     }
 
@@ -186,7 +186,7 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
 
         time = hourOfDay+":"+minute;
         Log.d("TestListFrag","timeSet");
-        showSubjectDialog();
+//        showSubjectDialog();
     }
 
     @Override
@@ -203,61 +203,61 @@ public class TestListFragment extends BaseActivity implements View.OnClickListen
     }
 
     Button buttonNext;
-    public void showSubjectDialog()
-    {
-        List<String> arrayList  = new ArrayList<>();
-        arrayList.add("Physics");
-        arrayList.add("Chemistry");
-        arrayList.add("Maths");
-        arrayList.add("SST");
-        arrayList.add("Hindi");
-
-        nextButton = true;
-
-        subjectDialog = new Dialog(this);
-        subjectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        subjectDialog.setContentView(R.layout.dialog_custom_msg_test);
-        autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
-        autoCompleteTextView.setAdapter(adapter);
-
-        buttonNext = (Button) subjectDialog.findViewById(R.id.buttonCreateTest);
-
-        buttonNext.setText("Next");
-        buttonNext.setOnClickListener(this);
-        subjectDialog.setCancelable(true);
-        subjectDialog.setCanceledOnTouchOutside(true);
-        subjectDialog.show();
-    }
+//    public void showSubjectDialog()
+//    {
+//        List<String> arrayList  = new ArrayList<>();
+//        arrayList.add("Physics");
+//        arrayList.add("Chemistry");
+//        arrayList.add("Maths");
+//        arrayList.add("SST");
+//        arrayList.add("Hindi");
+//
+//        nextButton = true;
+//
+//        subjectDialog = new Dialog(this);
+//        subjectDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        subjectDialog.setContentView(R.layout.dialog_custom_msg_test);
+//        autoCompleteTextView = (AutoCompleteTextView) subjectDialog.findViewById(R.id.autoCompleteSubject);
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
+//        autoCompleteTextView.setAdapter(adapter);
+//
+//        buttonNext = (Button) subjectDialog.findViewById(R.id.buttonCreateTest);
+//
+//        buttonNext.setText("Next");
+//        buttonNext.setOnClickListener(this);
+//        subjectDialog.setCancelable(true);
+//        subjectDialog.setCanceledOnTouchOutside(true);
+//        subjectDialog.show();
+//    }
 
     Button buttonCreateTest;
 
-    public void showTopicDialog()
-    {
-        List<String> arrayList  = new ArrayList<>();
-        arrayList.add("GEOMETRY");
-        arrayList.add("PROBABILITY");
-        arrayList.add("TRIGONOMETRY");
-        arrayList.add("ALGEBRA");
-        arrayList.add("NUMBER SYSTEMS");
-
-        topicDialog = new Dialog(this);
-        topicDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        topicDialog.setContentView(R.layout.dialog_custom_msg_test);
-        autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
-        autoCompleteTextView.setAdapter(adapter);
-
-        autoCompleteTextView.setHint("Enter Topic Name");
-
-        buttonCreateTest = (Button) topicDialog.findViewById(R.id.buttonCreateTest);
-
-        buttonCreateTest.setOnClickListener(this);
-        topicDialog.setCancelable(true);
-        topicDialog.setCanceledOnTouchOutside(true);
-        topicDialog.show();
-    }
+//    public void showTopicDialog()
+//    {
+//        List<String> arrayList  = new ArrayList<>();
+//        arrayList.add("GEOMETRY");
+//        arrayList.add("PROBABILITY");
+//        arrayList.add("TRIGONOMETRY");
+//        arrayList.add("ALGEBRA");
+//        arrayList.add("NUMBER SYSTEMS");
+//
+//        topicDialog = new Dialog(this);
+//        topicDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        topicDialog.setContentView(R.layout.dialog_custom_msg_test);
+//        autoCompleteTextView = (AutoCompleteTextView) topicDialog.findViewById(R.id.autoCompleteSubject);
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrayList);
+//        autoCompleteTextView.setAdapter(adapter);
+//
+//        autoCompleteTextView.setHint("Enter Topic Name");
+//
+//        buttonCreateTest = (Button) topicDialog.findViewById(R.id.buttonCreateTest);
+//
+//        buttonCreateTest.setOnClickListener(this);
+//        topicDialog.setCancelable(true);
+//        topicDialog.setCanceledOnTouchOutside(true);
+//        topicDialog.show();
+//    }
 
 }

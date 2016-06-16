@@ -27,6 +27,8 @@ public class PrefsKeys {
 
     public static final String EVENT_RESPONSE_DATA = "eventResponseData";
 
+    public static final String BATCHES_RESPONSE_DATA = "batchesResponseData";
+
     public static final String PROFILE_DATA = "profileData";
 
     public static final String LOCATION_FLAG = "locationFlag";

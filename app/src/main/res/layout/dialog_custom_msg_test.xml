@@ -22,8 +22,8 @@
             android:orientation="vertical"
             android:splitMotionEvents="false">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteSubject"
+            <EditText
+                android:id="@+id/editTextRemarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -31,13 +31,13 @@
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textColorHint="#fff"
-                android:hint="Enter Subject Name"/>
+                android:hint="Enter Remarks"/>
 
             <Button
-                android:id="@+id/buttonCreateTest"
+                android:id="@+id/buttonSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create"
+                android:text="Send"
                 android:textColor="#fff"
                 android:background="@color/blue_dark"
                 android:layout_marginBottom="10dp"

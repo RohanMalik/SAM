@@ -4,6 +4,7 @@ package com.monkeybusiness.jaaar.retrofit;
 import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
+import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
@@ -67,4 +68,10 @@ public interface ApiService {
 
     @POST("/events")
     void apiCallPostEvent(@Body TypedInput eventPostObject,Callback<AddEventResponseData> callback);
+
+    @GET("/batches")
+    void apiCallGetBatches(Callback<BatchesResponseData> callback);
+
+    @GET("/batches/{batch_id}/student_attendances")
+    void apiCallGetAttendanceDetail(@Path("batch_id") String batchId, @Query("group_by") String groupBy,@Query("page") String page,@Query("limit") String limit,Callback<String> callback);
 }

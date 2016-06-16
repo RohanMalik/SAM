@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.github.florent37.hollyviewpager.HollyViewPager;
 import com.github.florent37.hollyviewpager.HollyViewPagerConfigurator;
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.Adapter.AttendanceSlidePagerAdapter;
 import com.monkeybusiness.jaaar.Adapter.AttendanceViewPagerAdapter;
@@ -20,13 +21,20 @@ import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
+import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.DepthPageTransformer;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.preferences.Prefs;
+import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by rohanmalik on 29/12/15.
@@ -39,6 +47,7 @@ public class AttendanceFragment extends BaseActivity {
     HollyViewPager hollyViewPager;
 
     int pageCount = 6;
+    private String TAG = "AttendanceFragment";
 //    ViewPager viewPagerAttd;
 
 //    AttendanceSlidePagerAdapter adapter;
@@ -51,7 +60,7 @@ public class AttendanceFragment extends BaseActivity {
 
         Utils.classFlag = 1;
 
-        toggleLayouts(linearlayoutAttendance,textViewAttendance);
+        toggleLayouts(linearlayoutAttendance, textViewAttendance);
 
 
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
@@ -91,13 +100,10 @@ public class AttendanceFragment extends BaseActivity {
         hollyViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                if (position!=5)
-                {
-                    return StudentAttendanceCardFargment.newInstance(position,(String) getPageTitle(position));
-                }
-                else
-                {
-                    return AttendanceReviewFragment.newInstance(position,(String) getPageTitle(position));
+                if (position != 5) {
+                    return StudentAttendanceCardFargment.newInstance(position, (String) getPageTitle(position));
+                } else {
+                    return AttendanceReviewFragment.newInstance(position, (String) getPageTitle(position));
                 }
             }
 
@@ -108,12 +114,9 @@ public class AttendanceFragment extends BaseActivity {
 
             @Override
             public CharSequence getPageTitle(int position) {
-                if (position!=5)
-                {
-                    return "Roll No. "+(position+1);
-                }
-                else
-                {
+                if (position != 5) {
+                    return "Roll No. " + (position + 1);
+                } else {
                     return "Submit";
                 }
             }
@@ -141,13 +144,13 @@ public class AttendanceFragment extends BaseActivity {
 //
 //            }
 //        });
+
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;

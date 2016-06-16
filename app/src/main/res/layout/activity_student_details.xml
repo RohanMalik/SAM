@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="Name : Rohan Malik"
+                    android:text="Name : "
                     android:textSize="20dp" />
 
                 <TextView
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Class : 10th A"
+                    android:text=""
                     android:textSize="20dp" />
 
                 <TextView
@@ -56,16 +56,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Contact No. : 1234567890"
-                    android:textSize="20dp" />
+                    android:text=""
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/textViewEmailStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Email : rohan.malik@mail.com"
-                    android:textSize="20dp" />
+                    android:text=""
+                    android:textSize="16dp" />
 
 
 

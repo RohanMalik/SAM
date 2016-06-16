@@ -100,7 +100,8 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.linearlayoutAttendance:
                 if (Utils.classFlag != 1) {
 
-                    Intent intent = new Intent(BaseActivity.this, AttendanceFragment.class);
+//                    Intent intent = new Intent(BaseActivity.this, AttendanceFragment.class);
+                    Intent intent = new Intent(BaseActivity.this, MyBatchesActivity.class);
                     startActivity(intent);
                     finish();
                     toggleLayouts(linearlayoutAttendance,textViewAttendance);
