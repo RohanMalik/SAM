@@ -108,7 +108,7 @@ public class DashboardActivity extends BaseActivity {
                 toggle();
                 break;
             case R.id.buttonTakeAttd:
-                Intent intent = new Intent(DashboardActivity.this, AttendanceFragment.class);
+                Intent intent = new Intent(DashboardActivity.this, MyBatchesActivity.class);
                 startActivity(intent);
                 finish();
                 break;

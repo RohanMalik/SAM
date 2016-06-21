@@ -22,7 +22,7 @@ public class Config {
 
             case TEST:
 
-                BASE_URL = "http://samapi.bytedreams.in";
+                BASE_URL = "http://samapidev.bytedreams.in";
 
                 break;
 

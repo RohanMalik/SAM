@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.hollyviewpager.HollyViewPagerBus;
@@ -17,9 +18,12 @@ import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.utils.NonScrollListView;
 import com.rey.material.widget.Button;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -37,6 +41,9 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
      Button buttonSubmit;
 
     ObservableScrollView scrollView;
+
+    TextView textViewAbsentStudents;
+    TextView textViewPresentStudents;
 
     public static AttendanceReviewFragment newInstance(int page,String title) {
 
@@ -62,8 +69,9 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
         scrollView = (ObservableScrollView) rootView.findViewById(R.id.scrollView);
 
-        reviewListAdapter = new ReviewListAdapter(getActivity());
-        listViewReviewAttd.setAdapter(reviewListAdapter);
+        textViewAbsentStudents = (TextView) rootView.findViewById(R.id.textViewAbsentStudents);
+
+        textViewPresentStudents = (TextView) rootView.findViewById(R.id.textViewPresentStudents);
 
         buttonSubmit.setOnClickListener(this);
     }
@@ -75,7 +83,41 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
     @Override
     public void onResumeFragment() {
-        Log.d("attdReview", "onResumeFrag");
+        Log.d("abc", "onResumeFrag");
+        setUiData();
+    }
+
+    List<SingleIdDetail> singleIdDetails;
+    List<Integer> studentIds;
+//    String classAlias;
+
+    private void setUiData() {
+        absentStudents = 0;
+        studentIds = getAbsentStudents();
+        reviewListAdapter = new ReviewListAdapter(getActivity(),studentIds);
+        listViewReviewAttd.setAdapter(reviewListAdapter);
+    }
+
+    int absentStudents = 0;
+
+    public List<Integer> getAbsentStudents()
+    {
+        singleIdDetails = MasterClass.getInstance().getSingleIdDetails();
+        List<Integer> studentIds = new ArrayList<>();
+
+        for (SingleIdDetail singleIdDetail : singleIdDetails)
+        {
+            if (singleIdDetail.getStatus().equalsIgnoreCase("A"))
+            {
+                absentStudents++;
+                studentIds.add(singleIdDetail.getStudentId());
+            }
+        }
+
+        textViewAbsentStudents.setText(String.valueOf(absentStudents));
+        textViewPresentStudents.setText(String.valueOf(singleIdDetails.size()-absentStudents));
+
+        return studentIds;
     }
 
     @Override
@@ -93,5 +135,7 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
         super.onViewCreated(view, savedInstanceState);
 
         HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
+
+        Log.d("abc", "viewCreated");
     }
 }

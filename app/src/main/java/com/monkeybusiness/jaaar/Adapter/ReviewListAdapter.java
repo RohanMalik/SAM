@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,44 +24,47 @@ public class ReviewListAdapter extends BaseAdapter {
     Activity activity;
     List<StudentAttdData> studentAttdDatas;
     LayoutInflater inflater;
+    List<Integer> studentId;
+    List<StudentsInfo> studentsInfos;
 
-    public ReviewListAdapter(Activity activity)
-    {
+    public ReviewListAdapter(Activity activity, List<Integer> studentId) {
+        this.studentId = studentId;
         this.activity = activity;
+        studentsInfos = MasterClass.getInstance().getStudentsInfos();
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        studentAttdDatas = new ArrayList<>();
+//        studentAttdDatas = new ArrayList<>();
 
-        List<StudentAttdData> studentAttdDatasLocal = MasterClass.getInstance().getStudentAttdDatas();
-
-        for (StudentAttdData studentAttdData : studentAttdDatasLocal)
-        {
-            if (studentAttdData.getsCurrentAttd().equals("0"))
-            {
-                studentAttdDatas.add(studentAttdData);
-            }
-        }
+//        List<StudentAttdData> studentAttdDatasLocal = MasterClass.getInstance().getStudentAttdDatas();
+//
+//        for (StudentAttdData studentAttdData : studentAttdDatasLocal)
+//        {
+//            if (studentAttdData.getsCurrentAttd().equals("0"))
+//            {
+//                studentAttdDatas.add(studentAttdData);
+//            }
+//        }
     }
 
-    public void setData()
-    {
-        studentAttdDatas.clear();
-
-        List<StudentAttdData> studentAttdDatasLocal = MasterClass.getInstance().getStudentAttdDatas();
-
-        for (StudentAttdData studentAttdData : studentAttdDatasLocal)
-        {
-            if (studentAttdData.getsCurrentAttd().equals("0"))
-            {
-                studentAttdDatas.add(studentAttdData);
-            }
-        }
-
-        notifyDataSetChanged();
-    }
+//    public void setData()
+//    {
+//        studentAttdDatas.clear();
+//
+//        List<StudentAttdData> studentAttdDatasLocal = MasterClass.getInstance().getStudentAttdDatas();
+//
+//        for (StudentAttdData studentAttdData : studentAttdDatasLocal)
+//        {
+//            if (studentAttdData.getsCurrentAttd().equals("0"))
+//            {
+//                studentAttdDatas.add(studentAttdData);
+//            }
+//        }
+//
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public int getCount() {
-        return 5;
+        return studentId.size();
     }
 
     @Override
@@ -79,28 +83,38 @@ public class ReviewListAdapter extends BaseAdapter {
         View view = convertView;
         ViewHolder viewHolder;
 
-        if (view == null)
-        {
-            view = inflater.inflate(R.layout.list_view_review_attd,parent,false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.list_view_review_attd, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.textViewNameListView = (TextView) view.findViewById(R.id.textViewNameListView);
-            viewHolder.textViewRollnoListView = (TextView) view.findViewById(R.id.textViewRollnoListView);
+            viewHolder.textViewRollnoListView = (TextView) view.findViewById(R.id.textViewRollnoListView1);
 
             view.setTag(viewHolder);
-        }
-        else
-        {
+        } else {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-//        viewHolder.textViewNameListView.setText(""+studentAttdDatas.get(position).getsName());
-//        viewHolder.textViewRollnoListView.setText(""+studentAttdDatas.get(position).getsRollNo());
+        int id = studentId.get(position);
+        int index = getIndexOfId(id);
+
+        viewHolder.textViewNameListView.setText(studentsInfos.get(index).getStudentName());
+        viewHolder.textViewRollnoListView.setText(studentsInfos.get(index).getRollno()+"");
 
         return view;
     }
 
-    public class ViewHolder
-    {
+    private int getIndexOfId(int id) {
+
+        for (int i = 0; i < studentsInfos.size(); i++) {
+            if (studentsInfos.get(i).getId() == id)
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public class ViewHolder {
         TextView textViewRollnoListView;
         TextView textViewNameListView;
     }

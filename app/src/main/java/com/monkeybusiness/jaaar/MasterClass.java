@@ -5,8 +5,11 @@ import android.util.Log;
 
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rakesh on 1/2/16.
@@ -18,6 +21,10 @@ public class MasterClass extends Application {
     public ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
     public AttendanceFragment attendanceFragment;
+
+    List<SingleIdDetail> singleIdDetails;
+    List<StudentsInfo> studentsInfos;
+    String classAlias;
 
     public static MasterClass getInstance()
     {
@@ -44,5 +51,29 @@ public class MasterClass extends Application {
 
     public void setAttendanceFragment(AttendanceFragment attendanceFragment) {
         this.attendanceFragment = attendanceFragment;
+    }
+
+    public List<SingleIdDetail> getSingleIdDetails() {
+        return singleIdDetails;
+    }
+
+    public void setSingleIdDetails(List<SingleIdDetail> singleIdDetails) {
+        this.singleIdDetails = singleIdDetails;
+    }
+
+    public List<StudentsInfo> getStudentsInfos() {
+        return studentsInfos;
+    }
+
+    public void setStudentsInfos(List<StudentsInfo> studentsInfos) {
+        this.studentsInfos = studentsInfos;
+    }
+
+    public String getClassAlias() {
+        return classAlias;
+    }
+
+    public void setClassAlias(String classAlias) {
+        this.classAlias = classAlias;
     }
 }

@@ -61,7 +61,7 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
         textViewActionTitle.setOnClickListener(this);
         fabAddAttd.setOnClickListener(this);
 
-        textViewActionTitle.setText("My Batches");
+        textViewActionTitle.setText("My ATTENDANCES");
 
         listViewLectures = (ListView) findViewById(R.id.listViewLectures);
 
@@ -102,11 +102,6 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
 
                     JSONObject attendanceStatus = studentAttendance.getJSONObject("attendance_status");
 
-                    List<String> presentDates = new ArrayList<String>();
-                    List<Integer> presentStudents = new ArrayList<Integer>();
-                    List<Integer> absentStudents = new ArrayList<Integer>();
-                    List<Boolean> attdStatus = new ArrayList<Boolean>();
-
                     List<Datum> attendanceList = new ArrayList<Datum>();
 
                     Iterator<String> presentKeys = presentObject.keys();
@@ -122,14 +117,14 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
                         Datum datum = new Datum();
                         datum.setDate(key);
                         datum.setAbsent(absentObject.getInt(key));
-                        datum.setAttendanceStatus(attendanceStatus.getBoolean(key));
+                        datum.setAttendanceStatus(attendanceStatus.getString(key));
                         datum.setPresent(presentObject.getInt(key));
 
                         attendanceList.add(datum);
                     }
 
                     Log.d(TAG,"Datum : "+new Gson().toJson(attendanceList));
-                    setUiData(attendanceList);
+                    setUiData(attendanceList,id);
 //                    Log.d(TAG,"presentStudent : "+new Gson().toJson(presentStudents));
 //                    Log.d(TAG,"absentStudent : "+new Gson().toJson(absentStudents));
 //                    Log.d(TAG,"attdStudent : "+new Gson().toJson(attdStatus));
@@ -146,9 +141,9 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
         });
     }
 
-    private void setUiData(List<Datum> attendanceList) {
+    private void setUiData(List<Datum> attendanceList, int id) {
 
-        AttendanceDetailsAdapter attendanceDetailsAdapter = new AttendanceDetailsAdapter(this,attendanceList);
+        AttendanceDetailsAdapter attendanceDetailsAdapter = new AttendanceDetailsAdapter(this,attendanceList,id);
         listViewLectures.setAdapter(attendanceDetailsAdapter);
     }
 }

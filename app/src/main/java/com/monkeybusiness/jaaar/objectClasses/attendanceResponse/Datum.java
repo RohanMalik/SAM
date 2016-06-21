@@ -17,7 +17,7 @@ public class Datum {
     private int absent;
     @SerializedName("attendance_status")
     @Expose
-    private Boolean attendanceStatus;
+    private String attendanceStatus;
 
     /**
      * 
@@ -78,7 +78,7 @@ public class Datum {
      * @return
      *     The attendanceStatus
      */
-    public Boolean getAttendanceStatus() {
+    public String getAttendanceStatus() {
         return attendanceStatus;
     }
 
@@ -87,7 +87,7 @@ public class Datum {
      * @param attendanceStatus
      *     The attendance_status
      */
-    public void setAttendanceStatus(Boolean attendanceStatus) {
+    public void setAttendanceStatus(String attendanceStatus) {
         this.attendanceStatus = attendanceStatus;
     }
 

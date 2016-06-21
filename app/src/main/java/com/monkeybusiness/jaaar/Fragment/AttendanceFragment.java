@@ -1,10 +1,13 @@
 package com.monkeybusiness.jaaar.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import com.github.florent37.hollyviewpager.HollyViewPager;
 import com.github.florent37.hollyviewpager.HollyViewPagerConfigurator;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
+import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
 import com.monkeybusiness.jaaar.Adapter.AttendanceSlidePagerAdapter;
 import com.monkeybusiness.jaaar.Adapter.AttendanceViewPagerAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
@@ -22,14 +26,24 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.BatchInfo;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
+import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.DepthPageTransformer;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import retrofit.Callback;
@@ -46,7 +60,6 @@ public class AttendanceFragment extends BaseActivity {
 
     HollyViewPager hollyViewPager;
 
-    int pageCount = 6;
     private String TAG = "AttendanceFragment";
 //    ViewPager viewPagerAttd;
 
@@ -56,22 +69,13 @@ public class AttendanceFragment extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_attendance);
+
         MasterClass.getInstance().setAttendanceFragment(this);
 
         Utils.classFlag = 1;
 
         toggleLayouts(linearlayoutAttendance, textViewAttendance);
 
-
-        ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
-
-        studentAttdDatas.add(new StudentAttdData("Rohan Malik", "10th", "1", "", Arrays.asList("1", "0", "1", "0", "1")));
-        studentAttdDatas.add(new StudentAttdData("Jaspreet Arora", "10th", "2", "", Arrays.asList("0", "0", "0", "0", "1")));
-        studentAttdDatas.add(new StudentAttdData("Ravi Kumar", "10th", "3", "", Arrays.asList("1", "0", "1", "1", "1")));
-        studentAttdDatas.add(new StudentAttdData("Salman Khan", "10th", "4", "", Arrays.asList("1", "0", "0", "0", "1")));
-        studentAttdDatas.add(new StudentAttdData("Shahrukh Khan", "10th", "5", "", Arrays.asList("1", "0", "0", "0", "0")));
-
-        MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
 //        viewPagerAttd = (ViewPager) findViewById(R.id.viewPagerAttd);
 
         hollyViewPager = (HollyViewPager) findViewById(R.id.hollyViewPager);
@@ -83,44 +87,18 @@ public class AttendanceFragment extends BaseActivity {
 
         textViewActionTitle.setText("Attendance");
 
+        Intent intent = getIntent();
+
+        if (intent!=null)
+        {
+            int id = intent.getIntExtra(Constants.BATCH_ID,0);
+            String date = intent.getStringExtra(Constants.DATE);
+            getSingleDayAttendanceServerCall(date,id);
+        }
+
 //        adapter = new AttendanceSlidePagerAdapter(getSupportFragmentManager(),6);
 
-        hollyViewPager.getViewPager().setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
-        hollyViewPager.setConfigurator(new HollyViewPagerConfigurator() {
-            @Override
-            public float getHeightPercentForPage(int page) {
 
-//                Log.d("attendancePager","Height : "+((page+4)%10)/10f);
-//                return ((page+4)%10)/10f;
-                return 0.5f;
-            }
-
-        });
-
-        hollyViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                if (position != 5) {
-                    return StudentAttendanceCardFargment.newInstance(position, (String) getPageTitle(position));
-                } else {
-                    return AttendanceReviewFragment.newInstance(position, (String) getPageTitle(position));
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return pageCount;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                if (position != 5) {
-                    return "Roll No. " + (position + 1);
-                } else {
-                    return "Submit";
-                }
-            }
-        });
 
 //        viewPagerAttd.setPageTransformer(true, new DepthPageTransformer());
 //        viewPagerAttd.setAdapter(adapter);
@@ -146,6 +124,59 @@ public class AttendanceFragment extends BaseActivity {
 //        });
 
     }
+    int pageCount;
+
+    public void setUIData(List<SingleIdDetail> singleIdDetails, List<StudentsInfo> studentsInfos, String classAlias)
+    {
+
+        pageCount = singleIdDetails.size();
+        Log.d(TAG,"pageCount : "+pageCount);
+        ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
+
+        MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
+
+        MasterClass.getInstance().setSingleIdDetails(singleIdDetails);
+        MasterClass.getInstance().setStudentsInfos(studentsInfos);
+        MasterClass.getInstance().setClassAlias(classAlias);
+
+        hollyViewPager.getViewPager().setPageMargin(getResources().getDimensionPixelOffset(R.dimen.viewpager_margin));
+        hollyViewPager.setConfigurator(new HollyViewPagerConfigurator() {
+            @Override
+            public float getHeightPercentForPage(int page) {
+
+//                Log.d("attendancePager","Height : "+((page+4)%10)/10f);
+//                return ((page+4)%10)/10f;
+                return 0.5f;
+            }
+
+        });
+
+        AttendancePagerAdapterHolly adapterHolly = new AttendancePagerAdapterHolly(getSupportFragmentManager());
+
+        hollyViewPager.setAdapter(adapterHolly);
+
+        hollyViewPager.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG,"pageSelected : "+position);
+                if (position==10)
+                {
+                    ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
+                    reviewAttdInterface.onResumeFragment();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -157,4 +188,148 @@ public class AttendanceFragment extends BaseActivity {
         }
     }
 
+    private void getSingleDayAttendanceServerCall(String date,int id) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        String currentDate  = date+"T00:00:00.000Z";
+
+        RestClient.getApiService(xCookies,aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                Log.d(TAG,"Response : "+s);
+
+                JSONObject responseObject = null;
+                try {
+                    responseObject = new JSONObject(s);
+
+                    JSONObject dataObject = responseObject.getJSONObject("data");
+
+                    JSONObject batchInfoObject = dataObject.getJSONObject("batch_info");
+
+                    Log.d(TAG,"abc "+batchInfoObject.toString());
+
+                    BatchInfo batchInfo = new Gson().fromJson(batchInfoObject.toString(),BatchInfo.class);
+
+                    Log.d(TAG,"batchInfo : "+new Gson().toJson(batchInfo));
+
+                    JSONArray studentInfoArray = dataObject.getJSONArray("students_info");
+
+                    List<StudentsInfo> studentsInfos = new ArrayList<StudentsInfo>();
+
+                    for (int i = 0 ; i<studentInfoArray.length() ; i++)
+                    {
+                        StudentsInfo studentsInfo = new Gson().fromJson(studentInfoArray.get(i).toString(),StudentsInfo.class);
+                        studentsInfos.add(studentsInfo);
+                    }
+
+                    Log.d(TAG,"StudentsInfo : "+new Gson().toJson(studentsInfos));
+
+                    JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
+
+                    Iterator<String> keys = studentAttd.keys();
+
+                    List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
+
+                    while (keys.hasNext())
+                    {
+                        String key = keys.next();
+
+                        Log.d(TAG,"Key : "+key);
+
+                        singleIdDetails.add(getSingleIdObject(studentAttd,key));
+                    }
+
+                    Log.d(TAG,"Json : "+new Gson().toJson(singleIdDetails));
+
+                    setUIData(singleIdDetails,studentsInfos,batchInfo.getClassAlias());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG,"error : "+error.toString());
+            }
+        });
+    }
+
+    private SingleIdDetail getSingleIdObject(JSONObject studentAttd, String key) {
+
+        try {
+            JSONObject singleIdobject  = studentAttd.getJSONObject(key);
+
+            SingleIdDetail singleIdDetail  = new SingleIdDetail();
+
+            singleIdDetail.setId(singleIdobject.getInt("id"));
+            singleIdDetail.setStudentId(singleIdobject.getInt("student_id"));
+            singleIdDetail.setStatus(singleIdobject.getString("status"));
+            singleIdDetail.setAttendanceDate(singleIdobject.getString("attendance_date"));
+            singleIdDetail.setIsSave(singleIdobject.getBoolean("is_save"));
+            singleIdDetail.setStudentAttendanceGroupId(singleIdobject.getInt("student_attendance_group_id"));
+
+            Log.d(TAG,"SingleId : "+new Gson().toJson(singleIdDetail));
+
+            return singleIdDetail;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public class AttendancePagerAdapterHolly extends FragmentPagerAdapter
+    {
+        public AttendancePagerAdapterHolly(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position != pageCount) {
+                return StudentAttendanceCardFargment.newInstance(position, (String) getPageTitle(position));
+            } else {
+                return AttendanceReviewFragment.newInstance(position, (String) getPageTitle(position));
+            }
+        }
+
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return pageCount+1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position != pageCount) {
+                return "Roll No. " + (position + 1);
+            } else {
+                return "Submit";
+            }
+        }
+
+    }
 }

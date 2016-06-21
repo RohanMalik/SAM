@@ -73,9 +73,10 @@
                         >
 
                         <TextView
+                            android:id="@+id/textViewAbsentStudents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5"
+                            android:text=""
                             android:textSize="16dp"
                             android:textStyle="bold"
                             android:layout_weight="1"
@@ -84,9 +85,10 @@
                             />
 
                         <TextView
+                            android:id="@+id/textViewPresentStudents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30"
+                            android:text=""
                             android:textSize="16dp"
                             android:gravity="center"
                             android:textStyle="bold"
