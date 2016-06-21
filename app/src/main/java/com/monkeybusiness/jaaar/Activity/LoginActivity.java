@@ -24,6 +24,7 @@ import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.dialogBox.CommonDialog;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.FloatingActionButton;
 
 import java.io.UnsupportedEncodingException;
@@ -51,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewforgotpass;
 //    @Bind(R.id.linearLayoutMain)
 //    LinearLayout linearLayoutMain;
+
+    CheckBox checkBoxRememberMe;
 
 
 //    private void startAnimations() {
@@ -92,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
 //        startAnimations();
         ButterKnife.bind(this);
 
+        checkBoxRememberMe = (CheckBox) findViewById(R.id.checkBoxRememberMe);
+
         textViewforgotpass.setText(Html.fromHtml("<u>Forgot Password?</u>"));
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
@@ -129,6 +134,18 @@ public class LoginActivity extends AppCompatActivity {
         Session session = new Session();
         session.setUsername(inputEmail.getText().toString());
 
+        boolean remember;
+
+        if (checkBoxRememberMe.isChecked())
+        {
+            remember = true;
+        }
+        else
+        {
+            remember = false;
+        }
+
+        session.setRemember(remember);
         loginRequestObject.setSession(session);
         loginRequestObject.setPassword(inputPassword.getText().toString());
 

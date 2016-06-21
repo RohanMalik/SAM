@@ -49,7 +49,6 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
     StudentsInfo studentsInfos;
     String classAlias;
 
-
     Button buttonAbsent;
 
     AttendanceFragment attendanceFragment;

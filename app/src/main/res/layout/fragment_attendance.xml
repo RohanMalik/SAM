@@ -8,12 +8,24 @@
 
     <include layout="@layout/toolbar"/>
 
-    <com.github.florent37.hollyviewpager.HollyViewPager
-        android:id="@+id/hollyViewPager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:hvp_headerHeight="150dp"
-        />
+        android:layout_height="match_parent">
+
+        <com.github.florent37.hollyviewpager.HollyViewPager
+            android:id="@+id/hollyViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:hvp_headerHeight="150dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBarAttd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
 
 </LinearLayout>

@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,34 +18,29 @@ import com.github.florent37.hollyviewpager.HollyViewPager;
 import com.github.florent37.hollyviewpager.HollyViewPagerConfigurator;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
-import com.monkeybusiness.jaaar.Adapter.AttendancePagerAdapter;
-import com.monkeybusiness.jaaar.Adapter.AttendanceSlidePagerAdapter;
-import com.monkeybusiness.jaaar.Adapter.AttendanceViewPagerAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
-import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.BatchInfo;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
-import com.monkeybusiness.jaaar.utils.DepthPageTransformer;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -53,17 +48,21 @@ import retrofit.client.Response;
 /**
  * Created by rohanmalik on 29/12/15.
  */
-public class AttendanceFragment extends BaseActivity {
+public class AttendanceFragment extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
 
     HollyViewPager hollyViewPager;
-
-    private String TAG = "AttendanceFragment";
+    int pageCount;
 //    ViewPager viewPagerAttd;
 
 //    AttendanceSlidePagerAdapter adapter;
+    private String TAG = "AttendanceFragment";
+
+    ProgressBar progressBarAttd;
+
+    int batchId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,8 +79,11 @@ public class AttendanceFragment extends BaseActivity {
 
         hollyViewPager = (HollyViewPager) findViewById(R.id.hollyViewPager);
 
+        progressBarAttd = (ProgressBar) findViewById(R.id.progressBarAttd);
+
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+
         relativeLayoutMenu.setOnClickListener(this);
         textViewActionTitle.setOnClickListener(this);
 
@@ -89,15 +91,16 @@ public class AttendanceFragment extends BaseActivity {
 
         Intent intent = getIntent();
 
-        if (intent!=null)
-        {
-            int id = intent.getIntExtra(Constants.BATCH_ID,0);
+        if (intent != null) {
+            batchId = intent.getIntExtra(Constants.BATCH_ID, 0);
             String date = intent.getStringExtra(Constants.DATE);
-            getSingleDayAttendanceServerCall(date,id);
+
+            textViewActionTitle.setText("Attendance : " + date);
+            getSingleDayAttendanceServerCall(date, batchId);
+            Prefs.with(this).save(Constants.BATCH_ID, batchId);
         }
 
 //        adapter = new AttendanceSlidePagerAdapter(getSupportFragmentManager(),6);
-
 
 
 //        viewPagerAttd.setPageTransformer(true, new DepthPageTransformer());
@@ -124,13 +127,14 @@ public class AttendanceFragment extends BaseActivity {
 //        });
 
     }
-    int pageCount;
 
-    public void setUIData(List<SingleIdDetail> singleIdDetails, List<StudentsInfo> studentsInfos, String classAlias)
-    {
+    public void setUIData(List<SingleIdDetail> singleIdDetails, List<StudentsInfo> studentsInfos, String classAlias) {
+
+        progressBarAttd.setVisibility(View.GONE);
+        hollyViewPager.setVisibility(View.VISIBLE);
 
         pageCount = singleIdDetails.size();
-        Log.d(TAG,"pageCount : "+pageCount);
+        Log.d(TAG, "pageCount : " + pageCount);
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
         MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
@@ -163,9 +167,8 @@ public class AttendanceFragment extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG,"pageSelected : "+position);
-                if (position==10)
-                {
+                Log.d(TAG, "pageSelected : " + position);
+                if (position == 10) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
                     reviewAttdInterface.onResumeFragment();
                 }
@@ -185,20 +188,37 @@ public class AttendanceFragment extends BaseActivity {
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;
+            case R.id.textViewActionTitle:
+//                showDateDialog();
+                break;
         }
     }
 
-    private void getSingleDayAttendanceServerCall(String date,int id) {
+    public void showDateDialog() {
+        Calendar now = Calendar.getInstance();
+
+        DatePickerDialog dpd = DatePickerDialog.newInstance(AttendanceFragment.this, now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH));
+
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+
+    private void getSingleDayAttendanceServerCall(String date, int id) {
 
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        String currentDate  = date+"T00:00:00.000Z";
+        String currentDate = date + "T00:00:00.000Z";
 
-        RestClient.getApiService(xCookies,aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
+        hollyViewPager.setVisibility(View.GONE);
+        progressBarAttd.setVisibility(View.VISIBLE);
+
+        RestClient.getApiService(xCookies, aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                Log.d(TAG,"Response : "+s);
+                Log.d(TAG, "Response : " + s);
 
                 JSONObject responseObject = null;
                 try {
@@ -208,23 +228,22 @@ public class AttendanceFragment extends BaseActivity {
 
                     JSONObject batchInfoObject = dataObject.getJSONObject("batch_info");
 
-                    Log.d(TAG,"abc "+batchInfoObject.toString());
+                    Log.d(TAG, "abc " + batchInfoObject.toString());
 
-                    BatchInfo batchInfo = new Gson().fromJson(batchInfoObject.toString(),BatchInfo.class);
+                    BatchInfo batchInfo = new Gson().fromJson(batchInfoObject.toString(), BatchInfo.class);
 
-                    Log.d(TAG,"batchInfo : "+new Gson().toJson(batchInfo));
+                    Log.d(TAG, "batchInfo : " + new Gson().toJson(batchInfo));
 
                     JSONArray studentInfoArray = dataObject.getJSONArray("students_info");
 
                     List<StudentsInfo> studentsInfos = new ArrayList<StudentsInfo>();
 
-                    for (int i = 0 ; i<studentInfoArray.length() ; i++)
-                    {
-                        StudentsInfo studentsInfo = new Gson().fromJson(studentInfoArray.get(i).toString(),StudentsInfo.class);
+                    for (int i = 0; i < studentInfoArray.length(); i++) {
+                        StudentsInfo studentsInfo = new Gson().fromJson(studentInfoArray.get(i).toString(), StudentsInfo.class);
                         studentsInfos.add(studentsInfo);
                     }
 
-                    Log.d(TAG,"StudentsInfo : "+new Gson().toJson(studentsInfos));
+                    Log.d(TAG, "StudentsInfo : " + new Gson().toJson(studentsInfos));
 
                     JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
 
@@ -232,18 +251,17 @@ public class AttendanceFragment extends BaseActivity {
 
                     List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
 
-                    while (keys.hasNext())
-                    {
+                    while (keys.hasNext()) {
                         String key = keys.next();
 
-                        Log.d(TAG,"Key : "+key);
+                        Log.d(TAG, "Key : " + key);
 
-                        singleIdDetails.add(getSingleIdObject(studentAttd,key));
+                        singleIdDetails.add(getSingleIdObject(studentAttd, key));
                     }
 
-                    Log.d(TAG,"Json : "+new Gson().toJson(singleIdDetails));
+                    Log.d(TAG, "Json : " + new Gson().toJson(singleIdDetails));
 
-                    setUIData(singleIdDetails,studentsInfos,batchInfo.getClassAlias());
+                    setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -253,7 +271,7 @@ public class AttendanceFragment extends BaseActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d(TAG,"error : "+error.toString());
+                Log.d(TAG, "error : " + error.toString());
             }
         });
     }
@@ -261,9 +279,9 @@ public class AttendanceFragment extends BaseActivity {
     private SingleIdDetail getSingleIdObject(JSONObject studentAttd, String key) {
 
         try {
-            JSONObject singleIdobject  = studentAttd.getJSONObject(key);
+            JSONObject singleIdobject = studentAttd.getJSONObject(key);
 
-            SingleIdDetail singleIdDetail  = new SingleIdDetail();
+            SingleIdDetail singleIdDetail = new SingleIdDetail();
 
             singleIdDetail.setId(singleIdobject.getInt("id"));
             singleIdDetail.setStudentId(singleIdobject.getInt("student_id"));
@@ -272,7 +290,7 @@ public class AttendanceFragment extends BaseActivity {
             singleIdDetail.setIsSave(singleIdobject.getBoolean("is_save"));
             singleIdDetail.setStudentAttendanceGroupId(singleIdobject.getInt("student_attendance_group_id"));
 
-            Log.d(TAG,"SingleId : "+new Gson().toJson(singleIdDetail));
+            Log.d(TAG, "SingleId : " + new Gson().toJson(singleIdDetail));
 
             return singleIdDetail;
         } catch (JSONException e) {
@@ -281,9 +299,19 @@ public class AttendanceFragment extends BaseActivity {
         return null;
     }
 
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-    public class AttendancePagerAdapterHolly extends FragmentPagerAdapter
-    {
+        monthOfYear++;
+        textViewActionTitle.setText("ATTENDANCE : " + year + "-" + monthOfYear + "-" + dayOfMonth);
+
+        getSingleDayAttendanceServerCall(""+year+"-"+monthOfYear+"-"+dayOfMonth,batchId);
+    }
+
+    public class AttendancePagerAdapterHolly extends FragmentPagerAdapter {
+
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
         public AttendancePagerAdapterHolly(FragmentManager fm) {
             super(fm);
         }
@@ -296,8 +324,6 @@ public class AttendanceFragment extends BaseActivity {
                 return AttendanceReviewFragment.newInstance(position, (String) getPageTitle(position));
             }
         }
-
-        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
@@ -319,7 +345,7 @@ public class AttendanceFragment extends BaseActivity {
 
         @Override
         public int getCount() {
-            return pageCount+1;
+            return pageCount + 1;
         }
 
         @Override

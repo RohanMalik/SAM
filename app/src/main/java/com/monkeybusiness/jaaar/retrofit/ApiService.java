@@ -4,6 +4,7 @@ package com.monkeybusiness.jaaar.retrofit;
 import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
+import com.monkeybusiness.jaaar.objectClasses.attdSavedResponse.AttdSavedResponseData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
@@ -49,6 +50,10 @@ public interface ApiService {
     void apiCallGetStudents(@Query("lecture_id") String lectureId,Callback<StudentsListResponseData> callback);
 
     //for getting list of students
+    @GET("/students")
+    void apiCallGetStudentsByBatch(@Query("batch_id") String batchId,Callback<StudentsListResponseData> callback);
+
+    //for getting list of students
     @GET("/students/{id}")
     void apiCallGetStudentDetails(@Path("id") String studentId, Callback<StudentsDetailsResponseData> callback);
 
@@ -81,4 +86,10 @@ public interface ApiService {
 
     @PUT("/lectures/{lecture_id}/tests/{test_id}")
     void apiCallPutTest(@Path("lecture_id") String lectureId,@Path("test_id") String testId,@Body TypedInput testPostObject, Callback<AddTestResponse> callback);
+
+    @POST("/batches/{batch_id}/student_attendances")
+    void apiCallPostAttendances(@Path("batch_id") String batchId,@Body TypedInput attdPostObject,Callback<AttdSavedResponseData> callback);
+
+    @GET("/batches/{batch_id}/student_attendances")
+    void apiCallMonthAttendanceDetail(@Path("batch_id") String batchId, @Query("from_date") String currentDate, @Query("to_date") String toDate,Callback<String> callback);
 }

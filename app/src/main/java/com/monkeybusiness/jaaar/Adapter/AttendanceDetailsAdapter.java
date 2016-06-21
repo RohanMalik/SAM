@@ -102,9 +102,9 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
 
         holder.textViewBatchDate.setText("Date : " + datumList.get(position).getDate());
         holder.textViewSubmitStatus.setText("Status : " +datumList.get(position).getAttendanceStatus());
-        holder.textViewTotal.setText("Total Students : " + (datumList.get(position).getAbsent() + datumList.get(0).getPresent()));
-        holder.textViewPresent.setText("Present : " + datumList.get(position).getPresent() + "");
-        holder.textViewAbsent.setText("Absent : " + datumList.get(position).getAbsent() + "");
+        holder.textViewTotal.setText("Total Students : " + (datumList.get(position).getAbsent() + datumList.get(position).getPresent()));
+        holder.textViewPresent.setText( datumList.get(position).getPresent() + "");
+        holder.textViewAbsent.setText(datumList.get(position).getAbsent() + "");
 
         holder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -177,6 +177,33 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearlayoutMyclassDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="left">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/notification_icon"
+                />
+
+            <TextView
+                android:id="@+id/textViewMyclassDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Class"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linearlayoutCalender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -35,6 +35,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public LinearLayout linearlayoutCalender;
     public LinearLayout linearlayoutNotification;
     public LinearLayout linearlayoutRemarks;
+    public LinearLayout linearlayoutMyclassDown;
 
     public TextView textViewDashboard;
     public TextView textViewAttendance;
@@ -42,6 +43,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public TextView textViewTest;
     public TextView textViewCalendar;
     public TextView textViewRemarks;
+    public TextView textViewMyclassDown;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutCalender = (LinearLayout) findViewById(R.id.linearlayoutCalender);
         linearlayoutNotification = (LinearLayout) findViewById(R.id.linearlayoutNotification);
         linearlayoutRemarks = (LinearLayout) findViewById(R.id.linearlayoutRemarks);
+        linearlayoutMyclassDown = (LinearLayout) findViewById(R.id.linearlayoutMyclassDown);
 
         textViewDashboard = (TextView) findViewById(R.id.textViewDashboard);
         textViewAttendance= (TextView) findViewById(R.id.textViewAttendance);
@@ -67,6 +70,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         textViewTest= (TextView) findViewById(R.id.textViewTest);
         textViewCalendar= (TextView) findViewById(R.id.textViewCalendar);
         textViewRemarks= (TextView) findViewById(R.id.textViewRemarks);
+        textViewMyclassDown = (TextView) findViewById(R.id.textViewMyclassDown);
 
         linearlayoutDashboard.setOnClickListener(this);
         linearlayoutMyclass.setOnClickListener(this);
@@ -75,6 +79,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutNotification.setOnClickListener(this);
         linearlayoutAttendance.setOnClickListener(this);
         linearlayoutRemarks.setOnClickListener(this);
+        linearlayoutMyclassDown.setOnClickListener(this);
 
         SlidingMenu sm = getSlidingMenu();
         sm.setFadeDegree(0.50f);
@@ -142,9 +147,23 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     toggle();
                 }
                 break;
+
+            case R.id.linearlayoutMyclassDown:
+                if (Utils.classFlag != 4) {
+
+                    toggleLayouts(linearlayoutMyclassDown,textViewMyclassDown);
+                    Intent intent = new Intent(BaseActivity.this, MyClassActivity.class);
+                    startActivity(intent);
+                    finish();
+//                    overridePendingTransition(R.anim.slide_in_right,
+//                            R.anim.slide_out_left);
+                } else {
+                    toggle();
+                }
+                break;
             case R.id.linearlayoutCalender:
 
-                if (Utils.classFlag != 4) {
+                if (Utils.classFlag != 5) {
 
                     toggleLayouts(linearlayoutCalender,textViewCalendar);
                     Intent intent = new Intent(BaseActivity.this, MyCalendarFragment.class);
@@ -158,7 +177,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
 //
             case R.id.linearlayoutRemarks:
-                if (Utils.classFlag != 5) {
+                if (Utils.classFlag != 6) {
 
                     toggleLayouts(linearlayoutRemarks,textViewRemarks);
                     Intent intent = new Intent(BaseActivity.this, RemarksFragment.class);

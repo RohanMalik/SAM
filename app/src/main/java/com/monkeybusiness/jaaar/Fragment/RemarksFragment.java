@@ -81,7 +81,7 @@ public class RemarksFragment extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_remarks_student);
 
-        Utils.classFlag = 5;
+        Utils.classFlag = 6;
 
         toggleLayouts(linearlayoutRemarks, textViewRemarks);
 

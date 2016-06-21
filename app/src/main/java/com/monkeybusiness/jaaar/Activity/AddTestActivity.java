@@ -140,13 +140,16 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         {
             String lectureName = intent.getStringExtra(Constants.LECTURE_ID);
 
-            int pos = lectureList.indexOf(lectureName);
-            input_event_name.setSelection(pos);
+            if (lectureName!=null)
+            {
+                int pos = lectureList.indexOf(lectureName);
+                input_event_name.setSelection(pos);
 
-            textViewDate.setText(Utils.formatDateAndTime(intent.getStringExtra(Constants.DATE)));
-            editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS,0)+"");
-            editTextMax.setText(intent.getIntExtra(Constants.MAX_MARKS,0)+"");
-            editTextDuration.setText(intent.getIntExtra(Constants.DURATION,0)+"");
+                textViewDate.setText(Utils.formatDateAndTime(intent.getStringExtra(Constants.DATE)));
+                editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS,0)+"");
+                editTextMax.setText(intent.getIntExtra(Constants.MAX_MARKS,0)+"");
+                editTextDuration.setText(intent.getIntExtra(Constants.DURATION,0)+"");
+            }
         }
     }
 

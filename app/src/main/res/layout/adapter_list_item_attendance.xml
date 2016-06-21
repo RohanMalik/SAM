@@ -14,6 +14,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,9 +38,38 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_down"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Present"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Absent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:orientation="horizontal">
@@ -48,7 +78,9 @@
                 android:id="@+id/textViewPresent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Present : 10"
+                android:text="5"
+                android:gravity="center"
+                android:layout_weight="1"
                 android:textSize="18sp"/>
 
             <TextView
@@ -56,18 +88,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Absent : 5"
+                android:text="5"
+                android:gravity="center"
+                android:layout_weight="1"
                 android:textSize="18sp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_down"/>
         <TextView
             android:id="@+id/textViewTotal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Total : 10"
+            android:gravity="center"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:textSize="18sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_down"/>
 
         <TextView
             android:id="@+id/textViewSubmitStatus"

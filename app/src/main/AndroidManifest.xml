@@ -55,6 +55,8 @@
         <activity android:name=".Activity.AddTestActivity" />
         <activity android:name=".Activity.MyBatchesActivity" />
         <activity android:name=".Activity.AttendanceDetailsActivity"></activity>
+
+        <activity android:name=".Activity.MyClassActivity"/>
     </application>
 
 </manifest>

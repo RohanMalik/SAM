@@ -9,6 +9,9 @@ public class Session {
     @SerializedName("username")
     @Expose
     private String username;
+    @SerializedName("remember")
+    @Expose
+    private boolean remember;
 
     /**
      * 
@@ -28,4 +31,11 @@ public class Session {
         this.username = username;
     }
 
+    public boolean isRemember() {
+        return remember;
+    }
+
+    public void setRemember(boolean remember) {
+        this.remember = remember;
+    }
 }

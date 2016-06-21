@@ -75,8 +75,9 @@ public class FriendsActivity extends BaseActivity {
 
         Intent intent = getIntent();
         int lectureId = intent.getIntExtra(Constants.LECTURE_ID,0);
+        int batchId = intent.getIntExtra(Constants.BATCH_ID,0);
 
-        getStudentListServerCall(lectureId);
+        getStudentListServerCall(batchId);
 
     }
 
@@ -229,7 +230,7 @@ public class FriendsActivity extends BaseActivity {
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudents(String.valueOf(gradeId), new Callback<StudentsListResponseData>() {
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudentsByBatch(String.valueOf(gradeId), new Callback<StudentsListResponseData>() {
 
             @Override
             public void success(StudentsListResponseData studentsListResponseData, Response response) {
