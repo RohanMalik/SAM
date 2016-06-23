@@ -57,6 +57,8 @@
         <activity android:name=".Activity.AttendanceDetailsActivity"></activity>
 
         <activity android:name=".Activity.MyClassActivity"/>
+        
+        <activity android:name=".Fragment.FillMarksActivity"/>
     </application>
 
 </manifest>

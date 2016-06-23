@@ -38,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -136,6 +138,27 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         pageCount = singleIdDetails.size();
         Log.d(TAG, "pageCount : " + pageCount);
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
+
+        Log.d("sort","before abc : "+new Gson().toJson(singleIdDetails));
+        Log.d("sort","before studentInfo : "+new Gson().toJson(studentsInfos));
+
+        Collections.sort(singleIdDetails, new Comparator<SingleIdDetail>() {
+            @Override
+            public int compare(SingleIdDetail self, SingleIdDetail other) {
+                return String.valueOf(self.getStudentId()).compareTo(String.valueOf(other.getStudentId()));
+            }
+        });
+
+        Collections.sort(studentsInfos, new Comparator<StudentsInfo>() {
+            @Override
+            public int compare(StudentsInfo self, StudentsInfo other) {
+                return String.valueOf(self.getId()).compareTo(String.valueOf(other.getId()));
+            }
+        });
+
+
+        Log.d("sort","after singleId : "+new Gson().toJson(singleIdDetails));
+        Log.d("sort","after studentInfo : "+new Gson().toJson(studentsInfos));
 
         MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
 
@@ -358,4 +381,5 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         }
 
     }
+
 }

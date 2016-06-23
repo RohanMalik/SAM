@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.kbeanie.imagechooser.exceptions.ChooserException;
+import com.monkeybusiness.jaaar.Adapter.RemarksListAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.Services.CircleImageView;
 import com.monkeybusiness.jaaar.cropImageUtils.Crop;
@@ -31,11 +34,14 @@ import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.RemarksRequestObj
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
+import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
+import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Log;
+import com.monkeybusiness.jaaar.utils.NonScrollListView;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -71,6 +77,9 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     TextView textViewContact;
     TextView textViewEmail;
 
+    TextView textViewContactStudent;
+    TextView textViewRemarks;
+
     Button buttonRemarksStudent;
 
     ProgressBar progressBarStudent;
@@ -81,10 +90,16 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     private TextView textViewCamera;
     private TextView textViewGallery;
     private TextView textViewTitle;
+
+    TextView textViewRollNoStudent;
     private ImageChooserManager imageChooserManagerGallery;
     private ImageChooserManager imageChooserManagerCamera;
     private Uri inputUri;
     private Uri outputUri;
+
+    NonScrollListView listViewRemarks;
+
+    int studentId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,10 +113,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         initialization();
 
         Intent intent = getIntent();
-        int studentId = intent.getIntExtra(Constants.STUDENT_ID, 0);
+        studentId = intent.getIntExtra(Constants.STUDENT_ID, 0);
 
-        getStudentDetailsServerCall(studentId);
     }
+
+
 
     public void initialization() {
         linearLayoutMainStudent = (LinearLayout) findViewById(R.id.linearLayoutMainStudent);
@@ -113,12 +129,19 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         textViewClass = (TextView) findViewById(R.id.textViewClassStudent);
         textViewContact = (TextView) findViewById(R.id.textViewContactStudent);
         textViewEmail = (TextView) findViewById(R.id.textViewEmailStudent);
+        textViewRollNoStudent  = (TextView) findViewById(R.id.textViewRollNoStudent);
+
+        textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
 
         buttonRemarksStudent = (Button) findViewById(R.id.buttonRemarksStudent);
 
         progressBarStudent = (ProgressBar) findViewById(R.id.progressBarStudent);
 
+        textViewContactStudent = (TextView) findViewById(R.id.textViewParentConatctStudent);
+
         imageViewProfilePicStudent = (CircleImageView) findViewById(R.id.imageViewProfilePicStudent);
+
+        listViewRemarks = (NonScrollListView) findViewById(R.id.listViewRemarks);
 
         textViewActionTitle.setText("Student Profile");
 
@@ -147,10 +170,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         this.studentsDetailsResponseData = studentsDetailsResponseData;
 
         textViewName.setText("Name : " + studentsDetailsResponseData.getData().getStudent().getStudentName());
-        textViewClass.setText("Roll No. : " + studentsDetailsResponseData.getData().getStudent().getRollno());
+        textViewClass.setText("Class : " + studentsDetailsResponseData.getData().getStudent().getBatch().getClassAlias());
         textViewContact.setText("Address : " + studentsDetailsResponseData.getData().getStudent().getAddress());
         textViewEmail.setText("Father's Name : " + studentsDetailsResponseData.getData().getStudent().getFatherName());
-
+        textViewRollNoStudent.setText("Roll No. "+studentsDetailsResponseData.getData().getStudent().getRollno());
+        textViewContactStudent.setText("Contact : "+studentsDetailsResponseData.getData().getStudent().getParent().getContactPhone());
     }
 
     @Override
@@ -335,6 +359,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         });
     }
 
+
+
     private void sendRemarksServerCall(int id) {
 
         RemarksRequestObject remarksRequestObject = new RemarksRequestObject();
@@ -369,6 +395,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
                     if (addRemarksResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                         Utils.failureDialog(StudentDetailsActivity.this, "Success", "You have successfully sent remarks");
+                        getStudentRemarks(studentId);
                     } else {
                         Utils.failureDialog(StudentDetailsActivity.this, "Failure", "Something went wrong, please try again.");
                     }
@@ -384,6 +411,61 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getStudentRemarks(int studentId) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies,aCookies).apiCallFetchSingleStudentRemarks(String.valueOf(studentId), "1",
+                new Callback<StudentsRemarksResponse>() {
+                    @Override
+                    public void success(StudentsRemarksResponse studentsRemarksResponse, Response response) {
+                        Log.d(TAG,"Response : "+new Gson().toJson(studentsRemarksResponse));
+
+                        setUiremarks(studentsRemarksResponse);
+                    }
+
+                    
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG,"error : "+error.toString());
+                    }
+                });
+    }
+
+    private void setUiremarks(StudentsRemarksResponse studentsRemarksResponse) {
+
+        if (studentsRemarksResponse.getData().getRemarks().isEmpty())
+        {
+            textViewRemarks.setVisibility(View.GONE);
+        }
+        else
+        {
+            textViewRemarks.setVisibility(View.VISIBLE);
+        }
+
+        for (Remark remark : studentsRemarksResponse.getData().getRemarks())
+        {
+            Log.d("adapter","UIremark : "+new Gson().toJson(remark));
+        }
+        RemarksListAdapter remarksListAdapter = new RemarksListAdapter(this,studentsRemarksResponse.getData().getRemarks());
+        listViewRemarks.setAdapter(remarksListAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getStudentDetailsServerCall(studentId);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getStudentRemarks(studentId);
+            }
+        },200);
     }
 }
 

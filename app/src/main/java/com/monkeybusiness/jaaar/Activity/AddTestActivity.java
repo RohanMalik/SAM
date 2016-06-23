@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,6 +68,11 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     LectureResponseData lectureResponseData;
 
     Intent intent;
+    Calendar calendar;
+    Date date;
+    int month;
+    int year;
+    int day;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,9 +108,9 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         editTextMax = (EditText) findViewById(R.id.editTextMax);
         editTextMin = (EditText) findViewById(R.id.editTextMin);
-        ;
+
         editTextDuration = (EditText) findViewById(R.id.editTextDuration);
-        ;
+
 
         textViewActionTitle.setText("ADD TEST");
 
@@ -126,8 +130,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             lectureList.add(lecture.getLectureName());
         }
 
-        if (!lectureList.isEmpty())
-        {
+        if (!lectureList.isEmpty()) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, lectureList);
 // Specify the layout to use when the list of choices appears
@@ -136,19 +139,17 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             input_event_name.setAdapter(adapter);
         }
 
-        if (intent!=null)
-        {
+        if (intent != null) {
             String lectureName = intent.getStringExtra(Constants.LECTURE_ID);
 
-            if (lectureName!=null)
-            {
+            if (lectureName != null) {
                 int pos = lectureList.indexOf(lectureName);
                 input_event_name.setSelection(pos);
 
                 textViewDate.setText(Utils.formatDateAndTime(intent.getStringExtra(Constants.DATE)));
-                editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS,0)+"");
-                editTextMax.setText(intent.getIntExtra(Constants.MAX_MARKS,0)+"");
-                editTextDuration.setText(intent.getIntExtra(Constants.DURATION,0)+"");
+                editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS, 0) + "");
+                editTextMax.setText(intent.getIntExtra(Constants.MAX_MARKS, 0) + "");
+                editTextDuration.setText(intent.getIntExtra(Constants.DURATION, 0) + "");
             }
         }
     }
@@ -165,12 +166,11 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.buttonAddEvent:
                 Log.d(TAG, "List Selection : " + input_event_name.getSelectedItem());
-                if (intent!=null)
-                {
+
+                String lectureName = intent.getStringExtra(Constants.LECTURE_ID);
+                if (lectureName != null) {
                     updateTestServerCall();
-                }
-                else
-                {
+                } else {
                     addTestServerCall();
                 }
                 break;
@@ -186,11 +186,20 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date")) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
+
+            String testDate;
+            if (date!=null)
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
+                testDate = ISO8601.fromCalendar(calendar);
+            }
+            else
+            {
+                testDate = intent.getStringExtra(Constants.DATE);
+            }
 
             String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId() + "";
-            String testDate = ISO8601.fromCalendar(calendar);
             String testName = input_event_name.getSelectedItem().toString();
             String desc = input_event_desc.getText().toString();
             String maxMarks = editTextMax.getText().toString();
@@ -217,14 +226,14 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
             Log.d(TAG, "AddTest : " + addTestJson);
 
-            int testId = intent.getIntExtra(Constants.TEST_ID,0);
+            int testId = intent.getIntExtra(Constants.TEST_ID, 0);
 
             ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Adding Test...", false);
 
             try {
                 TypedInput typedInput = new TypedByteArray("application/json", addTestJson.getBytes("UTF-8"));
 
-                RestClient.getApiServicePojo(xCookies, aCookies).apiCallPutTest(lectureId,String.valueOf(testId), typedInput, new Callback<AddTestResponse>() {
+                RestClient.getApiServicePojo(xCookies, aCookies).apiCallPutTest(lectureId, String.valueOf(testId), typedInput, new Callback<AddTestResponse>() {
                     @Override
                     public void success(AddTestResponse addTestResponse, Response response) {
                         Log.d(TAG, "Response : " + new Gson().toJson(addTestResponse));
@@ -242,7 +251,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                             });
                             alert.show();
                         } else {
-                            Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                            Utils.failureDialog(AddTestActivity.this, "Something went wrong", "Something went wrong please try again.");
                         }
                     }
 
@@ -250,14 +259,14 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                     public void failure(RetrofitError error) {
                         Log.d(TAG, "error : " + error.toString());
                         progressDialog.dismiss();
-                        Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                        Utils.failureDialog(AddTestActivity.this, "Something went wrong", "Something went wrong please try again.");
                     }
                 });
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         } else {
-            Utils.failureDialog(this,"Warning","Please select date");
+            Utils.failureDialog(this, "Warning", "Please select date");
         }
 
     }
@@ -282,9 +291,6 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }
-
-    Calendar calendar;
-    Date date;
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
@@ -332,12 +338,15 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
+        String testDate;
         if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date")) {
+
             Calendar calendar = Calendar.getInstance();
             calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
+            testDate = ISO8601.fromCalendar(calendar);
 
             String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId() + "";
-            String testDate = ISO8601.fromCalendar(calendar);
+
             String testName = input_event_name.getSelectedItem().toString();
             String desc = input_event_desc.getText().toString();
             String maxMarks = editTextMax.getText().toString();
@@ -387,29 +396,23 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                             });
                             alert.show();
                         } else {
-                            Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                            Utils.failureDialog(AddTestActivity.this, "Something went wrong", "Something went wrong please try again.");
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         Log.d(TAG, "error : " + error.toString());
-                        Utils.failureDialog(AddTestActivity.this,"Something went wrong","Something went wrong please try again.");
+                        Utils.failureDialog(AddTestActivity.this, "Something went wrong", "Something went wrong please try again.");
                     }
                 });
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         } else {
-            Utils.failureDialog(this,"Warning","Please select date");
+            Utils.failureDialog(this, "Warning", "Please select date");
         }
     }
-
-
-
-    int month;
-    int year;
-    int day;
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

@@ -7,16 +7,20 @@ import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
 import com.monkeybusiness.jaaar.objectClasses.attdSavedResponse.AttdSavedResponseData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
+import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.objectClasses.loginResponseData.LoginResponse;
+import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.SearchStudentData;
 import com.monkeybusiness.jaaar.objectClasses.studentsResponse.StudentsListResponseData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.TestListResponse;
+import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksResponseData;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
@@ -92,4 +96,23 @@ public interface ApiService {
 
     @GET("/batches/{batch_id}/student_attendances")
     void apiCallMonthAttendanceDetail(@Path("batch_id") String batchId, @Query("from_date") String currentDate, @Query("to_date") String toDate,Callback<String> callback);
+
+    @GET("/students/{student_id}/remarks")
+    void apiCallFetchSingleStudentRemarks(@Path("student_id") String studentId, @Query("all") String all,Callback<StudentsRemarksResponse> callback);
+
+    @GET("/lectures/{lecture_id}/tests")
+    void apiCallGetTestByLectures(@Path("lecture_id") String lectureId,Callback<TestListResponse> callback);
+
+//    @GET("lectures/{lecture_id}/tests/{test_id}")
+//    void apiCallGetTestDetails(@Path("lecture_id") String lectureId,@Path("test_id") String testId,Callback<String> callback);
+
+
+    @GET("/tests/{test_id}/test_marks")
+    void apiCallGetTestMarks(@Path("test_id") String testId,Callback<TestMarksResponseData> callback);
+
+    @GET("/students")
+    void apiCallGetTestStudents(@Query("lecture_id") String lectureId, Callback<StudentDetailsForMarksResponse> callback);
+
+    @POST("/tests/{test_id}/test_marks")
+    void apiCallSendStudentMarks(@Path("test_id") String testId,@Body TypedInput marksPostObject,Callback<String> callback);
 }

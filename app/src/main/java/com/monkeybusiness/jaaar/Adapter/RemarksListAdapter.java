@@ -1,45 +1,44 @@
 package com.monkeybusiness.jaaar.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.TestData;
+import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
+import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
-import com.monkeybusiness.jaaar.utils.Constants;
-import com.monkeybusiness.jaaar.utils.ISO8601;
+import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
-import com.monkeybusiness.jaaar.utils.preferences.Prefs;
-import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
-import com.rey.material.widget.Button;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
  * Created by rakesh on 19/1/16.
  */
-public class TestListAdapter extends BaseAdapter {
+public class RemarksListAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-    List<Test> testDatas;
+    List<Remark> remarks;
 
-    public TestListAdapter(Context context, List<Test> testDatas) {
+    public RemarksListAdapter(Context context, List<Remark> remarks) {
         this.context = context;
-        this.testDatas = testDatas;
+        this.remarks = remarks;
+        for (Remark remark : remarks)
+        {
+            Log.d("adapter","remark : "+new Gson().toJson(remark));
+        }
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return testDatas.size();
+        return remarks.size();
     }
 
     @Override
@@ -49,7 +48,7 @@ public class TestListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -65,24 +64,17 @@ public class TestListAdapter extends BaseAdapter {
 //            viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);
             viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewTime);
             viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
-            viewHolder.buttonFillMarksStudent = (Button) view.findViewById(R.id.buttonFillMarksStudent);
 
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.textViewTime.setText(Utils.formatDateAndTime(testDatas.get(position).getTestDate()));
+//        Log.d("getView","getting view : "+getCount());
+
+        viewHolder.topicName.setText(Utils.formatDateAndTime(remarks.get(position).getDateOfRemark()));
 //        viewHolder.textViewDate.setText(testDatas.get(position).getDate());
-        viewHolder.topicName.setText(testDatas.get(position).getTestName());
-        viewHolder.buttonFillMarksStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, FillMarksActivity.class);
-                Prefs.with(context).save(PrefsKeys.TEST_DATA,testDatas.get(position));
-                context.startActivity(intent);
-            }
-        });
+        viewHolder.textViewTime.setText(remarks.get(position).getRemark());
 
         return view;
     }
@@ -92,7 +84,6 @@ public class TestListAdapter extends BaseAdapter {
         //        TextView textViewDate;
         TextView textViewTime;
         TextView topicName;
-        Button buttonFillMarksStudent;
     }
 
 }

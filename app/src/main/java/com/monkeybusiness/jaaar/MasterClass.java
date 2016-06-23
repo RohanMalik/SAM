@@ -4,9 +4,11 @@ import android.app.Application;
 import android.util.Log;
 
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
+import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
+import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,15 @@ public class MasterClass extends Application {
     public ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
     public AttendanceFragment attendanceFragment;
+    public FillMarksActivity fillMarksActivity;
 
     List<SingleIdDetail> singleIdDetails;
     List<StudentsInfo> studentsInfos;
     String classAlias;
+
+    List<Student> students;
+
+    List<com.monkeybusiness.jaaar.objectClasses.addMarksData.Student> studentsForMarks = new ArrayList<>();
 
     public static MasterClass getInstance()
     {
@@ -75,5 +82,29 @@ public class MasterClass extends Application {
 
     public void setClassAlias(String classAlias) {
         this.classAlias = classAlias;
+    }
+
+    public FillMarksActivity getFillMarksActivity() {
+        return fillMarksActivity;
+    }
+
+    public void setFillMarksActivity(FillMarksActivity fillMarksActivity) {
+        this.fillMarksActivity = fillMarksActivity;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<com.monkeybusiness.jaaar.objectClasses.addMarksData.Student> getStudentsForMarks() {
+        return studentsForMarks;
+    }
+
+    public void setStudentsForMarks(List<com.monkeybusiness.jaaar.objectClasses.addMarksData.Student> studentsForMarks) {
+        this.studentsForMarks = studentsForMarks;
     }
 }

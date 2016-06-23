@@ -9,7 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.monkeybusiness.jaaar.Activity.TestActivity;
 import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
+import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
@@ -82,9 +84,12 @@ public class LecturesAdapter extends BaseAdapter {
         viewHolder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, FriendsActivity.class);
+                Intent intent = new Intent(context, TestActivity.class);
                 intent.putExtra(Constants.LECTURE_ID, lectureResponseData.getData().getLectures().get(position).getId());
+                intent.putExtra(Constants.FROM_MAIN,false);
                 context.startActivity(intent);
+
+//                getTestByLectureIdServerCall(lectureResponseData.getData().getLectures().get(position).getId());
             }
         });
 
@@ -101,4 +106,5 @@ public class LecturesAdapter extends BaseAdapter {
         TextView textViewSubjectName;
         TextView textViewLectDesc;
     }
+
 }

@@ -29,6 +29,10 @@ public class PrefsKeys {
 
     public static final String BATCHES_RESPONSE_DATA = "batchesResponseData";
 
+    public static final String TEST_DATA = "testData";
+
+    public static final String TEST_MARKS_DATA = "testMarksData";
+
     public static final String PROFILE_DATA = "profileData";
 
     public static final String LOCATION_FLAG = "locationFlag";
@@ -38,6 +42,8 @@ public class PrefsKeys {
     public static final String MORE_SCREEN_DATA = "moreScreenData";
 
     public static final String VERIFIED_USER = "verifiedUser";
+
+    public static final String STUDENT_DATA_TEST = "studentDataTest";
 
     public static final String REFERRER_CODE = "referrerCode";
 

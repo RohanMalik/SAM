@@ -1,7 +1,7 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.TestPagerAdapter;
-import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.TestFragmentListner;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
@@ -43,6 +42,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     TextView textViewActionTitle;
 
     PagerTabStrip pager_header;
+    Intent intent;
     private TestPagerAdapter fragmentPagerAdapter;
 
     @Override
@@ -83,11 +83,12 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         relativeLayoutMenu.setOnClickListener(this);
     }
 
-    public void setUiData() {
+    public void setUiData(TestListResponse testListResponse) {
+
         fragmentPagerAdapter = new TestPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
 
-        TestListResponse testListResponse = Prefs.with(this).getObject(PrefsKeys.TEST_RESPONSE_DATA, TestListResponse.class);
+//        TestListResponse testListResponse = Prefs.with(this).getObject(PrefsKeys.TEST_RESPONSE_DATA, TestListResponse.class);
 
         List<Test> testList = testListResponse.getData().getTests();
 
@@ -115,20 +116,17 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
             }
         }
 
-        if (!testListUpcoming.isEmpty())
-        {
+        if (!testListUpcoming.isEmpty()) {
             TestFragmentListner listner = (TestFragmentListner) fragmentPagerAdapter.getRegisteredFragment(0);
             listner.onResumeFragment(this, testListUpcoming);
         }
 
-        if (!testListPending.isEmpty())
-        {
+        if (!testListPending.isEmpty()) {
             TestFragmentListner listner = (TestFragmentListner) fragmentPagerAdapter.getRegisteredFragment(1);
             listner.onResumeFragment(this, testListPending);
         }
 
-        if (!testListCompleted.isEmpty())
-        {
+        if (!testListCompleted.isEmpty()) {
             TestFragmentListner listner = (TestFragmentListner) fragmentPagerAdapter.getRegisteredFragment(2);
             listner.onResumeFragment(this, testListCompleted);
         }
@@ -153,8 +151,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void success(TestListResponse testListResponse, Response response) {
                 Log.d(TAG, "Response : " + new Gson().toJson(testListResponse));
-                Prefs.with(TestActivity.this).save(PrefsKeys.TEST_RESPONSE_DATA, testListResponse);
-                setUiData();
+//                Prefs.with(TestActivity.this).save(PrefsKeys.TEST_RESPONSE_DATA, testListResponse);
+                setUiData(testListResponse);
             }
 
             @Override
@@ -164,10 +162,42 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
+    int id;
     @Override
     protected void onResume() {
         super.onResume();
 
-        testListServerCall();
+        intent = getIntent();
+        boolean fromMain = intent.getBooleanExtra(Constants.FROM_MAIN, true);
+
+        if (fromMain) {
+            testListServerCall();
+        }
+        else
+        {
+            id = intent.getIntExtra(Constants.LECTURE_ID,0);
+            getTestByLectureIdServerCall(id);
+        }
+
+    }
+
+    public void getTestByLectureIdServerCall(int id) {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetTestByLectures(String.valueOf(id), new Callback<TestListResponse>() {
+            @Override
+            public void success(TestListResponse testListResponse, Response response) {
+                Log.d("TestByLectureId", "Response : " + new Gson().toJson(testListResponse));
+                setUiData(testListResponse);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("TestByLectureId", "error : " + error.toString());
+            }
+        });
+
+
     }
 }

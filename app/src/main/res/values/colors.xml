@@ -8,6 +8,9 @@
 
     <color name="background_attd">#007888</color>
 
+
+    <color name="background_remarks">#71b3bc</color>
+
     <!--<color name="primary">#00bcd4</color>-->
     <!--<color name="primary_dark">#3EC4E7</color>-->
     <!--<color name="primary_lighter">#008fa1</color>-->
