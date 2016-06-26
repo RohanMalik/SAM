@@ -35,7 +35,7 @@ public class MyClassActivity extends BaseActivity {
 
         Utils.classFlag = 1;
 
-        toggleLayouts(linearlayoutAttendance, textViewAttendance);
+        toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
 
 
         initialization();

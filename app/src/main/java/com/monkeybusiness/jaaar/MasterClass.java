@@ -107,4 +107,5 @@ public class MasterClass extends Application {
     public void setStudentsForMarks(List<com.monkeybusiness.jaaar.objectClasses.addMarksData.Student> studentsForMarks) {
         this.studentsForMarks = studentsForMarks;
     }
+
 }

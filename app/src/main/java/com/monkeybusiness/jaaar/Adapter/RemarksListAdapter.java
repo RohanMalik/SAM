@@ -58,7 +58,7 @@ public class RemarksListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.adapter_test_item, parent, false);
+            view = inflater.inflate(R.layout.adapter_remark_item, parent, false);
             viewHolder = new ViewHolder();
 //            viewHolder.subjectName = (TextView) view.findViewById(R.id.subjectName);
 //            viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);

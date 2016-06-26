@@ -136,7 +136,7 @@ public class FillMarksActivity extends BaseActivity {
         Collections.sort(students, new Comparator<Student>() {
             @Override
             public int compare(Student self, Student other) {
-                return String.valueOf(self.getRollno()).compareTo(String.valueOf(other.getRollno()));
+                return String.valueOf(self.getId()).compareTo(String.valueOf(other.getId()));
             }
         });
 
@@ -172,9 +172,14 @@ public class FillMarksActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.d(TAG, "pageSelected : " + position);
+
                 if (position == 10) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
                     reviewAttdInterface.onResumeFragment();
+                }
+                else
+                {
+
                 }
             }
 

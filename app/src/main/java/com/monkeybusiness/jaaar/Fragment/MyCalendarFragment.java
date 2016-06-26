@@ -177,10 +177,14 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
                         eventDescription = event.getEventDescription();
                     }
 
-                    BaseCalendarEvent event1 = new BaseCalendarEvent(event.getEventName(), "",eventDescription,
-                            eventColor, startTime, endTime, true);
+                    if (event.getEventName()!=null)
+                    {
+                        BaseCalendarEvent event1 = new BaseCalendarEvent(event.getEventName(), "",eventDescription,
+                                eventColor, startTime, endTime, true);
 
-                    eventList.add(event1);
+                        eventList.add(event1);
+                    }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

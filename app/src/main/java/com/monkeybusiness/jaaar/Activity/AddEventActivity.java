@@ -3,19 +3,20 @@ package com.monkeybusiness.jaaar.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-//import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,8 +25,11 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.addEventObject.AddEventObject;
 import com.monkeybusiness.jaaar.objectClasses.addEventObject.Events;
 import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
+import com.monkeybusiness.jaaar.objectClasses.batchesData.Batch;
+import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
+import com.monkeybusiness.jaaar.objectClasses.lectureResponse.Lecture;
+import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
-import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -38,8 +42,10 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -47,7 +53,9 @@ import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
 
-public class AddEventActivity extends BaseActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener {
+//import android.widget.Spinner;
+
+public class AddEventActivity extends BaseActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     EditText input_event_name;
     EditText input_event_desc;
@@ -58,11 +66,26 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     Button buttonAddEvent;
 
     RelativeLayout relativeLayoutMenu;
+
+    LinearLayout linearLayoutDynamicCheckBoxClass;
+    LinearLayout linearLayoutDynamicCheckBoxLecture;
+
     TextView textViewActionTitle;
 
     Spinner spinner;
 
+    ProgressBar progressBarAddEvent;
+
+    LinearLayout linearLayoutMainAddEvent;
+
     boolean fromTo;
+    Date startDate;
+    Date endDate;
+    int year;
+    int monthOfYear;
+    int dayOfMonth;
+    List<CheckBox> checkBoxesBatch;
+    List<CheckBox> checkBoxesLecture;
     private String TAG = "AddEventActivity";
 
     @Override
@@ -71,10 +94,21 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_test_event);
 
         initialization();
+
+
+        getBatchesServerCall();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lectureServerCall();
+            }
+        }, 200);
     }
 
-    public void initialization()
-    {
+    public void initialization() {
+
+        linearLayoutMainAddEvent = (LinearLayout) findViewById(R.id.linearLayoutMainAddEvent);
 
         input_event_name = (EditText) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
@@ -87,6 +121,13 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
+        linearLayoutDynamicCheckBoxClass = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxClass);
+        linearLayoutDynamicCheckBoxLecture = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxLecture);
+
+        linearLayoutMainAddEvent.setVisibility(View.GONE);
+
+        progressBarAddEvent = (ProgressBar) findViewById(R.id.progressBarAddEvent);
+
         spinner = (Spinner) findViewById(R.id.spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -96,6 +137,25 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                Log.d("abc", "Position : " + position);
+                if (position == 1) {
+                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+                    linearLayoutDynamicCheckBoxClass.setVisibility(View.VISIBLE);
+                } else if (position == 2) {
+                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
+                } else {
+                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+                }
+                return true;
+            }
+        });
+
         textViewActionTitle.setText("ADD EVENT");
 
         relativeLayoutMenu.setOnClickListener(this);
@@ -104,17 +164,17 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         buttonAddEvent.setOnClickListener(this);
         textViewFrom.setOnClickListener(this);
         textViewTo.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.textViewFrom:
                 showDateDialog();
                 fromTo = true;
-                 break;
+                break;
             case R.id.textViewTo:
                 showDateDialog();
                 fromTo = false;
@@ -131,8 +191,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    public void showTimeDialog()
-    {
+    public void showTimeDialog() {
         Calendar now = Calendar.getInstance();
         TimePickerDialog tpd = TimePickerDialog.newInstance(
                 AddEventActivity.this,
@@ -143,8 +202,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
 
-    public void showDateDialog()
-    {
+    public void showDateDialog() {
         Calendar now = Calendar.getInstance();
 
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -157,19 +215,15 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
-
-    Date startDate;
-    Date endDate;
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
 
-        Log.d("AddEvnt","h: "+hourOfDay+" m: "+minute+"h1: "+hourOfDay+" m1: "+second);
+        Log.d("AddEvnt", "h: " + hourOfDay + " m: " + minute + "h1: " + hourOfDay + " m1: " + second);
 
-        if (fromTo)
-        {
+        if (fromTo) {
 
             startDate = new Date();
-            startDate.setYear(year-1900);
+            startDate.setYear(year - 1900);
             startDate.setMonth(monthOfYear);
             startDate.setDate(dayOfMonth);
 
@@ -179,11 +233,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
             SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
 
             textViewFrom.setText(format.format(startDate));
-        }
-        else
-        {
+        } else {
             endDate = new Date();
-            endDate.setYear(year-1900);
+            endDate.setYear(year - 1900);
             endDate.setMonth(monthOfYear);
             endDate.setDate(dayOfMonth);
 
@@ -198,8 +250,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 super.onBackPressed();
                 break;
@@ -207,13 +258,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
-    int year;
-    int monthOfYear;
-    int dayOfMonth;
-
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        Log.d(TAG," "+year+" : "+monthOfYear+" : "+dayOfMonth);
+        Log.d(TAG, " " + year + " : " + monthOfYear + " : " + dayOfMonth);
         this.year = year;
         this.monthOfYear = monthOfYear;
         this.dayOfMonth = dayOfMonth;
@@ -221,57 +268,76 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         showTimeDialog();
     }
 
-    public void postEventServerCall()
-    {
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+    public void postEventServerCall() {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         String eventName = input_event_name.getText().toString();
 //        String eventDesc = input_event_desc.getText().toString();
         String type = "";
 
-        if (spinner.getSelectedItem().toString().equalsIgnoreCase("personal"))
-        {
+        List<Integer> eventId = new ArrayList<>();
+
+        if (spinner.getSelectedItem().toString().equalsIgnoreCase("personal")) {
             type = "UserLogin";
+        } else if (spinner.getSelectedItem().toString().equalsIgnoreCase("class")) {
+            type = "Batch";
+        } else {
+            type = "Lecture";
         }
 
-        if (textViewFrom.getText().toString().equalsIgnoreCase("select date") || textViewTo.getText().toString().equalsIgnoreCase("select date"))
-        {
-            Utils.failureDialog(this,"Warning","Please select date.");
+        if (type.equalsIgnoreCase("Batch")) {
+            for (CheckBox checkBox : checkBoxesBatch) {
+                if (checkBox.isChecked()) {
+                    eventId.add((Integer) checkBox.getTag());
+                }
+            }
+        } else {
+            for (CheckBox checkBox : checkBoxesLecture) {
+                if (checkBox.isChecked()) {
+                    eventId.add((Integer) checkBox.getTag());
+                }
+            }
         }
-        else
-        {
+
+        Log.d("events", "ids : " + new Gson().toJson(eventId));
+
+        if (textViewFrom.getText().toString().equalsIgnoreCase("select date") || textViewTo.getText().toString().equalsIgnoreCase("select date")) {
+            Utils.failureDialog(this, "Warning", "Please select date.");
+        } else if (!type.equalsIgnoreCase("userLogin") && eventId.isEmpty()) {
+            Utils.failureDialog(this, "Warning", "Please select event.");
+        } else {
             AddEventObject object = new AddEventObject();
 
             Events events = new Events();
             events.setEventName(eventName);
             events.setEventTypeType(type);
+            events.setEventTypeId(eventId);
 
             Calendar startCalendar = Calendar.getInstance();
-            startCalendar.set(startDate.getYear(),startDate.getMonth(),startDate.getDate(),startDate.getHours(),startDate.getMinutes());
+            startCalendar.set(startDate.getYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes());
 
             Calendar endCalendar = Calendar.getInstance();
-            endCalendar.set(endDate.getYear(),endDate.getMonth(),endDate.getDate(),endDate.getHours(),endDate.getMinutes());
+            endCalendar.set(endDate.getYear(), endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes());
 
             events.setStartTime(ISO8601.fromCalendar(startCalendar));
             events.setEndTime(ISO8601.fromCalendar(endCalendar));
 
             object.setEvents(events);
 
-            Log.d(TAG,"object : "+new Gson().toJson(object));
+            Log.d(TAG, "object : " + new Gson().toJson(object));
 
             String jsonObject = new Gson().toJson(object);
 
-            ProgressDialog dialog  = ProgressDialog.show(this,"Please Wait...","Adding Event");
+            ProgressDialog dialog = ProgressDialog.show(this, "Please Wait...", "Adding Event");
             try {
-                TypedInput typedInput = new TypedByteArray("application/json",jsonObject.getBytes("UTF-8"));
-                RestClient.getApiServicePojo(xCookies,aCookies).apiCallPostEvent(typedInput, new Callback<AddEventResponseData>() {
+                TypedInput typedInput = new TypedByteArray("application/json", jsonObject.getBytes("UTF-8"));
+                RestClient.getApiServicePojo(xCookies, aCookies).apiCallPostEvent(typedInput, new Callback<AddEventResponseData>() {
                     @Override
                     public void success(AddEventResponseData addEventResponseData, Response response) {
-                        Log.d(TAG,"Response : "+new Gson().toJson(addEventResponseData));
+                        Log.d(TAG, "Response : " + new Gson().toJson(addEventResponseData));
                         dialog.dismiss();
-                        if (addEventResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes"))
-                        {
+                        if (addEventResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AddEventActivity.this);
                             alert.setTitle("Event Added");
                             alert.setMessage("You Have successfully created event.");
@@ -285,19 +351,17 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                                 }
                             });
                             alert.show();
-                        }
-                        else
-                        {
-                            Utils.failureDialog(AddEventActivity.this,"Warning...","Something went wrong, please try again.");
+                        } else {
+                            Utils.failureDialog(AddEventActivity.this, "Warning...", "Something went wrong, please try again.");
                         }
 
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.d(TAG,"error : "+error.toString());
+                        Log.d(TAG, "error : " + error.toString());
                         dialog.dismiss();
-                        Utils.failureDialog(AddEventActivity.this,"Something went wrong","Plaese try again.");
+                        Utils.failureDialog(AddEventActivity.this, "Something went wrong", "Plaese try again.");
                     }
                 });
             } catch (UnsupportedEncodingException e) {
@@ -313,5 +377,90 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         Intent intent = new Intent(AddEventActivity.this
                 , MyCalendarFragment.class);
         startActivity(intent);
+    }
+
+    private void setCheckBoxes() {
+
+        BatchesResponseData batchesResponseData = Prefs.with(this).getObject(PrefsKeys.BATCHES_RESPONSE_DATA, BatchesResponseData.class);
+
+        checkBoxesBatch = new ArrayList<>();
+
+        if (!batchesResponseData.getData().getBatches().isEmpty()) {
+            for (Batch batch : batchesResponseData.getData().getBatches()) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.CENTER_VERTICAL;
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(batch.getClassAlias());
+                checkBox.setTag(batch.getId());
+                linearLayoutDynamicCheckBoxClass.addView(checkBox, params);
+                checkBoxesBatch.add(checkBox);
+
+                Log.d("events", "Batch adding : " + batch.getId());
+            }
+
+        }
+
+
+        checkBoxesLecture = new ArrayList<>();
+
+        LectureResponseData lectureResponseData = Prefs.with(this).getObject(PrefsKeys.LECTURE_RESPONSE_DATA, LectureResponseData.class);
+
+        if (!lectureResponseData.getData().getLectures().isEmpty()) {
+            for (Lecture lecture : lectureResponseData.getData().getLectures()) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.CENTER_VERTICAL;
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(lecture.getLectureName());
+                checkBox.setTag(lecture.getId());
+                linearLayoutDynamicCheckBoxLecture.addView(checkBox, params);
+                checkBoxesLecture.add(checkBox);
+
+                Log.d("events", "adding : " + lecture.getId());
+            }
+
+        }
+    }
+
+
+    public void getBatchesServerCall() {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetBatches(new Callback<BatchesResponseData>() {
+            @Override
+            public void success(BatchesResponseData batchesResponseData, Response response) {
+                android.util.Log.d(TAG, "Response : " + new Gson().toJson(batchesResponseData));
+
+                if (batchesResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
+                    Prefs.with(AddEventActivity.this).save(PrefsKeys.BATCHES_RESPONSE_DATA, batchesResponseData);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                android.util.Log.d(TAG, "error : " + error.toString());
+            }
+        });
+    }
+
+    public void lectureServerCall() {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallLectures(new Callback<LectureResponseData>() {
+            @Override
+            public void success(LectureResponseData lectureResponseData, Response response) {
+                com.monkeybusiness.jaaar.utils.Log.d(TAG, "Response : " + new Gson().toJson(lectureResponseData));
+                Prefs.with(AddEventActivity.this).save(PrefsKeys.LECTURE_RESPONSE_DATA, lectureResponseData);
+                setCheckBoxes();
+                progressBarAddEvent.setVisibility(View.GONE);
+                linearLayoutMainAddEvent.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                com.monkeybusiness.jaaar.utils.Log.d(TAG, "error : ");
+            }
+        });
     }
 }

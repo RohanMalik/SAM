@@ -149,6 +149,8 @@ public class FriendsActivity extends BaseActivity {
                 holder.infoPage = getLayoutInflater().inflate(R.layout.friends_info, parent, false);
                 holder.nickName = (TextView) holder.infoPage.findViewById(R.id.nickname);
                 holder.className = (TextView) holder.infoPage.findViewById(R.id.className);
+                holder.fatherName = (TextView) holder.infoPage.findViewById(R.id.fatherName);
+                holder.dateOfBirth = (TextView) holder.infoPage.findViewById(R.id.dateOfBirth);
 
 //                for (int id : IDS_INTEREST)
 //                    holder.interests.add((ImageView) holder.infoPage.findViewById(id));
@@ -196,6 +198,8 @@ public class FriendsActivity extends BaseActivity {
             holder.infoPage.setBackgroundColor(getResources().getColor(R.color.purple));
             holder.className.setText("Roll No. "+String.valueOf(friend.getRollno()));
             holder.nickName.setText(friend.getStudentName());
+            holder.fatherName.setText("Father's Name : "+friend.getFatherName());
+            holder.dateOfBirth.setText("DOB : "+friend.getDob());
             holder.buttonViewProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -219,6 +223,8 @@ public class FriendsActivity extends BaseActivity {
             //            List<ImageView> interests = new ArrayList<>();
             TextView nickName;
             TextView className;
+            TextView fatherName;
+            TextView dateOfBirth;
 
             Button buttonViewRemarks;
             Button buttonViewProfile;

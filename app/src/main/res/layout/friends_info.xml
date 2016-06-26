@@ -11,12 +11,31 @@
         android:id="@+id/nickname" />
 
     <com.monkeybusiness.jaaar.utils.FontTextView
-        android:id="@+id/className"
+        android:id="@+id/fatherName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:textSize="20sp"
+        android:text="Father's Name"/>
+
+    <com.monkeybusiness.jaaar.utils.FontTextView
+        android:id="@+id/className"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:textSize="20sp"
         android:text="CLASS 10th"/>
+
+    <com.monkeybusiness.jaaar.utils.FontTextView
+        android:id="@+id/dateOfBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:textSize="20sp"
+        android:text="12-05-1992"/>
+
 
     <LinearLayout
         android:id="@+id/interestsPrimary"
@@ -65,7 +84,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.rey.material.widget.Button
             android:id="@+id/buttonViewRemarks"

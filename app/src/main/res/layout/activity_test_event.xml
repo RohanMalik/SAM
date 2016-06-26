@@ -19,130 +19,184 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:theme="@style/TextLabel">
-                <AutoCompleteTextView android:id="@+id/input_event_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Event Name"
-                    android:textSize="25sp"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:theme="@style/TextLabel">
-                <EditText android:id="@+id/input_event_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Description"
-                    android:textSize="20sp"
-                    android:visibility="gone"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <com.rey.material.widget.Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="center_horizontal" />
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/linearLayoutMainAddEvent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="24dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:theme="@style/TextLabel">
+                    <AutoCompleteTextView android:id="@+id/input_event_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Event Name"
+                        android:textSize="25sp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone"
+                    android:theme="@style/TextLabel">
+                    <EditText android:id="@+id/input_event_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Description"
+                        android:textSize="20sp"
+                        />
+                </android.support.design.widget.TextInputLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="From"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/sub_tab"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:text="Type Of Event"
                     android:layout_marginLeft="16dp"
-                    android:background="@drawable/right_arrow"/>
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"/>
 
-                <TextView
-                    android:id="@+id/textViewFrom"
-                    android:layout_width="wrap_content"
+                <com.rey.material.widget.Spinner
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select Date"
-                    android:textSize="18sp"
+                    android:id="@+id/spinner"
                     android:layout_marginLeft="16dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/sub_tab"
-                    />
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="20dp"
+                    app:spn_labelEnable="true"
+                    android:background="@color/background_color_lecture"
+                    android:paddingBottom="5dp"
+                    android:layout_gravity="center_horizontal" />
 
+                <LinearLayout
+                    android:id="@+id/linearLayoutDynamicCheckBoxClass"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone">
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutDynamicCheckBoxLecture"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    >
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/sub_tab"
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/right_arrow"/>
+
+                    <TextView
+                        android:id="@+id/textViewFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Date"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/sub_tab"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/sub_tab"
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/right_arrow"/>
+
+                    <TextView
+                        android:id="@+id/textViewTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Date"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/sub_tab"
+                        />
+
+                </LinearLayout>
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/buttonAddEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="ADD EVENT"
+                    android:layout_margin="16dp"
+                    android:textSize="16sp"
+                    android:background="@drawable/non_border_simple_button_corner"
+                    android:elevation="5dp"
+                    android:textColor="#fff"
+                    app:rd_enable="true"
+                    app:rd_rippleColor="@color/primary"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressBarAddEvent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp">
+                android:layout_gravity="center"/>
+        </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="To"
-                    android:textSize="18sp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/sub_tab"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/right_arrow"/>
-
-                <TextView
-                    android:id="@+id/textViewTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Date"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/sub_tab"
-                    />
-
-            </LinearLayout>
-
-            <com.rey.material.widget.Button
-                android:id="@+id/buttonAddEvent"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="ADD EVENT"
-                android:layout_margin="16dp"
-                android:textSize="16sp"
-                android:background="@drawable/non_border_simple_button_corner"
-                android:elevation="5dp"
-                android:textColor="#fff"
-                app:rd_enable="true"
-                app:rd_rippleColor="@color/primary"/>
-        </LinearLayout>
 
     </ScrollView>
 </LinearLayout>

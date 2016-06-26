@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.TestPagerAdapter;
+import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.TestFragmentListner;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
@@ -166,6 +167,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+
+        MasterClass.getInstance().getStudentsForMarks().clear();
 
         intent = getIntent();
         boolean fromMain = intent.getBooleanExtra(Constants.FROM_MAIN, true);

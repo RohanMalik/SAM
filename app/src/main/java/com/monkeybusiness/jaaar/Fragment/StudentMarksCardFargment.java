@@ -21,6 +21,7 @@ import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
+import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMark;
 import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksResponseData;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -57,6 +58,8 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
     TextView textViewMarks;
     EditText editTextFillMarks;
     Test test;
+
+    boolean marksChanged;
 
     com.monkeybusiness.jaaar.objectClasses.addMarksData.Student studentForMarks;
 
@@ -99,6 +102,17 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
 
         test = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_DATA, Test.class);
 
+        int marks = 0;
+
+        for (TestMark testMark : testMarksResponseData.getData().getTestMarks())
+        {
+            if (student.getId() == testMark.getStudentId())
+            {
+                marks = testMark.getMarks();
+            }
+        }
+        editTextFillMarks.setText(String.valueOf(marks));
+
         textViewMarks.setText("/"+test.getMaxMarks());
 
         Log.d("StudentMark","test : "+new Gson().toJson(test));
@@ -131,6 +145,7 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
         studentForMarks = new com.monkeybusiness.jaaar.objectClasses.addMarksData.Student();
         studentForMarks.setRemarks("");
         studentForMarks.setStudentId(student.getId());
+        studentForMarks.setMarks(marks);
 
         MasterClass.getInstance().getStudentsForMarks().add(studentForMarks);
 

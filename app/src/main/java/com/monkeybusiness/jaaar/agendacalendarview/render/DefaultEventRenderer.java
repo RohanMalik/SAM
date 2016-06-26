@@ -1,6 +1,7 @@
 package com.monkeybusiness.jaaar.agendacalendarview.render;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;

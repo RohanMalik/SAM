@@ -145,8 +145,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         textViewActionTitle.setText("Student Profile");
 
-//        linearLayoutMainStudent.setVisibility(View.GONE);
-        progressBarStudent.setVisibility(View.GONE);
+        linearLayoutMainStudent.setVisibility(View.GONE);
+
 
         imageChooserManagerCamera = new ImageChooserManager(this, ChooserType.REQUEST_CAPTURE_PICTURE);
         imageChooserManagerCamera.setImageChooserListener(this);

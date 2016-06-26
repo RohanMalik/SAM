@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,15 @@ public class MarksListAdapter extends BaseAdapter {
 
     public MarksListAdapter(Activity activity, List<Student> studentsForMarks) {
 
+        Log.d("MarksListAdapter","Students size : "+studentsForMarks.size());
+
         this.studentsForMarks = studentsForMarks;
         this.activity = activity;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         studentDetailsForMarksResponse = Prefs.with(activity).getObject(PrefsKeys.STUDENT_DATA_TEST, StudentDetailsForMarksResponse.class);
+
+        Log.d("MarksListAdapter","studentsfor marks : "+studentDetailsForMarksResponse.getData().getStudents().size());
+
 //        studentAttdDatas = new ArrayList<>();
 
 //        List<StudentAttdData> studentAttdDatasLocal = MasterClass.getInstance().getStudentAttdDatas();

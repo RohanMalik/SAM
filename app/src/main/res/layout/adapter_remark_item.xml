@@ -19,23 +19,22 @@
             android:text="Chemistry"
             android:textSize="20dp"/>
 
-        <com.rey.material.widget.Button
-            android:id="@+id/buttonFillMarksStudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:elevation="5dp"
-            android:padding="6dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Fill Marks"
-            android:layout_alignParentRight="true"
-            android:textColor="#fff"
-            android:textSize="14dp"
-            android:focusable="false"
-            app:rd_enable="true"
-            app:rd_rippleAnimDuration="500"
-            app:rd_rippleColor="@color/primary_lighter" />
+        <!--<com.rey.material.widget.Button-->
+            <!--android:id="@+id/buttonFillMarksStudent"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/primary"-->
+            <!--android:elevation="5dp"-->
+            <!--android:padding="6dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:text="Fill Marks"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:textColor="#fff"-->
+            <!--android:textSize="14dp"-->
+            <!--app:rd_enable="true"-->
+            <!--app:rd_rippleAnimDuration="500"-->
+            <!--app:rd_rippleColor="@color/primary_lighter" />-->
 
 
     </RelativeLayout>

@@ -1,8 +1,12 @@
 
 package com.monkeybusiness.jaaar.objectClasses.addEventObject;
 
+import android.content.Intent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Events {
 
@@ -18,6 +22,9 @@ public class Events {
     @SerializedName("event_type_type")
     @Expose
     private String eventTypeType;
+    @SerializedName("event_type_id")
+    @Expose
+    private List<Integer> eventTypeId;
 
     /**
      * 
@@ -91,4 +98,11 @@ public class Events {
         this.eventTypeType = eventTypeType;
     }
 
+    public List<Integer> getEventTypeId() {
+        return eventTypeId;
+    }
+
+    public void setEventTypeId(List<Integer> eventTypeId) {
+        this.eventTypeId = eventTypeId;
+    }
 }
