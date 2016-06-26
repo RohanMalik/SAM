@@ -43,6 +43,8 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
     TextView textViewClass;
     TextView textViewRollNo;
 
+    EditText editTextRemarks;
+
     String classAlias;
 
 
@@ -98,20 +100,25 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
         textViewMarks = (TextView) rootView.findViewById(R.id.textViewMarks);
         editTextFillMarks = (EditText) rootView.findViewById(R.id.editTextFillMarks);
 
+        editTextRemarks = (EditText) rootView.findViewById(R.id.editTextRemarks);
+
         testMarksResponseData = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_MARKS_DATA, TestMarksResponseData.class);
 
         test = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_DATA, Test.class);
 
         int marks = 0;
+        String remarks = "";
 
         for (TestMark testMark : testMarksResponseData.getData().getTestMarks())
         {
             if (student.getId() == testMark.getStudentId())
             {
                 marks = testMark.getMarks();
+                remarks = testMark.getRemarks();
             }
         }
         editTextFillMarks.setText(String.valueOf(marks));
+        editTextRemarks.setText(remarks);
 
         textViewMarks.setText("/"+test.getMaxMarks());
 
@@ -143,11 +150,31 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
         textViewClass.setText("Class " + classAlias);
 
         studentForMarks = new com.monkeybusiness.jaaar.objectClasses.addMarksData.Student();
-        studentForMarks.setRemarks("");
+        studentForMarks.setRemarks(remarks);
         studentForMarks.setStudentId(student.getId());
         studentForMarks.setMarks(marks);
 
         MasterClass.getInstance().getStudentsForMarks().add(studentForMarks);
+
+        editTextRemarks.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0)
+                {
+                    studentForMarks.setRemarks(String.valueOf(s));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         editTextFillMarks.addTextChangedListener(new TextWatcher() {
             @Override
