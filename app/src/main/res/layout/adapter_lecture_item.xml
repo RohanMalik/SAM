@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
+        android:padding="24px"
+        android:layout_margin="16px"
+        android:elevation="10px"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -25,14 +25,14 @@
                 android:layout_height="wrap_content"
                 android:text="1. "
                 android:textStyle="bold"
-                android:textSize="24sp"/>
+                android:textSize="36px"/>
 
             <TextView
                 android:id="@+id/textViewLectureName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chemistry"
-                android:textSize="20sp"
+                android:textSize="36px"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -41,7 +41,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="16px"
             android:orientation="horizontal">
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chemistry"
-                android:textSize="18sp"/>
+                android:textSize="32px"/>
 
             <TextView
                 android:id="@+id/textViewLectDesc"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="Calculation"
-                android:textSize="18sp"/>
+                android:textSize="32px"/>
 
 
         </RelativeLayout>

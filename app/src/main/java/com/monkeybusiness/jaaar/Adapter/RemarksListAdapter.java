@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -16,6 +17,8 @@ import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 
 import java.util.List;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 19/1/16.
@@ -64,6 +67,9 @@ public class RemarksListAdapter extends BaseAdapter {
 //            viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);
             viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewTime);
             viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
+            viewHolder.linearLayoutMainRoot = (LinearLayout) view.findViewById(R.id.linearLayoutMainRoot);
+
+            ASSL.DoMagic(viewHolder.linearLayoutMainRoot);
 
             view.setTag(viewHolder);
         } else {
@@ -84,6 +90,7 @@ public class RemarksListAdapter extends BaseAdapter {
         //        TextView textViewDate;
         TextView textViewTime;
         TextView topicName;
+        LinearLayout linearLayoutMainRoot;
     }
 
 }

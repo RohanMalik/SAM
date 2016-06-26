@@ -2,28 +2,22 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
-import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
-import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
-import com.rey.material.widget.RippleManager;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
+import rmn.androidscreenlibrary.ASSL;
 
 
 public class BaseActivity extends SlidingFragmentActivity implements View.OnClickListener {
@@ -49,7 +43,8 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBehindContentView(R.layout.activity_base);
-
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
         initializationMenu();
     }
 
@@ -65,11 +60,11 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutMyclassDown = (LinearLayout) findViewById(R.id.linearlayoutMyclassDown);
 
         textViewDashboard = (TextView) findViewById(R.id.textViewDashboard);
-        textViewAttendance= (TextView) findViewById(R.id.textViewAttendance);
-        textViewMyclass= (TextView) findViewById(R.id.textViewMyclass);
-        textViewTest= (TextView) findViewById(R.id.textViewTest);
-        textViewCalendar= (TextView) findViewById(R.id.textViewCalendar);
-        textViewRemarks= (TextView) findViewById(R.id.textViewRemarks);
+        textViewAttendance = (TextView) findViewById(R.id.textViewAttendance);
+        textViewMyclass = (TextView) findViewById(R.id.textViewMyclass);
+        textViewTest = (TextView) findViewById(R.id.textViewTest);
+        textViewCalendar = (TextView) findViewById(R.id.textViewCalendar);
+        textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
         textViewMyclassDown = (TextView) findViewById(R.id.textViewMyclassDown);
 
         linearlayoutDashboard.setOnClickListener(this);
@@ -83,7 +78,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
 
         SlidingMenu sm = getSlidingMenu();
         sm.setFadeDegree(0.50f);
-        getSlidingMenu().setBehindWidth(800);
+        getSlidingMenu().setBehindWidth((int) (550 * ASSL.Xscale()));
     }
 
 
@@ -98,7 +93,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     Intent intent = new Intent(BaseActivity.this, DashboardActivity.class);
                     startActivity(intent);
                     finish();
-                    toggleLayouts(linearlayoutDashboard,textViewDashboard);
+                    toggleLayouts(linearlayoutDashboard, textViewDashboard);
 //                    overridePendingTransition(R.anim.slide_in_right,
 //                            R.anim.slide_out_left);
                 } else {
@@ -112,7 +107,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     Intent intent = new Intent(BaseActivity.this, MyBatchesActivity.class);
                     startActivity(intent);
                     finish();
-                    toggleLayouts(linearlayoutAttendance,textViewAttendance);
+                    toggleLayouts(linearlayoutAttendance, textViewAttendance);
 //                    overridePendingTransition(R.anim.slide_in_right,
 //                            R.anim.slide_out_left);
                 } else {
@@ -123,7 +118,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
 
                 if (Utils.classFlag != 2) {
 
-                    toggleLayouts(linearlayoutMyclass,textViewMyclass);
+                    toggleLayouts(linearlayoutMyclass, textViewMyclass);
                     Intent intent = new Intent(BaseActivity.this, MyLecturesActivity.class);
                     startActivity(intent);
                     finish();
@@ -137,7 +132,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
 
                 if (Utils.classFlag != 3) {
 
-                    toggleLayouts(linearlayoutTest,textViewTest);
+                    toggleLayouts(linearlayoutTest, textViewTest);
                     Intent intent = new Intent(BaseActivity.this, TestActivity.class);
                     startActivity(intent);
                     finish();
@@ -151,7 +146,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.linearlayoutMyclassDown:
                 if (Utils.classFlag != 4) {
 
-                    toggleLayouts(linearlayoutMyclassDown,textViewMyclassDown);
+                    toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
                     Intent intent = new Intent(BaseActivity.this, MyClassActivity.class);
                     startActivity(intent);
                     finish();
@@ -165,7 +160,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
 
                 if (Utils.classFlag != 5) {
 
-                    toggleLayouts(linearlayoutCalender,textViewCalendar);
+                    toggleLayouts(linearlayoutCalender, textViewCalendar);
                     Intent intent = new Intent(BaseActivity.this, MyCalendarFragment.class);
                     startActivity(intent);
                     finish();
@@ -179,7 +174,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.linearlayoutRemarks:
                 if (Utils.classFlag != 6) {
 
-                    toggleLayouts(linearlayoutRemarks,textViewRemarks);
+                    toggleLayouts(linearlayoutRemarks, textViewRemarks);
                     Intent intent = new Intent(BaseActivity.this, RemarksFragment.class);
                     startActivity(intent);
                     finish();
@@ -191,7 +186,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.linearlayoutNotification:
                 Prefs.with(this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
-                Intent intent = new Intent(this,LoginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
 //            case R.id.linearLayoutContactUsMenu:
@@ -220,8 +215,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
 
-    public void toggleLayouts(LinearLayout linearLayout,TextView textView)
-    {
+    public void toggleLayouts(LinearLayout linearLayout, TextView textView) {
         linearlayoutDashboard.setBackgroundColor(getResources().getColor(R.color.white));
         linearlayoutAttendance.setBackgroundColor(getResources().getColor(R.color.white));
         linearlayoutMyclass.setBackgroundColor(getResources().getColor(R.color.white));

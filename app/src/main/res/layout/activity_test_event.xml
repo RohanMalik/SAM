@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,29 +33,29 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="32px"
                     android:theme="@style/TextLabel">
                     <AutoCompleteTextView android:id="@+id/input_event_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Event Name"
-                        android:textSize="25sp"/>
+                        android:textSize="32px"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="32px"
+                    android:layout_marginTop="16px"
+                    android:layout_marginRight="32px"
+                    android:layout_marginBottom="32px"
                     android:visibility="gone"
                     android:theme="@style/TextLabel">
                     <EditText android:id="@+id/input_event_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Description"
-                        android:textSize="20sp"
+                        android:textSize="32px"
                         />
                 </android.support.design.widget.TextInputLayout>
 
@@ -62,20 +63,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Type Of Event"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:textSize="28px"
+                    android:layout_marginLeft="32px"
+                    android:layout_marginRight="32px"
+                    android:layout_marginBottom="16px"/>
 
                 <com.rey.material.widget.Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="32px"
+                    android:layout_marginRight="32px"
+                    android:layout_marginBottom="40px"
                     app:spn_labelEnable="true"
                     android:background="@color/background_color_lecture"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10px"
                     android:layout_gravity="center_horizontal" />
 
                 <LinearLayout
@@ -83,10 +85,10 @@
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="32px"
+                    android:layout_marginRight="32px"
+                    android:layout_marginBottom="8px"
+                    android:layout_marginTop="8px"
                     android:visibility="gone">
 
 
@@ -97,10 +99,10 @@
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="32px"
+                    android:layout_marginRight="32px"
+                    android:layout_marginBottom="8px"
+                    android:layout_marginTop="8px"
                     android:visibility="gone"
                     >
 
@@ -111,21 +113,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="48px">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="From"
-                        android:textSize="18sp"
+                        android:textSize="32px"
                         android:layout_gravity="center"
                         android:textColor="@color/sub_tab"
                         />
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="16dp"
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:layout_marginLeft="32px"
                         android:background="@drawable/right_arrow"/>
 
                     <TextView
@@ -133,8 +135,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Select Date"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="16dp"
+                        android:textSize="32px"
+                        android:layout_marginLeft="32px"
                         android:layout_gravity="center"
                         android:textColor="@color/sub_tab"
                         />
@@ -145,22 +147,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginLeft="48px"
+                    android:layout_marginTop="16px">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="To"
-                        android:textSize="18sp"
+                        android:textSize="32px"
                         android:layout_gravity="center"
                         android:textColor="@color/sub_tab"
                         />
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="16dp"
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:layout_marginLeft="32px"
                         android:background="@drawable/right_arrow"/>
 
                     <TextView
@@ -168,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Select Date"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="16dp"
+                        android:textSize="32px"
+                        android:layout_marginLeft="32px"
                         android:layout_gravity="center"
                         android:textColor="@color/sub_tab"
                         />
@@ -179,12 +181,12 @@
                 <com.rey.material.widget.Button
                     android:id="@+id/buttonAddEvent"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="80px"
                     android:text="ADD EVENT"
-                    android:layout_margin="16dp"
-                    android:textSize="16sp"
+                    android:layout_margin="32px"
+                    android:textSize="32px"
                     android:background="@drawable/non_border_simple_button_corner"
-                    android:elevation="5dp"
+                    android:elevation="10px"
                     android:textColor="#fff"
                     app:rd_enable="true"
                     app:rd_rippleColor="@color/primary"/>

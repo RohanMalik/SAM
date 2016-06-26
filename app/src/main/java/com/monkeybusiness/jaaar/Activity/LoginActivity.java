@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ import retrofit.client.Header;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -92,6 +94,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
 //        startAnimations();
         ButterKnife.bind(this);
 

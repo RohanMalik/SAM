@@ -38,6 +38,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -71,6 +72,9 @@ public class MarksReviewFragment extends Fragment implements ReviewAttdInterface
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_marks_review, container, false);
+
+        new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
+                false);
 
         initialization();
         return rootView;

@@ -52,6 +52,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 //import android.widget.Spinner;
 
@@ -93,6 +94,8 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_event);
 
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
         initialization();
 
 

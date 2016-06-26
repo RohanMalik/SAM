@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="120px"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="120px"
         android:background="@color/primary">
 
         <RelativeLayout
             android:id="@+id/relativeLayoutMenu"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="120px"
+            android:layout_height="120px"
             android:layout_alignParentLeft="true">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="15dp"
+                android:layout_width="40px"
+                android:layout_height="30px"
                 android:layout_centerInParent="true"
                 android:background="@drawable/icon_menu_selector" />
 
@@ -29,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="65dp"
+            android:layout_marginLeft="130px"
             android:text="MORE"
             android:textColor="#fff"
             android:textAllCaps="true"
-            android:textSize="16dp" />
+            android:textSize="32px" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -59,6 +60,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 4/2/16.
@@ -105,6 +107,9 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_details);
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
 
 //        Utils.classFlag = 0;
 //

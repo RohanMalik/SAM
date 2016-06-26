@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_margin="16dp"
-        android:elevation="5dp"
+        android:padding="32px"
+        android:layout_margin="32px"
+        android:elevation="10px"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -26,27 +26,27 @@
                 android:layout_height="wrap_content"
                 android:text="1. "
                 android:textStyle="bold"
-                android:textSize="24sp"/>
+                android:textSize="32px"/>
 
             <TextView
                 android:id="@+id/textViewBatchDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date : "
-                android:textSize="20sp"
+                android:textSize="32px"
                 android:textStyle="bold"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="4px"
             android:background="@drawable/shadow_down"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="16px"
             android:orientation="horizontal">
 
             <TextView
@@ -55,7 +55,7 @@
                 android:text="Present"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="36px"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,14 +64,14 @@
                 android:text="Absent"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="36px"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="8px"
             android:orientation="horizontal">
 
             <TextView
@@ -81,7 +81,7 @@
                 android:text="5"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="36px"/>
 
             <TextView
                 android:id="@+id/textViewAbsent"
@@ -91,14 +91,14 @@
                 android:text="5"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:textSize="18sp"/>
+                android:textSize="36px"/>
 
         </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="4px"
             android:background="@drawable/shadow_down"/>
         <TextView
             android:id="@+id/textViewTotal"
@@ -106,13 +106,13 @@
             android:layout_height="wrap_content"
             android:text="Total : 10"
             android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="18sp"/>
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:textSize="36px"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="4px"
             android:background="@drawable/shadow_down"/>
 
         <TextView
@@ -120,8 +120,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status : Submitted"
-            android:layout_marginTop="5dp"
-            android:textSize="18sp"/>
+            android:layout_marginTop="10px"
+            android:textSize="36px"/>
 
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.LecturesAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
+import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
@@ -19,6 +21,7 @@ import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 public class MyLecturesActivity extends BaseActivity {
 
@@ -33,10 +36,16 @@ public class MyLecturesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lectures);
 
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
+
         toggleLayouts(linearlayoutMyclass, textViewMyclass);
         Utils.classFlag = 2;
         
         initialization();
+
+        new CommonApiCalls(this).checkLoginServerCall();
         lectureServerCall();
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
@@ -21,6 +22,8 @@ import com.rey.material.widget.Button;
 
 import java.text.ParseException;
 import java.util.List;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 19/1/16.
@@ -66,7 +69,9 @@ public class TestListAdapter extends BaseAdapter {
             viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewTime);
             viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
             viewHolder.buttonFillMarksStudent = (Button) view.findViewById(R.id.buttonFillMarksStudent);
+            viewHolder.linearLayoutRoot = (LinearLayout) view.findViewById(R.id.root);
 
+            ASSL.DoMagic(viewHolder.linearLayoutRoot);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -93,6 +98,8 @@ public class TestListAdapter extends BaseAdapter {
         TextView textViewTime;
         TextView topicName;
         Button buttonFillMarksStudent;
+
+        LinearLayout linearLayoutRoot;
     }
 
 }

@@ -25,6 +25,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo
 import java.util.List;
 
 import butterknife.ButterKnife;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 1/1/16.
@@ -78,6 +79,11 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_student_card,container,false);
+
+
+        new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
+                false);
+
 
         attendanceFragment = MasterClass.getInstance().getAttendanceFragment();
 //

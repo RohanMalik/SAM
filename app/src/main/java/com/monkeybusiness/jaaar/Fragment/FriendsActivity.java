@@ -36,6 +36,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * @author Yalantis
@@ -60,6 +61,9 @@ public class FriendsActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+        
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
 
         toggleLayouts(linearlayoutMyclass, textViewMyclass);
         Utils.classFlag = 2;

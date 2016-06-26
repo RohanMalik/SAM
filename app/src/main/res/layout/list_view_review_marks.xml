@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="24dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="48px"
+    android:paddingTop="32px"
+    android:paddingBottom="32px"
+    android:paddingRight="32px"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/textViewRollnoListView1"
-        android:layout_width="wrap_content"
+        android:layout_width="150px"
         android:layout_height="wrap_content"
         android:text="Roll No."
-        android:textSize="16dp"
-        android:layout_weight="1"
+        android:textSize="32px"
         />
 
     <TextView
         android:id="@+id/textViewNameListView"
-        android:layout_width="wrap_content"
+        android:layout_width="350px"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:textSize="16dp"
-        android:layout_weight="3"
+        android:textSize="32px"
         />
 
     <TextView
         android:id="@+id/textViewMarksListView"
-        android:layout_width="wrap_content"
+        android:layout_width="150px"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="16dp"
+        android:textSize="32px"
         android:layout_weight="1"
         />
 

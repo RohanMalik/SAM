@@ -48,6 +48,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -79,6 +80,8 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
         rootView = inflater.inflate(R.layout.fragment_attd_review,container,false);
 
+        new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
+                false);
         initialization();
         return rootView;
     }

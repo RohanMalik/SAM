@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
@@ -17,6 +18,8 @@ import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
 import java.util.List;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -97,6 +100,9 @@ public class MarksListAdapter extends BaseAdapter {
             viewHolder.textViewNameListView = (TextView) view.findViewById(R.id.textViewNameListView);
             viewHolder.textViewRollnoListView = (TextView) view.findViewById(R.id.textViewRollnoListView1);
             viewHolder.textViewMarksListView = (TextView) view.findViewById(R.id.textViewMarksListView);
+            viewHolder.linearLayoutRoot = (LinearLayout) view.findViewById(R.id.root);
+
+            ASSL.DoMagic(viewHolder.linearLayoutRoot);
 
             view.setTag(viewHolder);
         } else {
@@ -122,5 +128,7 @@ public class MarksListAdapter extends BaseAdapter {
         TextView textViewRollnoListView;
         TextView textViewNameListView;
         TextView textViewMarksListView;
+
+        LinearLayout linearLayoutRoot;
     }
 }

@@ -26,6 +26,8 @@ import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksRes
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
+import rmn.androidscreenlibrary.ASSL;
+
 /**
  * Created by rakesh on 1/1/16.
  */
@@ -85,6 +87,10 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_student_marks, container, false);
+
+
+        new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
+                false);
 
         attendanceFragment = MasterClass.getInstance().getAttendanceFragment();
 //

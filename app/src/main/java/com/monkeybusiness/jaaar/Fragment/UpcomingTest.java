@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import rmn.androidscreenlibrary.ASSL;
+
 /**
  * Created by rakesh on 2/6/16.
  */
@@ -88,6 +90,9 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_test_list, container, false);
+
+        new ASSL(getActivity(), (ViewGroup) view.findViewById(R.id.root), 1134, 720,
+                false);
 
         context = getActivity().getApplicationContext();
 

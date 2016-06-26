@@ -23,6 +23,7 @@ import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 4/6/16.
@@ -70,6 +71,7 @@ public class LecturesAdapter extends BaseAdapter {
 
             viewHolder.linearLayoutMainItemLecture = (LinearLayout) view.findViewById(R.id.linearLayoutMainItemLecture);
 
+            ASSL.DoMagic(viewHolder.linearLayoutMainItemLecture);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();

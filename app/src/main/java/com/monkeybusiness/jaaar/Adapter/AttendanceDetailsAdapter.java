@@ -38,6 +38,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 16/6/16.
@@ -91,6 +92,8 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
             holder.textViewBatchDate = (TextView) view.findViewById(R.id.textViewBatchDate);
 
             holder.textViewLectureNo = (TextView) view.findViewById(R.id.textViewLectureNo);
+
+            ASSL.DoMagic(holder.linearLayoutMainItemLecture);
 
             view.setTag(holder);
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 public class AttendanceDetailsActivity extends BaseActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
 
@@ -60,6 +62,9 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_details);
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
 
         initialization();
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.MasterClass;
@@ -15,6 +16,8 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -88,8 +91,11 @@ public class ReviewListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.textViewNameListView = (TextView) view.findViewById(R.id.textViewNameListView);
             viewHolder.textViewRollnoListView = (TextView) view.findViewById(R.id.textViewRollnoListView1);
+            viewHolder.linearLayoutMain = (LinearLayout) view.findViewById(R.id.root);
 
             view.setTag(viewHolder);
+
+            ASSL.DoMagic(viewHolder.linearLayoutMain);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
@@ -99,6 +105,7 @@ public class ReviewListAdapter extends BaseAdapter {
 
         viewHolder.textViewNameListView.setText(studentsInfos.get(index).getStudentName());
         viewHolder.textViewRollnoListView.setText(studentsInfos.get(index).getRollno()+"");
+
 
         return view;
     }
@@ -117,5 +124,7 @@ public class ReviewListAdapter extends BaseAdapter {
     public class ViewHolder {
         TextView textViewRollnoListView;
         TextView textViewNameListView;
+
+        LinearLayout linearLayoutMain;
     }
 }

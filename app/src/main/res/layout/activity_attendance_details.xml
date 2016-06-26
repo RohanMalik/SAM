@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,8 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="20px"
+        android:paddingBottom="20px"
         android:background="@color/primary_lighter">
 
 
@@ -22,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date : 27-05-2016"
-            android:textSize="16sp"
+            android:textSize="32px"
             android:textColor="#fff"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="40px"
             android:layout_alignParentRight="true"/>
 
 
@@ -47,9 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            app:fab_elevation="5dp"
-            app:fab_iconSize="24dp"
+            android:layout_margin="32px"
+            app:fab_elevation="10px"
+            app:fab_iconSize="48px"
             app:fab_iconSrc="@drawable/add_button"
             app:fab_backgroundColor="@color/primary"
             app:fab_animDuration="1000"

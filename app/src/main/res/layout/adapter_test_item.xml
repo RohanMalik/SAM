@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="24px">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,21 +18,21 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Chemistry"
-            android:textSize="20dp"/>
+            android:textSize="32px"/>
 
         <com.rey.material.widget.Button
             android:id="@+id/buttonFillMarksStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/primary"
-            android:elevation="5dp"
-            android:padding="6dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:elevation="10px"
+            android:padding="12px"
+            android:layout_marginTop="16px"
+            android:layout_marginBottom="16px"
             android:text="Fill Marks"
             android:layout_alignParentRight="true"
             android:textColor="#fff"
-            android:textSize="14dp"
+            android:textSize="28px"
             android:focusable="false"
             app:rd_enable="true"
             app:rd_rippleAnimDuration="500"
@@ -44,7 +45,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
+        android:paddingTop="8px"
         android:orientation="horizontal">
 
         <TextView
@@ -57,6 +58,7 @@
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="32px"
             android:text=""/>
 
 

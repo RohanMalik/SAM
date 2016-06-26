@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.monkeybusiness.jaaar.interfaces.TestFragmentListner;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.TestListResponse;
+import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.Log;
@@ -29,6 +31,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 public class TestActivity extends BaseActivity implements View.OnClickListener {
 
@@ -51,11 +54,16 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
+
         Utils.classFlag = 3;
 
         toggleLayouts(linearlayoutTest, textViewTest);
 
         initialization();
+
+        new CommonApiCalls(this).checkLoginServerCall();
 
     }
 
@@ -76,6 +84,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         pager_header.setTabIndicatorColor(getResources().getColor(R.color.white));
 
         pager_header.setTextColor(getResources().getColor(R.color.white));
+
+//        pager_header.setTextSize();
 
         textViewActionTitle.setText("TEST");
 

@@ -31,6 +31,7 @@ import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.RemarksRequestObj
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.SearchStudentData;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
+import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
@@ -49,6 +50,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 2/2/16.
@@ -81,7 +83,12 @@ public class RemarksFragment extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_remarks_student);
 
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
+
         Utils.classFlag = 6;
+
+        new CommonApiCalls(this).checkLoginServerCall();
 
         toggleLayouts(linearlayoutRemarks, textViewRemarks);
 

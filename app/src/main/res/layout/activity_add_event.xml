@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
@@ -29,19 +30,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20px"
+                android:layout_marginLeft="32px"
+                android:layout_marginRight="32px"
+                android:layout_marginTop="40px"
                 android:outlineProvider="paddedBounds" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32px"
+                android:layout_marginLeft="32px"
+                android:layout_marginRight="32px"
+                android:layout_marginTop="16px"
                 android:theme="@style/TextLabel">
 
                 <EditText
@@ -49,14 +50,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"
-                    android:textSize="20sp" />
+                    android:textSize="32px" />
             </android.support.design.widget.TextInputLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="48px"
                 android:orientation="horizontal">
 
                 <TextView
@@ -66,7 +67,7 @@
                     android:text="Date"
                     android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
                 <TextView
                     android:id="@+id/textViewDate"
@@ -75,17 +76,17 @@
                     android:layout_gravity="center"
                     android:text="Select Date"
                     android:layout_weight="2"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="60px"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="48px"
+                android:layout_marginTop="16px"
                 android:weightSum="3"
                 android:orientation="horizontal">
 
@@ -97,7 +98,7 @@
                     android:text="Max Marks "
                     android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
                 <EditText
                     android:id="@+id/editTextMax"
@@ -107,16 +108,16 @@
                     android:hint="Enter Marks"
                     android:inputType="number"
                     android:layout_weight="2"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20px"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="48px"
+                android:layout_marginTop="16px"
                 android:orientation="horizontal">
 
                 <TextView
@@ -126,7 +127,7 @@
                     android:text="Min Marks "
                     android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="36px" />
 
                 <EditText
                     android:id="@+id/editTextMin"
@@ -136,16 +137,16 @@
                     android:hint="Enter Marks"
                     android:inputType="number"
                     android:layout_weight="2"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20px"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="48px"
+                android:layout_marginTop="16px"
                 android:orientation="horizontal">
 
                 <TextView
@@ -156,7 +157,7 @@
                     android:text="Duration"
                     android:layout_weight="1"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="36px" />
 
                 <EditText
                     android:id="@+id/editTextDuration"
@@ -164,23 +165,23 @@
                     android:layout_height="wrap_content"
                     android:hint="Enter Duration"
                     android:layout_weight="2"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20px"
                     android:inputType="number"
                     android:textColor="@color/sub_tab"
-                    android:textSize="18sp" />
+                    android:textSize="32px" />
 
             </LinearLayout>
 
             <com.rey.material.widget.Button
                 android:id="@+id/buttonAddEvent"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
+                android:layout_height="80px"
+                android:layout_margin="32px"
                 android:background="@drawable/non_border_simple_button_corner"
-                android:elevation="5dp"
+                android:elevation="10px"
                 android:text="CREATE TEST"
                 android:textColor="#fff"
-                android:textSize="16sp"
+                android:textSize="32px"
                 app:rd_enable="true"
                 app:rd_rippleColor="@color/primary" />
         </LinearLayout>

@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
 
 import java.util.List;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 15/6/16.
@@ -58,6 +61,9 @@ public class StudentNameAdapter extends BaseAdapter{
 
             holder.textViewNameItem = (TextView) view.findViewById(R.id.textViewNameItem);
             holder.imageViewCross = (ImageView) view.findViewById(R.id.imageViewCross);
+            holder.linearLayoutRoot = (LinearLayout) view.findViewById(R.id.root);
+
+            ASSL.DoMagic(holder.linearLayoutRoot);
 
             view.setTag(holder);
         }
@@ -85,5 +91,7 @@ public class StudentNameAdapter extends BaseAdapter{
     {
         ImageView imageViewCross;
         TextView textViewNameItem;
+
+        LinearLayout linearLayoutRoot;
     }
 }

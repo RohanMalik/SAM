@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.monkeybusiness.jaaar.Adapter.BatchesAdapter;
 import com.monkeybusiness.jaaar.Adapter.ClassAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
+import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -19,6 +21,7 @@ import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 public class MyClassActivity extends BaseActivity {
 
@@ -33,12 +36,18 @@ public class MyClassActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lectures);
 
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
+
         Utils.classFlag = 1;
 
         toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
 
 
         initialization();
+
+        new CommonApiCalls(this).checkLoginServerCall();
 
         getBatchesServerCall();
 

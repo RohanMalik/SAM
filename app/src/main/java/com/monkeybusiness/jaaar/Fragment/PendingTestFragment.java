@@ -25,6 +25,8 @@ import com.rey.material.widget.FloatingActionButton;
 import java.text.DateFormat;
 import java.util.List;
 
+import rmn.androidscreenlibrary.ASSL;
+
 /**
  * Created by rakesh on 2/6/16.
  */
@@ -73,6 +75,10 @@ public class PendingTestFragment extends Fragment implements TestFragmentListner
 
         View view = inflater.inflate(R.layout.fragment_test_list,container,false);
         context = getActivity().getApplicationContext();
+
+
+        new ASSL(getActivity(), (ViewGroup) view.findViewById(R.id.root), 1134, 720,
+                false);
 
         initialization(view);
         return view;

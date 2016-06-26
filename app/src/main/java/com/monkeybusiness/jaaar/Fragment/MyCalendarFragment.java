@@ -25,6 +25,7 @@ import com.monkeybusiness.jaaar.agendacalendarview.models.CalendarEvent;
 import com.monkeybusiness.jaaar.agendacalendarview.models.DayItem;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
+import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
@@ -43,6 +44,7 @@ import java.util.Locale;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 13/1/16.
@@ -68,9 +70,16 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_calendar);
 
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
+
         Utils.classFlag = 5;
         toggleLayouts(linearlayoutCalender, textViewCalendar);
         initialization();
+
+
+        new CommonApiCalls(this).checkLoginServerCall();
+        getEventsServerCall();
 
     }
 //
@@ -261,6 +270,5 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
 
-        getEventsServerCall();
     }
 }

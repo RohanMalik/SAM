@@ -15,6 +15,8 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.utils.Constants;
 
+import rmn.androidscreenlibrary.ASSL;
+
 /**
  * Created by rakesh on 4/6/16.
  */
@@ -61,6 +63,8 @@ public class ClassAdapter extends BaseAdapter {
             viewHolder.textViewSubjectName = (TextView) view.findViewById(R.id.textViewSubjectName);
 
             viewHolder.linearLayoutMainItemLecture = (LinearLayout) view.findViewById(R.id.linearLayoutMainItemLecture);
+
+            ASSL.DoMagic(viewHolder.linearLayoutMainItemLecture);
 
             view.setTag(viewHolder);
         } else {

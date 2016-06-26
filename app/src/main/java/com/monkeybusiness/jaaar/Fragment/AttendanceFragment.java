@@ -46,6 +46,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rohanmalik on 29/12/15.
@@ -70,6 +71,10 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_attendance);
+
+
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
 
         MasterClass.getInstance().setAttendanceFragment(this);
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
@@ -28,75 +29,75 @@
 
                 <com.monkeybusiness.jaaar.Services.CircleImageView
                     android:id="@+id/imageViewProfilePicStudent"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="320px"
+                    android:layout_height="320px"
+                    android:layout_marginTop="20px"
                     android:src="@drawable/ic_tmp_usr_placeholder"
                     app:border_color="@color/primary"
                     app:border_overlay="true"
-                    app:border_width="2dp" />
+                    app:border_width="4px" />
 
                 <TextView
                     android:id="@+id/textViewNameStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="50px"
                     android:text="Name : "
-                    android:textSize="20dp" />
+                    android:textSize="36px" />
 
                 <TextView
                     android:id="@+id/textViewClassStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:text=""
-                    android:textSize="20dp" />
+                    android:textSize="36px" />
 
                 <TextView
                     android:id="@+id/textViewRollNoStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:text=""
-                    android:textSize="20dp" />
+                    android:textSize="36px" />
 
 
                 <TextView
                     android:id="@+id/textViewParentConatctStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:text=""
-                    android:textSize="20dp" />
+                    android:textSize="36px" />
 
                 <TextView
                     android:id="@+id/textViewContactStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:text=""
-                    android:textSize="16dp" />
+                    android:textSize="32px" />
 
                 <TextView
                     android:id="@+id/textViewEmailStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:text=""
-                    android:textSize="16dp" />
+                    android:textSize="32px" />
 
 
                 <com.rey.material.widget.Button
                     android:id="@+id/buttonRemarksStudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20px"
                     android:background="@color/primary"
-                    android:elevation="5dp"
-                    android:padding="12dp"
+                    android:elevation="10px"
+                    android:padding="24px"
                     android:text="Add Remarks"
                     android:textColor="#fff"
-                    android:textSize="18sp"
+                    android:textSize="36px"
                     app:rd_enable="true"
                     app:rd_rippleAnimDuration="500"
                     app:rd_rippleColor="@color/primary_lighter" />
@@ -106,16 +107,16 @@
                     android:id="@+id/textViewRemarks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32px"
                     android:background="@color/background_remarks"
-                    android:padding="16dp"
+                    android:padding="32px"
                     android:text="Remarks"
-                    android:textSize="20dp"
+                    android:textSize="32px"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="4px"
                     android:background="@drawable/shadow_down" />
 
                 <com.monkeybusiness.jaaar.utils.NonScrollListView
