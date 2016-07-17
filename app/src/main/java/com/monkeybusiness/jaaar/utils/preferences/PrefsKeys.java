@@ -35,6 +35,8 @@ public class PrefsKeys {
 
     public static final String TEST_MARKS_DATA = "testMarksData";
 
+    public static final String ATTD_DATE = "attdDate";
+
     public static final String PROFILE_DATA = "profileData";
 
     public static final String LOCATION_FLAG = "locationFlag";

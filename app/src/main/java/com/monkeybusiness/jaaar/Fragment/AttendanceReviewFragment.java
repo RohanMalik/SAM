@@ -123,7 +123,9 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
         StudentAttendance studentAttendance = new StudentAttendance();
         studentAttendance.setStatus(status);
-        studentAttendance.setAttendanceDate(Utils.simpleDateFormatter(new Date()));
+        String date = Prefs.with(this.getActivity()).getString(PrefsKeys.ATTD_DATE,"");
+        date = date+"T00:00:00.000Z";
+        studentAttendance.setAttendanceDate(date);
 
         List<Student> students = new ArrayList<>();
 

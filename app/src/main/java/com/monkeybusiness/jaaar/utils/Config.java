@@ -28,8 +28,7 @@ public class Config {
 
             case LIVE:
 
-                BASE_URL = "";
-
+                BASE_URL = "http://samapi.bytedreams.in";
 
                 break;
         }

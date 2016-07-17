@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMark;
 import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksResponseData;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
+import com.rey.material.widget.Spinner;
 
 import rmn.androidscreenlibrary.ASSL;
 
@@ -62,6 +64,8 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
     TextView textViewMarks;
     EditText editTextFillMarks;
     Test test;
+
+    Spinner testApplicability;
 
     boolean marksChanged;
 
@@ -106,6 +110,8 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
         textViewMarks = (TextView) rootView.findViewById(R.id.textViewMarks);
         editTextFillMarks = (EditText) rootView.findViewById(R.id.editTextFillMarks);
 
+        testApplicability = (Spinner) rootView.findViewById(R.id.testApplicability);
+
         editTextRemarks = (EditText) rootView.findViewById(R.id.editTextRemarks);
 
         testMarksResponseData = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_MARKS_DATA, TestMarksResponseData.class);
@@ -115,6 +121,39 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
         int marks = 0;
         String remarks = "";
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.test_applicable_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        testApplicability.setAdapter(adapter);
+
+        testApplicability.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+
+                Log.d("abc", "Position : " + position);
+                if (position == 1) {
+                    studentForMarks.setMarks(-777);
+                    editTextRemarks.setEnabled(false);
+                    editTextFillMarks.setEnabled(false);
+                } else if (position == 2) {
+                    studentForMarks.setMarks(-999);
+                    editTextRemarks.setEnabled(false);
+                    editTextFillMarks.setEnabled(false);
+                } else {
+                    editTextRemarks.setEnabled(true);
+                    editTextFillMarks.setEnabled(true);
+                    if (!editTextFillMarks.getText().toString().equalsIgnoreCase(""))
+                    {
+                        studentForMarks.setMarks(Integer.parseInt(editTextFillMarks.getText().toString()));
+                    }
+//
+                }
+                return true;
+            }
+        });
+
         for (TestMark testMark : testMarksResponseData.getData().getTestMarks())
         {
             if (student.getId() == testMark.getStudentId())
@@ -123,8 +162,21 @@ public class StudentMarksCardFargment extends Fragment implements View.OnClickLi
                 remarks = testMark.getRemarks();
             }
         }
-        editTextFillMarks.setText(String.valueOf(marks));
-        editTextRemarks.setText(remarks);
+
+        if (marks == -777)
+        {
+            testApplicability.setSelection(1);
+            editTextRemarks.setEnabled(false);
+            editTextFillMarks.setEnabled(false);
+        }else if (marks == -999)
+        {
+            testApplicability.setSelection(2);
+            editTextRemarks.setEnabled(false);
+            editTextFillMarks.setEnabled(false);
+        }else {
+            editTextFillMarks.setText(String.valueOf(marks));
+            editTextRemarks.setText(remarks);
+        }
 
         textViewMarks.setText("/"+test.getMaxMarks());
 

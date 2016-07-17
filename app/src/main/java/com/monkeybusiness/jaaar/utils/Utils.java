@@ -53,7 +53,7 @@ public class Utils {
         return stringArrayList;
     }
 
-    public static void failureDialog(Context context,String title,String msg) {
+    public static AlertDialog.Builder failureDialog(Context context,String title,String msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(title);
         alert.setMessage(msg);
@@ -63,6 +63,16 @@ public class Utils {
             }
         });
         alert.show();
+
+        return alert;
+    }
+
+    public static AlertDialog.Builder failureDialogCanOverride(Context context,String title,String msg) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle(title);
+        alert.setMessage(msg);
+
+        return alert;
     }
 
     public static String formatDateAndTime(String isoDate)

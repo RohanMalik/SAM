@@ -1,7 +1,9 @@
 package com.monkeybusiness.jaaar.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.internal.al;
 import com.google.common.primitives.Booleans;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -162,11 +165,11 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
 
                     List<Datum> attendanceList = new ArrayList<Datum>();
 
-                    Iterator<String> presentKeys = presentObject.keys();
+                    Iterator<String> attdKeys = attendanceStatus.keys();
 
-                    while (presentKeys.hasNext())
+                    while (attdKeys.hasNext())
                     {
-                        String key = presentKeys.next();
+                        String key = attdKeys.next();
 //                        presentDates.add(key);
 //                        presentStudents.add(presentObject.getInt(key));
 //                        absentStudents.add(absentObject.getInt(key));
@@ -174,9 +177,28 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
 
                         Datum datum = new Datum();
                         datum.setDate(key);
-                        datum.setAbsent(absentObject.getInt(key));
+                        int absentValue = 0;
+
+                        try
+                        {
+                            absentValue = absentObject.getInt(key);
+                        }
+                        catch (JSONException e){
+
+                        }
+
+                        int presentValue = 0;
+                        try
+                        {
+                            presentValue = presentObject.getInt(key);
+                        }
+                        catch (JSONException e){
+
+                        }
+
+                        datum.setAbsent(absentValue);
                         datum.setAttendanceStatus(attendanceStatus.getString(key));
-                        datum.setPresent(presentObject.getInt(key));
+                        datum.setPresent(presentValue);
 
                         attendanceList.add(datum);
                     }
@@ -293,7 +315,20 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
                     else
                     {
                         String msg = responseMetaData.getString("message");
-                        Utils.failureDialog(AttendanceDetailsActivity.this,"Error","Attendance Not found");
+                        AlertDialog.Builder alert = Utils.failureDialogCanOverride(AttendanceDetailsActivity.this,"Error","Attendance Not found");
+
+                        alert.setPositiveButton("Fill Attendance", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(AttendanceDetailsActivity.this, AttendanceFragment.class);
+                                intent.putExtra(Constants.BATCH_ID,id);
+                                intent.putExtra(Constants.DATE,date);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alert.show();
+
                     }
 
            } catch (JSONException e) {

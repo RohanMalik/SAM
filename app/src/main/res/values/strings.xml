@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JAAAR</string>
+    <string name="app_name">SAM Teacher</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -158,5 +158,11 @@
         <item>Personal</item>
         <item>Class</item>
         <item>Lecture</item>
+    </string-array>
+
+    <string-array name="test_applicable_array">
+        <item>Test Applicable</item>
+        <item>Not Applicable</item>
+        <item>Student Absent</item>
     </string-array>
 </resources>

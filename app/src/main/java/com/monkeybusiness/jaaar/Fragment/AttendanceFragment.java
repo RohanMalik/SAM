@@ -1,11 +1,14 @@
 package com.monkeybusiness.jaaar.Fragment;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -102,6 +105,8 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         if (intent != null) {
             batchId = intent.getIntExtra(Constants.BATCH_ID, 0);
             String date = intent.getStringExtra(Constants.DATE);
+
+            Prefs.with(this).save(PrefsKeys.ATTD_DATE,date);
 
             textViewActionTitle.setText("Attendance : " + date);
             getSingleDayAttendanceServerCall(date, batchId);
@@ -218,7 +223,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
                 toggle();
                 break;
             case R.id.textViewActionTitle:
-//                showDateDialog();
+                showDateDialog();
                 break;
         }
     }
@@ -313,8 +318,6 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
                         setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
                     }
 
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -378,7 +381,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         monthOfYear++;
         textViewActionTitle.setText("ATTENDANCE : " + year + "-" + monthOfYear + "-" + dayOfMonth);
 
-        getSingleDayAttendanceServerCall(""+year+"-"+monthOfYear+"-"+dayOfMonth,batchId);
+        checkSingleDayAttendanceServerCall(""+year+"-"+monthOfYear+"-"+dayOfMonth,batchId);
     }
 
     public class AttendancePagerAdapterHolly extends FragmentPagerAdapter {
@@ -430,6 +433,77 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
             }
         }
 
+    }
+
+    private void checkSingleDayAttendanceServerCall(String date,int id) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        Log.d(TAG,"abcdate : "+date);
+
+        String currentDate  = date+"T00:00:00.000Z";
+
+        ProgressDialog dialog = ProgressDialog.show(this,"Please wait...","Loading...",false);
+
+        RestClient.getApiService(xCookies,aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                Log.d(TAG,"Response : "+s);
+
+                dialog.dismiss();
+
+                JSONObject responseObject = null;
+                try {
+                    responseObject = new JSONObject(s);
+                    JSONObject responseMetaData = responseObject.getJSONObject("response_metadata");
+
+                    String success = responseMetaData.getString("success");
+
+                    JSONObject dataObject = responseObject.getJSONObject("data");
+
+                    JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
+
+                    Log.d(TAG,"Attd : "+studentAttd.length());
+
+                    if (success.equalsIgnoreCase("yes") && studentAttd.length()!=0)
+                    {
+                        Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
+                        intent.putExtra(Constants.BATCH_ID,id);
+                        intent.putExtra(Constants.DATE,date);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                    {
+                        String msg = responseMetaData.getString("message");
+                        AlertDialog.Builder alert = Utils.failureDialogCanOverride(AttendanceFragment.this,"Error","Attendance Not found");
+
+                        alert.setPositiveButton("Fill Attendance", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
+                                intent.putExtra(Constants.BATCH_ID,id);
+                                intent.putExtra(Constants.DATE,date);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alert.show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                dialog.dismiss();
+                Log.d(TAG,"error : "+error.toString());
+            }
+        });
     }
 
 }

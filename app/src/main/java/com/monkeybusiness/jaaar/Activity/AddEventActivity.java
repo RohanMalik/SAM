@@ -318,10 +318,10 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
             events.setEventTypeId(eventId);
 
             Calendar startCalendar = Calendar.getInstance();
-            startCalendar.set(startDate.getYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes());
+            startCalendar.set(startDate.getYear()+1900, startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes());
 
             Calendar endCalendar = Calendar.getInstance();
-            endCalendar.set(endDate.getYear(), endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes());
+            endCalendar.set(endDate.getYear()+1900, endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes());
 
             events.setStartTime(ISO8601.fromCalendar(startCalendar));
             events.setEndTime(ISO8601.fromCalendar(endCalendar));

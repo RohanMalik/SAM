@@ -116,7 +116,14 @@ public class MarksListAdapter extends BaseAdapter {
         viewHolder.textViewRollnoListView.setText(studentDetailsForMarksResponse.getData().getStudents().get(position).getRollno()+"");
         if (studentsForMarks.get(position).getMarks()!=null)
         {
-            viewHolder.textViewMarksListView.setText(studentsForMarks.get(position).getMarks()+"");
+            int marks = studentsForMarks.get(position).getMarks();
+
+            if (marks==-777 || marks == -999)
+            {
+                marks = 0;
+            }
+
+            viewHolder.textViewMarksListView.setText(marks+"");
         }
 
 
