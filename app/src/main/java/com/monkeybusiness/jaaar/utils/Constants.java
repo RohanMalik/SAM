@@ -25,6 +25,7 @@ public class Constants {
     public static final String MIN_MARKS = "minMarks";
     public static final String MAX_MARKS = "maxMarks";
     public static final String DURATION = "duration";
+    public static final String TEST_NAME = "testName";
     public static final String TEST_STATUS = "testStatus";
 
     public static final String FROM_MAIN = "fromMain";

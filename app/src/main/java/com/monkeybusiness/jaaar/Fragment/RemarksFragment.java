@@ -262,6 +262,7 @@ public class RemarksFragment extends BaseActivity {
             public void success(SearchStudentData searchStudentData, Response response) {
                 Log.d(TAG, "response : " + new Gson().toJson(searchStudentData));
 
+
                 if (searchStudentData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                     Log.d(TAG, "Student Name:" + new Gson().toJson(studentList));
 

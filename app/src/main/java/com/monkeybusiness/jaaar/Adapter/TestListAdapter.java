@@ -33,10 +33,12 @@ public class TestListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     List<Test> testDatas;
+    String buttonName;
 
-    public TestListAdapter(Context context, List<Test> testDatas) {
+    public TestListAdapter(Context context, List<Test> testDatas, String buttonName) {
         this.context = context;
         this.testDatas = testDatas;
+        this.buttonName = buttonName;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -80,6 +82,7 @@ public class TestListAdapter extends BaseAdapter {
         viewHolder.textViewTime.setText(Utils.formatDateAndTime(testDatas.get(position).getTestDate()));
 //        viewHolder.textViewDate.setText(testDatas.get(position).getDate());
         viewHolder.topicName.setText(testDatas.get(position).getTestName());
+        viewHolder.buttonFillMarksStudent.setText(buttonName);
         viewHolder.buttonFillMarksStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

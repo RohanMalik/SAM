@@ -36,6 +36,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -70,7 +72,6 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
 
         batchId = getIntent().getIntExtra(Constants.BATCH_ID, 0);
 
-        getAttendanceDetailsServerCall(batchId);
 
 //        getMonthAttdServerCall(batchId);
     }
@@ -200,7 +201,22 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
 
     private void setUiData(List<Datum> attendanceList, int id) {
 
-        AttendanceDetailsAdapter attendanceDetailsAdapter = new AttendanceDetailsAdapter(this,attendanceList,id);
+        Log.d("list","before : "+new Gson().toJson(attendanceList));
+
+        Collections.sort(attendanceList, new Comparator<Datum>() {
+            @Override
+            public int compare(Datum self, Datum other) {
+                return String.valueOf(self.getDate()).compareTo(String.valueOf(other.getDate()));
+            }
+        });
+
+        List<Datum> attendanceListReverse = new ArrayList<>();
+
+        for (int i = attendanceList.size()-1 ; i >=0 ; i--)
+        {
+            attendanceListReverse.add(attendanceList.get(i));
+        }
+        AttendanceDetailsAdapter attendanceDetailsAdapter = new AttendanceDetailsAdapter(this,attendanceListReverse,id);
         listViewLectures.setAdapter(attendanceDetailsAdapter);
     }
 
@@ -292,5 +308,11 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
                 Log.d(TAG,"error : "+error.toString());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAttendanceDetailsServerCall(batchId);
     }
 }

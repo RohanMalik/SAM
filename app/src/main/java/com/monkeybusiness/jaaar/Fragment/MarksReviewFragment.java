@@ -119,6 +119,14 @@ public class MarksReviewFragment extends Fragment implements ReviewAttdInterface
 
         textViewPresentStudents = (TextView) rootView.findViewById(R.id.textViewPresentStudents);
 
+
+        Test test = Prefs.with(this.getActivity()).getObject(PrefsKeys.TEST_DATA,Test.class);
+
+        if (test.getTestStatus().equalsIgnoreCase("Submit"))
+        {
+            buttonSave.setVisibility(View.GONE);
+        }
+
         buttonSubmit.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
     }
@@ -158,11 +166,11 @@ public class MarksReviewFragment extends Fragment implements ReviewAttdInterface
 
                         if (status.equalsIgnoreCase("save"))
                         {
-                            msg = "You Have successfully saved attendance";
+                            msg = "You Have successfully saved marks";
                         }
                         else
                         {
-                            msg = "You Have successfully Submitted attendance";
+                            msg = "You Have successfully Submitted marks";
                         }
                         AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.setTitle("Success");

@@ -65,8 +65,13 @@ public class FriendsActivity extends BaseActivity {
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
 
-        toggleLayouts(linearlayoutMyclass, textViewMyclass);
-        Utils.classFlag = 2;
+//        toggleLayouts(linearlayoutMyclass, textViewMyclass);
+//        Utils.classFlag = 2;
+
+        Utils.classFlag = 1;
+
+        toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
+
         friends = (ListView) findViewById(R.id.friends);
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);

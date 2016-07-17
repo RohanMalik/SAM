@@ -36,6 +36,25 @@
                 android:layout_marginTop="40px"
                 android:outlineProvider="paddedBounds" />
 
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16px"
+                android:layout_marginLeft="32px"
+                android:layout_marginRight="32px"
+                android:layout_marginTop="16px"
+                android:theme="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/input_event_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Test Name"
+                    android:textSize="32px" />
+            </android.support.design.widget.TextInputLayout>
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

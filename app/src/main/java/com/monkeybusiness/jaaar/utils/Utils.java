@@ -100,4 +100,14 @@ public class Utils {
 
         return dateStr+"T00:00:00.000Z";
     }
+
+    public static String getOnlyDateNotTime(Date date)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = simpleDateFormat.format(date);
+
+        Log.d("utils",dateStr);
+
+        return dateStr;
+    }
 }

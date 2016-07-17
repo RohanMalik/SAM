@@ -23,6 +23,8 @@ public class PrefsKeys {
 
     public static final String STUDENT_DETAILS_RESPONSE_DATA = "studentDetailsResponseData";
 
+    public static final String ATTD_STATUS = "attendanceStatus";
+
     public static final String TEST_RESPONSE_DATA = "testResponseData";
 
     public static final String EVENT_RESPONSE_DATA = "eventResponseData";

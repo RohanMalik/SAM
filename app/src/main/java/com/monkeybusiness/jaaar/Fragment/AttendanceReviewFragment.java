@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.github.florent37.hollyviewpager.HollyViewPagerBus;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.google.android.gms.internal.el;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.ReviewListAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
@@ -61,7 +62,8 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
     NonScrollListView listViewReviewAttd;
     ReviewListAdapter reviewListAdapter;
 
-     Button buttonSubmit;
+    Button buttonSubmit;
+    Button buttonSave;
 
     ObservableScrollView scrollView;
 
@@ -90,6 +92,8 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
     {
         buttonSubmit = (Button) rootView.findViewById(R.id.buttonSubmit);
 
+        buttonSave = (Button) rootView.findViewById(R.id.buttonSave);
+
         listViewReviewAttd = (NonScrollListView) rootView.findViewById(R.id.listViewReviewAttd);
 
         scrollView = (ObservableScrollView) rootView.findViewById(R.id.scrollView);
@@ -98,7 +102,19 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
 
         textViewPresentStudents = (TextView) rootView.findViewById(R.id.textViewPresentStudents);
 
+        String status = Prefs.with(this.getActivity()).getString(PrefsKeys.ATTD_STATUS,"");
+
+        if (status.equalsIgnoreCase("save"))
+        {
+            buttonSave.setVisibility(View.GONE);
+        }
+        else if (status.equalsIgnoreCase("submit")){
+            buttonSave.setVisibility(View.GONE);
+            buttonSubmit.setVisibility(View.GONE);
+        }
+
         buttonSubmit.setOnClickListener(this);
+        buttonSave.setOnClickListener(this);
     }
 
     public void submitAttd(String status)
@@ -150,12 +166,22 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
                 public void success(AttdSavedResponseData attdSavedResponseData, Response response) {
                     Log.d(TAG,"Response : "+new Gson().toJson(attdSavedResponseData));
 
+                    String status = "";
+
+                    if (objectData.getStudentAttendance().getStatus().equalsIgnoreCase("save"))
+                    {
+                        status = "saved";
+                    }
+                    else {
+                        status = "submitted";
+                    }
+
                     dialog.dismiss();
                     if (attdSavedResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes"))
                     {
                         AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.setTitle("Success");
-                        alert.setMessage("You Have successfully saved attendance");
+                        alert.setMessage("You Have successfully "+status+" attendance");
                         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -229,6 +255,9 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
         switch (v.getId())
         {
             case R.id.buttonSubmit:
+                submitAttd("submit");
+                break;
+            case R.id.buttonSave:
                 submitAttd("save");
                 break;
         }

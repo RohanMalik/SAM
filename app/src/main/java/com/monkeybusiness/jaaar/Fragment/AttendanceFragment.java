@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -247,6 +248,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
             @Override
             public void success(String s, Response response) {
                 Log.d(TAG, "Response : " + s);
+                Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS,"");
 
                 JSONObject responseObject = null;
                 try {
@@ -273,23 +275,45 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
 
                     Log.d(TAG, "StudentsInfo : " + new Gson().toJson(studentsInfos));
 
+
                     JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
 
-                    Iterator<String> keys = studentAttd.keys();
 
-                    List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
+                    if (studentAttd.length() != 0)
+                    {
+                        Iterator<String> keys = studentAttd.keys();
 
-                    while (keys.hasNext()) {
-                        String key = keys.next();
+                        List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
 
-                        Log.d(TAG, "Key : " + key);
+                        while (keys.hasNext()) {
+                            String key = keys.next();
 
-                        singleIdDetails.add(getSingleIdObject(studentAttd, key));
+                            Log.d(TAG, "Key : " + key);
+
+                            singleIdDetails.add(getSingleIdObject(studentAttd, key));
+                        }
+
+                        Log.d(TAG, "Json : " + new Gson().toJson(singleIdDetails));
+
+                        JSONObject studentAttdGrpObj = dataObject.getJSONObject("student_attendance_groups");
+
+                        String status = studentAttdGrpObj.getString("status");
+                        Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS,status);
+
+                        Log.d(TAG,"Attd_status : "+status);
+
+                        setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
+                    }else {
+                        List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
+
+                        for (StudentsInfo studentsInfo : studentsInfos){
+
+                            singleIdDetails.add(getDefaultSingleIdObject(studentAttd,studentsInfo));
+                        }
+                        setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
                     }
 
-                    Log.d(TAG, "Json : " + new Gson().toJson(singleIdDetails));
 
-                    setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -322,6 +346,27 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
 
             return singleIdDetail;
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private SingleIdDetail getDefaultSingleIdObject(JSONObject studentAttd,StudentsInfo studentsInfo) {
+
+        try {
+            SingleIdDetail singleIdDetail = new SingleIdDetail();
+
+            singleIdDetail.setId(0);
+            singleIdDetail.setStudentId(studentsInfo.getId());
+            singleIdDetail.setStatus("P");
+            singleIdDetail.setAttendanceDate(Utils.getOnlyDateNotTime(new Date()));
+            singleIdDetail.setIsSave(false);
+            singleIdDetail.setStudentAttendanceGroupId(0);
+
+            Log.d(TAG, "SingleId : " + new Gson().toJson(singleIdDetail));
+
+            return singleIdDetail;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

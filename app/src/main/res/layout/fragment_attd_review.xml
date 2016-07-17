@@ -159,19 +159,40 @@
                         android:layout_height="2px"
                         android:background="@drawable/shadow_down"/>
 
-                    <com.rey.material.widget.Button
-                        android:id="@+id/buttonSubmit"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="80px"
-                        android:text="SUBMIT"
-                        android:layout_margin="32px"
-                        android:textSize="32px"
-                        android:background="@drawable/non_border_simple_button_corner"
-                        android:elevation="10px"
-                        android:textColor="#fff"
-                        app:rd_enable="true"
-                        app:rd_rippleColor="@color/primary"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+                        <com.rey.material.widget.Button
+                            android:id="@+id/buttonSave"
+                            android:layout_width="match_parent"
+                            android:layout_height="80px"
+                            android:text="SAVE"
+                            android:layout_margin="32px"
+                            android:textSize="32px"
+                            android:background="@drawable/non_border_simple_button_corner"
+                            android:elevation="10px"
+                            android:textColor="#fff"
+                            app:rd_enable="true"
+                            android:layout_weight="1"
+                            app:rd_rippleColor="@color/primary"/>
+
+                        <com.rey.material.widget.Button
+                            android:id="@+id/buttonSubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="80px"
+                            android:text="SUBMIT"
+                            android:layout_margin="32px"
+                            android:textSize="32px"
+                            android:background="@drawable/non_border_simple_button_corner"
+                            android:elevation="10px"
+                            android:textColor="#fff"
+                            app:rd_enable="true"
+                            android:layout_weight="1"
+                            app:rd_rippleColor="@color/primary"/>
+
+                    </LinearLayout>
                 </LinearLayout>
 
 

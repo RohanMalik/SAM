@@ -249,7 +249,7 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
             Log.d(TAG, "Test : " + new Gson().toJson(test));
         }
 
-        testListAdapter = new TestListAdapter(context, tests);
+        testListAdapter = new TestListAdapter(context, tests,"FILL MARKS");
         listViewTest.setAdapter(testListAdapter);
         listViewTest.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -262,6 +262,7 @@ public class UpcomingTest extends Fragment implements View.OnClickListener, Date
                 intent.putExtra(Constants.MIN_MARKS,tests.get(position).getMinMarks());
                 intent.putExtra(Constants.MAX_MARKS,tests.get(position).getMaxMarks());
                 intent.putExtra(Constants.DURATION,tests.get(position).getDurationMinutes());
+                intent.putExtra(Constants.TEST_NAME,tests.get(position).getTestName());
                 startActivity(intent);
             }
         });

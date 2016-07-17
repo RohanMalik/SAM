@@ -105,7 +105,7 @@ public class TestTakenFragment extends Fragment implements TestFragmentListner,V
             Log.d(TAG,"Test : "+new Gson().toJson(test));
         }
 
-        testListAdapter = new TestListAdapter(context, tests);
+        testListAdapter = new TestListAdapter(context, tests, "VIEW MARKS");
         listViewTest.setAdapter(testListAdapter);
 
 //        testListAdapter = new TestListAdapter(context,tests);

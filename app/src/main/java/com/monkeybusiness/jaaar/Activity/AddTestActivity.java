@@ -53,6 +53,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     private static final String TAG = "AddTestActivity";
     Spinner input_event_name;
     EditText input_event_desc;
+    EditText input_event_full_name;
 
     TextView textViewDate;
 
@@ -102,6 +103,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         input_event_name = (Spinner) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
+        input_event_full_name = (EditText) findViewById(R.id.input_event_full_name);
 
         buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
 
@@ -150,6 +152,8 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             if (lectureName != null) {
                 int pos = lectureList.indexOf(lectureName);
                 input_event_name.setSelection(pos);
+
+                input_event_full_name.setText(intent.getStringExtra(Constants.TEST_NAME));
 
                 textViewDate.setText(Utils.formatDateAndTime(intent.getStringExtra(Constants.DATE)));
                 editTextMin.setText(intent.getIntExtra(Constants.MIN_MARKS, 0) + "");
@@ -344,7 +348,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         String testDate;
-        if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date")) {
+        if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date") || !input_event_full_name.getText().toString().equalsIgnoreCase("")) {
 
             Calendar calendar = Calendar.getInstance();
             calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
@@ -352,7 +356,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
             String lectureId = lectureResponseData.getData().getLectures().get(input_event_name.getSelectedItemPosition()).getId() + "";
 
-            String testName = input_event_name.getSelectedItem().toString();
+            String testName = input_event_full_name.getText().toString();
             String desc = input_event_desc.getText().toString();
             String maxMarks = editTextMax.getText().toString();
             String minMarks = editTextMin.getText().toString();
