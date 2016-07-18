@@ -99,7 +99,7 @@ public class DashboardActivity extends BaseActivity {
         if (checkLoginResponse!=null)
         {
             textViewName.setText("Hi "+checkLoginResponse.getData().getUserTypeDetails().getTeacherName());
-//            textViewClass.setText(checkLoginResponse.getData().get);
+            textViewClass.setVisibility(View.GONE);
             textViewContact.setText("Contact No : "+checkLoginResponse.getData().getUserTypeDetails().getContactInfo());
             textViewEmail.setText("Email : "+checkLoginResponse.getData().getUserInfo().getEmail());
         }

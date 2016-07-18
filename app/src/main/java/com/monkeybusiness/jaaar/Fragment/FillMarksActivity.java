@@ -28,6 +28,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
+import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMark;
 import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -126,12 +127,23 @@ public class FillMarksActivity extends BaseActivity {
 
     }
 
-    public void setUIData(StudentDetailsForMarksResponse studentDetailsForMarksResponse) {
+
+    List<Student> students;
+
+    public void setUIData(StudentDetailsForMarksResponse studentDetailsForMarksResponse,List<Student> studentsList) {
 
         progressBarAttd.setVisibility(View.GONE);
         hollyViewPager.setVisibility(View.VISIBLE);
 
-        List<Student> students = studentDetailsForMarksResponse.getData().getStudents();
+
+        if (studentsList.isEmpty())
+        {
+            students = studentDetailsForMarksResponse.getData().getStudents();
+        }
+        else {
+            students = studentsList;
+        }
+
         pageCount = students.size();
         Log.d(TAG, "pageCount : " + pageCount);
 
@@ -250,7 +262,8 @@ public class FillMarksActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (position != pageCount) {
-                return "Roll No. " + (position + 1);
+                String rollNo = "Roll No. "+students.get(position).getRollno();
+                return rollNo;
             } else {
                 return "Submit";
             }
@@ -267,7 +280,20 @@ public class FillMarksActivity extends BaseActivity {
             public void success(TestMarksResponseData testMarksResponseData, Response response) {
                 Log.d(TAG,"Response : "+new Gson().toJson(testMarksResponseData));
                 Prefs.with(FillMarksActivity.this).save(PrefsKeys.TEST_MARKS_DATA,testMarksResponseData);
-                getTestStudentsServerCall();
+//                getTestStudentsServerCall();
+
+                List<Student> students = new ArrayList<Student>();
+                for (TestMark testMark : testMarksResponseData.getData().getTestMarks())
+                {
+                    Student student = new Student();
+                    student.setId(testMark.getStudent().getId());
+                    student.setBatchId(testMark.getStudent().getBatchId());
+                    student.setRollno(testMark.getStudent().getRollno());
+                    student.setStudentName(testMark.getStudent().getStudentName());
+
+                    students.add(student);
+                }
+                getTestStudentsServerCall(students);
             }
 
             @Override
@@ -277,7 +303,7 @@ public class FillMarksActivity extends BaseActivity {
         });
     }
 
-    private void getTestStudentsServerCall() {
+    private void getTestStudentsServerCall(List<Student> students) {
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
 
@@ -286,7 +312,7 @@ public class FillMarksActivity extends BaseActivity {
             public void success(StudentDetailsForMarksResponse studentDetailsForMarksResponse, Response response) {
                 Log.d(TAG,"Response : "+new Gson().toJson(studentDetailsForMarksResponse));
 
-                setUIData(studentDetailsForMarksResponse);
+                setUIData(studentDetailsForMarksResponse,students);
             }
 
             @Override

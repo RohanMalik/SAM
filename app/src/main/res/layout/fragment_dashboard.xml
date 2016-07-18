@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50px"
-                    android:text="Hi! Rohan Malik"
+                    android:text=""
                     android:textSize="36px" />
 
                 <TextView
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20px"
-                    android:text="Class : 10th A"
+                    android:text=""
                     android:textSize="36px" />
 
                 <TextView
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20px"
-                    android:text="Contact No. : 1234567890"
+                    android:text=""
                     android:textSize="32px" />
 
                 <TextView
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20px"
-                    android:text="Email : rohan.malik@mail.com"
+                    android:text=""
                     android:textSize="32px" />
 
                 <com.rey.material.widget.CheckBox

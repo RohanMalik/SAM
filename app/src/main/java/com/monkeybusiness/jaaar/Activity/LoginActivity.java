@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (loginResponse!=null)
                     {
-                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes"))
+                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("Teacher"))
                         {
                             Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.VERIFIED);
                             Prefs.with(LoginActivity.this).save(PrefsKeys.LOGIN_RESPONSE_DATA,loginResponse);
@@ -196,8 +196,12 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
-                        else
+                        else if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("School"))
                         {
+                            new CommonDialog(LoginActivity.this).Show("Something went wrong");
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
+                        }
+                        else {
                             new CommonDialog(LoginActivity.this).Show(loginResponse.getResponseMetadata().getMessage());
                             Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
                         }
