@@ -12,6 +12,9 @@ public class SingleIdDetail {
     @SerializedName("student_id")
     @Expose
     private int studentId;
+    @SerializedName("student_name")
+    @Expose
+    private String studentName;
     @SerializedName("status")
     @Expose
     private String status;
@@ -30,6 +33,14 @@ public class SingleIdDetail {
     @SerializedName("student_attendance_group_id")
     @Expose
     private int studentAttendanceGroupId;
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 
     /**
      * 

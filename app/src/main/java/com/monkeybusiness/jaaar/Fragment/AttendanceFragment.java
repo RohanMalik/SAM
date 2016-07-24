@@ -63,13 +63,11 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
     HollyViewPager hollyViewPager;
     int pageCount;
 //    ViewPager viewPagerAttd;
-
-//    AttendanceSlidePagerAdapter adapter;
-    private String TAG = "AttendanceFragment";
-
     ProgressBar progressBarAttd;
-
     int batchId;
+    List<StudentsInfo> studentsInfos;
+    //    AttendanceSlidePagerAdapter adapter;
+    private String TAG = "AttendanceFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +104,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
             batchId = intent.getIntExtra(Constants.BATCH_ID, 0);
             String date = intent.getStringExtra(Constants.DATE);
 
-            Prefs.with(this).save(PrefsKeys.ATTD_DATE,date);
+            Prefs.with(this).save(PrefsKeys.ATTD_DATE, date);
 
             textViewActionTitle.setText("Attendance : " + date);
             getSingleDayAttendanceServerCall(date, batchId);
@@ -146,30 +144,43 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         progressBarAttd.setVisibility(View.GONE);
         hollyViewPager.setVisibility(View.VISIBLE);
 
+        for (StudentsInfo studentsInfo : studentsInfos) {
+
+            for (SingleIdDetail singleIdDetail : singleIdDetails) {
+
+                if (singleIdDetail.getStudentId() == studentsInfo.getId()) {
+
+                    singleIdDetail.setStudentName(studentsInfo.getStudentName());
+                }
+            }
+        }
+
         pageCount = singleIdDetails.size();
         Log.d(TAG, "pageCount : " + pageCount);
         ArrayList<StudentAttdData> studentAttdDatas = new ArrayList<>();
 
-        Log.d("sort","before abc : "+new Gson().toJson(singleIdDetails));
-        Log.d("sort","before studentInfo : "+new Gson().toJson(studentsInfos));
+        Log.d("sort", "before abc : " + new Gson().toJson(singleIdDetails));
+        Log.d("sort", "before studentInfo : " + new Gson().toJson(studentsInfos));
 
         Collections.sort(singleIdDetails, new Comparator<SingleIdDetail>() {
             @Override
             public int compare(SingleIdDetail self, SingleIdDetail other) {
-                return String.valueOf(self.getStudentId()).compareTo(String.valueOf(other.getStudentId()));
+                return String.valueOf(self.getStudentName()).compareTo(String.valueOf(other.getStudentName()));
             }
         });
 
         Collections.sort(studentsInfos, new Comparator<StudentsInfo>() {
             @Override
             public int compare(StudentsInfo self, StudentsInfo other) {
-                return String.valueOf(self.getId()).compareTo(String.valueOf(other.getId()));
+                return String.valueOf(self.getStudentName()).compareTo(String.valueOf(other.getStudentName()));
             }
         });
 
 
-        Log.d("sort","after singleId : "+new Gson().toJson(singleIdDetails));
-        Log.d("sort","after studentInfo : "+new Gson().toJson(studentsInfos));
+        this.studentsInfos = studentsInfos;
+
+        Log.d("sort", "after singleId : " + new Gson().toJson(singleIdDetails));
+        Log.d("sort", "after studentInfo : " + new Gson().toJson(studentsInfos));
 
         MasterClass.getInstance().setStudentAttdDatas(studentAttdDatas);
 
@@ -202,7 +213,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
             @Override
             public void onPageSelected(int position) {
                 Log.d(TAG, "pageSelected : " + position);
-                if (position == 10) {
+                if (position == pageCount) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
                     reviewAttdInterface.onResumeFragment();
                 }
@@ -253,7 +264,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
             @Override
             public void success(String s, Response response) {
                 Log.d(TAG, "Response : " + s);
-                Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS,"");
+                Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS, "");
 
                 JSONObject responseObject = null;
                 try {
@@ -284,8 +295,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
                     JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
 
 
-                    if (studentAttd.length() != 0)
-                    {
+                    if (studentAttd.length() != 0) {
                         Iterator<String> keys = studentAttd.keys();
 
                         List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
@@ -303,17 +313,17 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
                         JSONObject studentAttdGrpObj = dataObject.getJSONObject("student_attendance_groups");
 
                         String status = studentAttdGrpObj.getString("status");
-                        Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS,status);
+                        Prefs.with(AttendanceFragment.this).save(PrefsKeys.ATTD_STATUS, status);
 
-                        Log.d(TAG,"Attd_status : "+status);
+                        Log.d(TAG, "Attd_status : " + status);
 
                         setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
-                    }else {
+                    } else {
                         List<SingleIdDetail> singleIdDetails = new ArrayList<SingleIdDetail>();
 
-                        for (StudentsInfo studentsInfo : studentsInfos){
+                        for (StudentsInfo studentsInfo : studentsInfos) {
 
-                            singleIdDetails.add(getDefaultSingleIdObject(studentAttd,studentsInfo));
+                            singleIdDetails.add(getDefaultSingleIdObject(studentAttd, studentsInfo));
                         }
                         setUIData(singleIdDetails, studentsInfos, batchInfo.getClassAlias());
                     }
@@ -354,7 +364,7 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         return null;
     }
 
-    private SingleIdDetail getDefaultSingleIdObject(JSONObject studentAttd,StudentsInfo studentsInfo) {
+    private SingleIdDetail getDefaultSingleIdObject(JSONObject studentAttd, StudentsInfo studentsInfo) {
 
         try {
             SingleIdDetail singleIdDetail = new SingleIdDetail();
@@ -381,7 +391,75 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         monthOfYear++;
         textViewActionTitle.setText("ATTENDANCE : " + year + "-" + monthOfYear + "-" + dayOfMonth);
 
-        checkSingleDayAttendanceServerCall(""+year+"-"+monthOfYear+"-"+dayOfMonth,batchId);
+        checkSingleDayAttendanceServerCall("" + year + "-" + monthOfYear + "-" + dayOfMonth, batchId);
+    }
+
+    private void checkSingleDayAttendanceServerCall(String date, int id) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        Log.d(TAG, "abcdate : " + date);
+
+        String currentDate = date + "T00:00:00.000Z";
+
+        ProgressDialog dialog = ProgressDialog.show(this, "Please wait...", "Loading...", false);
+
+        RestClient.getApiService(xCookies, aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                Log.d(TAG, "Response : " + s);
+
+                dialog.dismiss();
+
+                JSONObject responseObject = null;
+                try {
+                    responseObject = new JSONObject(s);
+                    JSONObject responseMetaData = responseObject.getJSONObject("response_metadata");
+
+                    String success = responseMetaData.getString("success");
+
+                    JSONObject dataObject = responseObject.getJSONObject("data");
+
+                    JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
+
+                    Log.d(TAG, "Attd : " + studentAttd.length());
+
+                    if (success.equalsIgnoreCase("yes") && studentAttd.length() != 0) {
+                        Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
+                        intent.putExtra(Constants.BATCH_ID, id);
+                        intent.putExtra(Constants.DATE, date);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String msg = responseMetaData.getString("message");
+                        AlertDialog.Builder alert = Utils.failureDialogCanOverride(AttendanceFragment.this, "Error", "Attendance Not found");
+
+                        alert.setPositiveButton("Fill Attendance", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
+                                intent.putExtra(Constants.BATCH_ID, id);
+                                intent.putExtra(Constants.DATE, date);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alert.show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                dialog.dismiss();
+                Log.d(TAG, "error : " + error.toString());
+            }
+        });
     }
 
     public class AttendancePagerAdapterHolly extends FragmentPagerAdapter {
@@ -427,83 +505,19 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
         @Override
         public CharSequence getPageTitle(int position) {
             if (position != pageCount) {
-                return "Roll No. " + (position + 1);
+//                if ((studentsInfos.get(position).getRollno()+"").length()<=2)
+//                {
+                return "" + (position + 1);
+//                }
+//                else {
+//                    return "Roll No. " + (position+1);
+//                }
+//                return studentsInfos.get(position).getRollno()+"";
             } else {
                 return "Submit";
             }
         }
 
-    }
-
-    private void checkSingleDayAttendanceServerCall(String date,int id) {
-
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
-
-        Log.d(TAG,"abcdate : "+date);
-
-        String currentDate  = date+"T00:00:00.000Z";
-
-        ProgressDialog dialog = ProgressDialog.show(this,"Please wait...","Loading...",false);
-
-        RestClient.getApiService(xCookies,aCookies).apiCallGetSingleDayAttendanceDetail(String.valueOf(id), currentDate, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                Log.d(TAG,"Response : "+s);
-
-                dialog.dismiss();
-
-                JSONObject responseObject = null;
-                try {
-                    responseObject = new JSONObject(s);
-                    JSONObject responseMetaData = responseObject.getJSONObject("response_metadata");
-
-                    String success = responseMetaData.getString("success");
-
-                    JSONObject dataObject = responseObject.getJSONObject("data");
-
-                    JSONObject studentAttd = dataObject.getJSONObject("student_attendance");
-
-                    Log.d(TAG,"Attd : "+studentAttd.length());
-
-                    if (success.equalsIgnoreCase("yes") && studentAttd.length()!=0)
-                    {
-                        Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
-                        intent.putExtra(Constants.BATCH_ID,id);
-                        intent.putExtra(Constants.DATE,date);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else
-                    {
-                        String msg = responseMetaData.getString("message");
-                        AlertDialog.Builder alert = Utils.failureDialogCanOverride(AttendanceFragment.this,"Error","Attendance Not found");
-
-                        alert.setPositiveButton("Fill Attendance", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(AttendanceFragment.this, AttendanceFragment.class);
-                                intent.putExtra(Constants.BATCH_ID,id);
-                                intent.putExtra(Constants.DATE,date);
-                                startActivity(intent);
-                            }
-                        });
-
-                        alert.show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                dialog.dismiss();
-                Log.d(TAG,"error : "+error.toString());
-            }
-        });
     }
 
 }

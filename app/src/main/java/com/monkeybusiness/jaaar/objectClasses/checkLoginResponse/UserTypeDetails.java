@@ -59,6 +59,17 @@ public class UserTypeDetails {
     @SerializedName("contact_info")
     @Expose
     private String contactInfo;
+    @SerializedName("picture")
+    @Expose
+    private Picture picture;
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
     /**
      * @return The id

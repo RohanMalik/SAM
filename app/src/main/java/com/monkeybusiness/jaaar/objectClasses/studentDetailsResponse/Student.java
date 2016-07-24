@@ -80,6 +80,17 @@ public class Student {
     @SerializedName("attendances")
     @Expose
     private List<Attendance> attendances = new ArrayList<Attendance>();
+    @SerializedName("picture")
+    @Expose
+    private Picture picture= new Picture();
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
     /**
      * @return The id

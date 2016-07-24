@@ -3,18 +3,18 @@ package com.monkeybusiness.jaaar.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,11 +33,14 @@ import com.monkeybusiness.jaaar.cropImageUtils.Crop;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.Remarks;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.RemarksRequestObject;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
+import com.monkeybusiness.jaaar.objectClasses.imagePutObject.ImageStudentPutObject;
+import com.monkeybusiness.jaaar.objectClasses.imagePutObject.Student;
+import com.monkeybusiness.jaaar.objectClasses.imageUploadResponse.ImageUploadResponse;
+import com.monkeybusiness.jaaar.objectClasses.pictureUploadObject.Picture;
+import com.monkeybusiness.jaaar.objectClasses.pictureUploadObject.PictureUploadObject;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
-import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
-import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
@@ -46,14 +49,15 @@ import com.monkeybusiness.jaaar.utils.NonScrollListView;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
-
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -89,19 +93,20 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     CircleImageView imageViewProfilePicStudent;
 
     Dialog dialog;
+    TextView textViewRollNoStudent;
+    NonScrollListView listViewRemarks;
+    int studentId;
+    StudentsDetailsResponseData studentsDetailsResponseData;
+    Dialog subjectDialog;
+    EditText editTextRemarks;
+    Button buttonSend;
     private TextView textViewCamera;
     private TextView textViewGallery;
     private TextView textViewTitle;
-
-    TextView textViewRollNoStudent;
     private ImageChooserManager imageChooserManagerGallery;
     private ImageChooserManager imageChooserManagerCamera;
     private Uri inputUri;
     private Uri outputUri;
-
-    NonScrollListView listViewRemarks;
-
-    int studentId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,8 +127,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
     }
 
-
-
     public void initialization() {
         linearLayoutMainStudent = (LinearLayout) findViewById(R.id.linearLayoutMainStudent);
 
@@ -134,7 +137,9 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         textViewClass = (TextView) findViewById(R.id.textViewClassStudent);
         textViewContact = (TextView) findViewById(R.id.textViewContactStudent);
         textViewEmail = (TextView) findViewById(R.id.textViewEmailStudent);
-        textViewRollNoStudent  = (TextView) findViewById(R.id.textViewRollNoStudent);
+        textViewRollNoStudent = (TextView) findViewById(R.id.textViewRollNoStudent);
+
+        imageViewProfilePicStudent = (CircleImageView) findViewById(R.id.imageViewProfilePicStudent);
 
         textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
 
@@ -165,8 +170,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         imageViewProfilePicStudent.setOnClickListener(this);
     }
 
-    StudentsDetailsResponseData studentsDetailsResponseData;
-
     private void setUIData(StudentsDetailsResponseData studentsDetailsResponseData) {
 
         progressBarStudent.setVisibility(View.GONE);
@@ -174,12 +177,18 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         this.studentsDetailsResponseData = studentsDetailsResponseData;
 
-        textViewName.setText("Name : " + studentsDetailsResponseData.getData().getStudent().getStudentName());
-        textViewClass.setText("Class : " + studentsDetailsResponseData.getData().getStudent().getBatch().getClassAlias());
-        textViewContact.setText("Address : " + studentsDetailsResponseData.getData().getStudent().getAddress());
-        textViewEmail.setText("Father's Name : " + studentsDetailsResponseData.getData().getStudent().getFatherName());
-        textViewRollNoStudent.setText("Roll No. "+studentsDetailsResponseData.getData().getStudent().getRollno());
-        textViewContactStudent.setText("Contact : "+studentsDetailsResponseData.getData().getStudent().getParent().getContactPhone());
+        if (studentsDetailsResponseData.getData().getStudent() != null) {
+            textViewName.setText("Name : " + studentsDetailsResponseData.getData().getStudent().getStudentName());
+            textViewClass.setText("Class : " + studentsDetailsResponseData.getData().getStudent().getBatch().getClassAlias());
+            textViewContact.setText("Address : " + studentsDetailsResponseData.getData().getStudent().getAddress());
+            textViewEmail.setText("Father's Name : " + studentsDetailsResponseData.getData().getStudent().getFatherName());
+            textViewRollNoStudent.setText("Roll No. " + studentsDetailsResponseData.getData().getStudent().getRollno());
+            textViewContactStudent.setText("Contact : " + studentsDetailsResponseData.getData().getStudent().getParent().getContactPhone());
+
+            if (studentsDetailsResponseData.getData().getStudent().getPicture() != null) {
+                Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).into(imageViewProfilePicStudent);
+            }
+        }
     }
 
     @Override
@@ -190,8 +199,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 toggle();
                 break;
             case R.id.buttonRemarksStudent:
-                if (studentsDetailsResponseData!=null)
-                {
+                if (studentsDetailsResponseData != null) {
                     showRemarksDialog(studentsDetailsResponseData.getData().getStudent().getId());
                 }
                 Log.d(TAG, "button pressed");
@@ -224,10 +232,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 break;
         }
     }
-
-    Dialog subjectDialog;
-    EditText editTextRemarks;
-    Button buttonSend;
 
     public void showRemarksDialog(int id) {
 
@@ -290,7 +294,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             Log.d("ProfiileEdit", "CropResult");
             if (outputUri != null) {
                 String filePath = outputUri.toString().substring(7);
-                Picasso.with(this).load(new File(filePath)).fit().into(imageViewProfilePicStudent);
+                File file = new File(filePath);
+                Picasso.with(this).load(file).fit().into(imageViewProfilePicStudent);
+
+                sendPictureToUploads(filePath);
+
 
 //                    postUserImageOnServer(filePath);
 //                getAddressGivenLatLongFrom(filePath);
@@ -304,6 +312,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             @Override
             public void run() {
                 if (chosenImage != null) {
+
+                    Log.d("image", "extension : " + chosenImage.getExtension());
 
                     String path = "file://" + chosenImage.getFilePathOriginal();
                     inputUri = Uri.parse(path);
@@ -365,7 +375,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     }
 
 
-
     private void sendRemarksServerCall(int id) {
 
         RemarksRequestObject remarksRequestObject = new RemarksRequestObject();
@@ -423,41 +432,121 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        RestClient.getApiServicePojo(xCookies,aCookies).apiCallFetchSingleStudentRemarks(String.valueOf(studentId), "1",
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallFetchSingleStudentRemarks(String.valueOf(studentId), "1",
                 new Callback<StudentsRemarksResponse>() {
                     @Override
                     public void success(StudentsRemarksResponse studentsRemarksResponse, Response response) {
-                        Log.d(TAG,"Response : "+new Gson().toJson(studentsRemarksResponse));
+                        Log.d(TAG, "Response : " + new Gson().toJson(studentsRemarksResponse));
 
                         setUiremarks(studentsRemarksResponse);
                     }
 
-                    
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.d(TAG,"error : "+error.toString());
+                        Log.d(TAG, "error : " + error.toString());
                     }
                 });
     }
 
     private void setUiremarks(StudentsRemarksResponse studentsRemarksResponse) {
 
-        if (studentsRemarksResponse.getData().getRemarks().isEmpty())
-        {
+        if (studentsRemarksResponse.getData().getRemarks().isEmpty()) {
             textViewRemarks.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             textViewRemarks.setVisibility(View.VISIBLE);
         }
 
-        for (Remark remark : studentsRemarksResponse.getData().getRemarks())
-        {
-            Log.d("adapter","UIremark : "+new Gson().toJson(remark));
+        for (Remark remark : studentsRemarksResponse.getData().getRemarks()) {
+            Log.d("adapter", "UIremark : " + new Gson().toJson(remark));
         }
-        RemarksListAdapter remarksListAdapter = new RemarksListAdapter(this,studentsRemarksResponse.getData().getRemarks());
+        RemarksListAdapter remarksListAdapter = new RemarksListAdapter(this, studentsRemarksResponse.getData().getRemarks());
         listViewRemarks.setAdapter(remarksListAdapter);
+    }
+
+    private void sendPictureToUploads(String filePath) {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        PictureUploadObject pictureUploadObject = new PictureUploadObject();
+        Picture picture = new Picture();
+
+        picture.setExtention("jpeg");
+        picture.setContentType("image/jpeg");
+        picture.setFile("data:image/jpeg;base64,"+Base64.encodeToString(convertToByteArray(filePath), Base64.DEFAULT));
+
+        pictureUploadObject.setPicture(picture);
+
+        String jsonUpload = new Gson().toJson(pictureUploadObject);
+
+        ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Uploading Image...", false);
+
+        try {
+            TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));
+            RestClient.getApiServicePojo(xCookies, aCookies).apiCallSendStudentPicture(typedInput, new Callback<ImageUploadResponse>() {
+                @Override
+                public void success(ImageUploadResponse imageUploadResponse, Response response) {
+                    Log.d(TAG,"Response : "+imageUploadResponse);
+                    progressDialog.dismiss();
+                    if (imageUploadResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")){
+                        sendPutStudentPicture(imageUploadResponse.getData().getImageUrl());
+                    }else {
+                        Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG,"error : "+error.toString());
+                    progressDialog.dismiss();
+                    Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendPutStudentPicture(String imageUrl) {
+
+        ImageStudentPutObject imageStudentPutObject = new ImageStudentPutObject();
+
+        Student student = new Student();
+
+        student.setId(studentId);
+
+        com.monkeybusiness.jaaar.objectClasses.imagePutObject.Picture picture = new com.monkeybusiness.jaaar.objectClasses.imagePutObject.Picture();
+
+        picture.setUrl(imageUrl);
+
+        student.setPicture(picture);
+
+        imageStudentPutObject.setStudent(student);
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+        String jsonUpload = new Gson().toJson(imageStudentPutObject);
+
+        ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Uploading Image...", false);
+
+        try {
+            TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));
+            RestClient.getApiService(xCookies, aCookies).apiCallPutStudentPicture(String.valueOf(studentId), typedInput, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Log.d(TAG,"Response : "+s);
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG,"error : "+error.toString());
+                    progressDialog.dismiss();
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -470,8 +559,46 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             public void run() {
                 getStudentRemarks(studentId);
             }
-        },200);
+        }, 200);
     }
+
+    public byte[] convertToByteArray(String filePath) {
+        Bitmap bm = BitmapFactory.decodeFile(filePath);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bm, 400, 400, false);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return b;
+    }
+
+    //decodes image and scales it to reduce memory consumption
+//    private Bitmap decodeFile(File f) {
+//        try {
+//            //decode image size
+//            BitmapFactory.Options o = new BitmapFactory.Options();
+//            o.inJustDecodeBounds = true;
+//            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+//
+//            //Find the correct scale value. It should be the power of 2.
+//            final int REQUIRED_SIZE = 400;
+//            int width_tmp = o.outWidth, height_tmp = o.outHeight;
+//            int scale = 1;
+//            while (true) {
+//                if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
+//                    break;
+//                width_tmp /= 2;
+//                height_tmp /= 2;
+//                scale *= 2;
+//            }
+//
+//            //decode with inSampleSize
+//            BitmapFactory.Options o2 = new BitmapFactory.Options();
+//            o2.inSampleSize = scale;
+//            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+//        } catch (FileNotFoundException e) {
+//        }
+//        return null;
+//    }
 }
 
 

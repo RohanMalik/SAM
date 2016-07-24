@@ -16,9 +16,6 @@ import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.Activity.StudentDetailsActivity;
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.DemoDataFlipImageViewer;
-import com.monkeybusiness.jaaar.objectClasses.Friend;
-import com.monkeybusiness.jaaar.objectClasses.batchesData.Students;
 import com.monkeybusiness.jaaar.objectClasses.studentsResponse.Student;
 import com.monkeybusiness.jaaar.objectClasses.studentsResponse.StudentsListResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
@@ -28,9 +25,12 @@ import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit.Callback;
@@ -61,7 +61,7 @@ public class FriendsActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
-        
+
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
 
@@ -83,18 +83,24 @@ public class FriendsActivity extends BaseActivity {
         textViewActionTitle.setText("My Class");
 
         Intent intent = getIntent();
-        int lectureId = intent.getIntExtra(Constants.LECTURE_ID,0);
-        int batchId = intent.getIntExtra(Constants.BATCH_ID,0);
+        int lectureId = intent.getIntExtra(Constants.LECTURE_ID, 0);
+        int batchId = intent.getIntExtra(Constants.BATCH_ID, 0);
 
         getStudentListServerCall(batchId);
 
     }
 
-    public void setUIData(StudentsListResponseData studentsListResponseData)
-    {
+    public void setUIData(StudentsListResponseData studentsListResponseData) {
 
-        List<Student> studentsList =  studentsListResponseData.getData().getStudents();
-        Log.d(TAG,"Students : "+studentsList.size());
+        List<Student> studentsList = studentsListResponseData.getData().getStudents();
+        Log.d(TAG, "Students : " + studentsList.size());
+
+        Collections.sort(studentsList, new Comparator<Student>() {
+            @Override
+            public int compare(Student self, Student other) {
+                return String.valueOf(self.getStudentName()).compareTo(String.valueOf(other.getStudentName()));
+            }
+        });
 
         FlipSettings settings = new FlipSettings.Builder().defaultPage(1).build();
         friends.setAdapter(new FriendsAdapter(this, studentsList, settings));
@@ -103,13 +109,12 @@ public class FriendsActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Friend f = (Friend) friends.getAdapter().getItem(position);
 
-                Log.d(TAG,"Position : "+position);
-                StudentsListResponseData studentsListResponseData = Prefs.with(FriendsActivity.this).getObject(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,StudentsListResponseData.class);
+                Log.d(TAG, "Position : " + position);
+                StudentsListResponseData studentsListResponseData = Prefs.with(FriendsActivity.this).getObject(PrefsKeys.STUDENT_LIST_RESPONSE_DATA, StudentsListResponseData.class);
 
-                if (studentsListResponseData!=null)
-                {
+                if (studentsListResponseData != null) {
                     Intent intent = new Intent(FriendsActivity.this, StudentDetailsActivity.class);
-                    intent.putExtra(Constants.STUDENT_ID,studentsListResponseData.getData().getStudents().get(position).getId());
+                    intent.putExtra(Constants.STUDENT_ID, studentsList.get(position).getId());
                     startActivity(intent);
                 }
             }
@@ -124,6 +129,27 @@ public class FriendsActivity extends BaseActivity {
                 toggle();
                 break;
         }
+    }
+
+    public void getStudentListServerCall(int gradeId) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudentsByBatch(String.valueOf(gradeId), new Callback<StudentsListResponseData>() {
+
+            @Override
+            public void success(StudentsListResponseData studentsListResponseData, Response response) {
+                Log.d("LectureAdapter", "Response : " + new Gson().toJson(studentsListResponseData));
+                Prefs.with(FriendsActivity.this).save(PrefsKeys.STUDENT_LIST_RESPONSE_DATA, studentsListResponseData);
+                setUIData(studentsListResponseData);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("LectureAdapter", "error : " + error.toString());
+            }
+        });
     }
 
     class FriendsAdapter extends BaseFlipAdapter<Student> {
@@ -175,9 +201,21 @@ public class FriendsActivity extends BaseActivity {
             switch (position) {
                 // Merged page with 2 friends
                 case 1:
-                    holder.leftAvatar.setImageResource(R.drawable.anastasia);
-                    if (friend2 != null)
-                        holder.rightAvatar.setImageResource(R.drawable.irene);
+                    Log.d("1234", "image");
+                    if (friend1.getPicture() != null) {
+                        Picasso.with(FriendsActivity.this).load(friend1.getPicture().getUrl()).into(holder.leftAvatar);
+                    } else {
+                        holder.leftAvatar.setImageResource(R.drawable.anastasia);
+                    }
+                    if (friend2!=null){
+                        if (friend2.getPicture() != null) {
+                            Picasso.with(FriendsActivity.this).load(friend2.getPicture().getUrl()).into(holder.rightAvatar);
+                        } else {
+                            holder.rightAvatar.setImageResource(R.drawable.irene);
+                        }
+                    }
+//                    if (friend2 != null)
+//                        holder.rightAvatar.setImageResource(R.drawable.irene);
                     break;
                 default:
                     fillHolder(holder, position == 0 ? friend1 : friend2);
@@ -205,10 +243,10 @@ public class FriendsActivity extends BaseActivity {
 //                    iViews.next().setImageDrawable(drawablePresent);
 //                }
             holder.infoPage.setBackgroundColor(getResources().getColor(R.color.purple));
-            holder.className.setText("Roll No. "+String.valueOf(friend.getRollno()));
+            holder.className.setText("Roll No. " + String.valueOf(friend.getRollno()));
             holder.nickName.setText(friend.getStudentName());
-            holder.fatherName.setText("Father's Name : "+friend.getFatherName());
-            holder.dateOfBirth.setText("DOB : "+friend.getDob());
+            holder.fatherName.setText("Father's Name : " + friend.getFatherName());
+            holder.dateOfBirth.setText("DOB : " + friend.getDob());
             holder.buttonViewProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -238,27 +276,6 @@ public class FriendsActivity extends BaseActivity {
             Button buttonViewRemarks;
             Button buttonViewProfile;
         }
-    }
-
-    public void getStudentListServerCall(int gradeId) {
-
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
-
-        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudentsByBatch(String.valueOf(gradeId), new Callback<StudentsListResponseData>() {
-
-            @Override
-            public void success(StudentsListResponseData studentsListResponseData, Response response) {
-                Log.d("LectureAdapter", "Response : " + new Gson().toJson(studentsListResponseData));
-                Prefs.with(FriendsActivity.this).save(PrefsKeys.STUDENT_LIST_RESPONSE_DATA,studentsListResponseData);
-                setUIData(studentsListResponseData);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("LectureAdapter", "error : " + error.toString());
-            }
-        });
     }
 
 }

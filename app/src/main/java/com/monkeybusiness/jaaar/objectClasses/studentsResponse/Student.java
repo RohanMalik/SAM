@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.objectClasses.studentsResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.Picture;
 
 public class Student {
 
@@ -65,6 +66,17 @@ public class Student {
     @SerializedName("parent_id")
     @Expose
     private int parentId;
+    @SerializedName("picture")
+    @Expose
+    private Picture picture;
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
     /**
      * @return The id

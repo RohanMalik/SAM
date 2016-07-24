@@ -7,6 +7,7 @@ import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
 import com.monkeybusiness.jaaar.objectClasses.attdSavedResponse.AttdSavedResponseData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
+import com.monkeybusiness.jaaar.objectClasses.imageUploadResponse.ImageUploadResponse;
 import com.monkeybusiness.jaaar.objectClasses.simpleResponseDaa.SimpleResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
@@ -116,4 +117,10 @@ public interface ApiService {
 
     @POST("/tests/{test_id}/test_marks")
     void apiCallSendStudentMarks(@Path("test_id") String testId,@Body TypedInput marksPostObject,Callback<SimpleResponseData> callback);
+
+    @POST("/upload")
+    void apiCallSendStudentPicture(@Body TypedInput pictureObject,Callback<ImageUploadResponse> callback);
+
+    @PUT("/students/{id}")
+    void apiCallPutStudentPicture(@Path("id") String id,@Body TypedInput pictureObject,Callback<String> callback);
 }

@@ -34,7 +34,7 @@
         <item name="android:background">@color/primary</item>
     </style>
 
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         //hint color And Label Color in False State
         <item name="android:textColorHint">@color/sub_tab</item>
         <item name="android:textSize">20sp</item>

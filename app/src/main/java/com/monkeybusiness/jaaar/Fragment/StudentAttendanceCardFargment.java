@@ -121,17 +121,18 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 //        setStudentRecord(attdP4,3);
 //        setStudentRecord(attdP5,4);
 
-        if (singleIdDetails.getStatus().equals("A"))
-        {
-            buttonAbsent.setText("MARK PRESENT");
-            buttonAbsent.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
+        if (singleIdDetails.getStatus()!=null){
+            if (singleIdDetails.getStatus().equals("A"))
+            {
+                buttonAbsent.setText("MARK PRESENT");
+                buttonAbsent.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
+            }
+            else
+            {
+                buttonAbsent.setText("MARK ABSENT");
+                buttonAbsent.setBackgroundColor(getResources().getColor(R.color.primary));
+            }
         }
-        else
-        {
-            buttonAbsent.setText("MARK ABSENT");
-            buttonAbsent.setBackgroundColor(getResources().getColor(R.color.primary));
-        }
-
 
         textViewTitle.setText(studentsInfos.getStudentName());
         textViewRollNo.setText("Roll No "+studentsInfos.getRollno());

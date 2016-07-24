@@ -75,6 +75,7 @@
             android:gravity="left">
 
             <com.monkeybusiness.jaaar.Services.CircleImageView
+                android:id="@+id/littleProfilePic"
                 android:layout_width="64px"
                 android:layout_height="64px"
                 android:layout_marginLeft="32px"

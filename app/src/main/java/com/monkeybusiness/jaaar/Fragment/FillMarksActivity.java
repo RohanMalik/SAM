@@ -1,8 +1,6 @@
 package com.monkeybusiness.jaaar.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,9 +20,6 @@ import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
-import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
-import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
-import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
@@ -55,15 +50,12 @@ public class FillMarksActivity extends BaseActivity {
     HollyViewPager hollyViewPager;
     int pageCount;
 //    ViewPager viewPagerAttd;
-
-//    AttendanceSlidePagerAdapter adapter;
-    private String TAG = "AttendanceFragment";
-
     ProgressBar progressBarAttd;
-
     int batchId;
-
     Test test;
+    List<Student> students;
+    //    AttendanceSlidePagerAdapter adapter;
+    private String TAG = "AttendanceFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,9 +67,9 @@ public class FillMarksActivity extends BaseActivity {
 
         MasterClass.getInstance().setFillMarksActivity(this);
 
-        test = Prefs.with(this).getObject(PrefsKeys.TEST_DATA,Test.class);
+        test = Prefs.with(this).getObject(PrefsKeys.TEST_DATA, Test.class);
 
-        Log.d(TAG,"Test Data : "+test.getTestName()+" "+test.getTestDate());
+        Log.d(TAG, "Test Data : " + test.getTestName() + " " + test.getTestDate());
 
 //        Utils.classFlag = 1;
 
@@ -95,7 +87,7 @@ public class FillMarksActivity extends BaseActivity {
         relativeLayoutMenu.setOnClickListener(this);
         textViewActionTitle.setOnClickListener(this);
 
-        textViewActionTitle.setText(""+test.getTestName());
+        textViewActionTitle.setText("" + test.getTestName());
 
         getTestMarksServerCall();
 
@@ -127,38 +119,33 @@ public class FillMarksActivity extends BaseActivity {
 
     }
 
-
-    List<Student> students;
-
-    public void setUIData(StudentDetailsForMarksResponse studentDetailsForMarksResponse,List<Student> studentsList) {
+    public void setUIData(StudentDetailsForMarksResponse studentDetailsForMarksResponse, List<Student> studentsList) {
 
         progressBarAttd.setVisibility(View.GONE);
         hollyViewPager.setVisibility(View.VISIBLE);
 
 
-        if (studentsList.isEmpty())
-        {
+        if (studentsList.isEmpty()) {
             students = studentDetailsForMarksResponse.getData().getStudents();
-        }
-        else {
+        } else {
             students = studentsList;
         }
 
         pageCount = students.size();
         Log.d(TAG, "pageCount : " + pageCount);
 
-        Log.d("sort","before studentInfo : "+new Gson().toJson(students));
+        Log.d("sort", "before studentInfo : " + new Gson().toJson(students));
 
         Collections.sort(students, new Comparator<Student>() {
             @Override
             public int compare(Student self, Student other) {
-                return String.valueOf(self.getId()).compareTo(String.valueOf(other.getId()));
+                return String.valueOf(self.getStudentName()).compareTo(String.valueOf(other.getStudentName()));
             }
         });
 
-        Prefs.with(FillMarksActivity.this).save(PrefsKeys.STUDENT_DATA_TEST,studentDetailsForMarksResponse);
+        Prefs.with(FillMarksActivity.this).save(PrefsKeys.STUDENT_DATA_TEST, studentDetailsForMarksResponse);
 
-        Log.d("sort","after students : "+new Gson().toJson(students));
+        Log.d("sort", "after students : " + new Gson().toJson(students));
 
         MasterClass.getInstance().setClassAlias(studentDetailsForMarksResponse.getData().getBatch().getClassAlias());
         MasterClass.getInstance().setStudents(students);
@@ -192,9 +179,7 @@ public class FillMarksActivity extends BaseActivity {
                 if (position == 10) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
                     reviewAttdInterface.onResumeFragment();
-                }
-                else
-                {
+                } else {
 
                 }
             }
@@ -217,6 +202,57 @@ public class FillMarksActivity extends BaseActivity {
 //                showDateDialog();
                 break;
         }
+    }
+
+    private void getTestMarksServerCall() {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetTestMarks(String.valueOf(test.getId()), new Callback<TestMarksResponseData>() {
+            @Override
+            public void success(TestMarksResponseData testMarksResponseData, Response response) {
+                Log.d(TAG, "Response : " + new Gson().toJson(testMarksResponseData));
+                Prefs.with(FillMarksActivity.this).save(PrefsKeys.TEST_MARKS_DATA, testMarksResponseData);
+//                getTestStudentsServerCall();
+
+                List<Student> students = new ArrayList<Student>();
+                for (TestMark testMark : testMarksResponseData.getData().getTestMarks()) {
+                    Student student = new Student();
+                    student.setId(testMark.getStudent().getId());
+                    student.setBatchId(testMark.getStudent().getBatchId());
+                    student.setRollno(testMark.getStudent().getRollno());
+                    student.setStudentName(testMark.getStudent().getStudentName());
+
+                    students.add(student);
+                }
+                getTestStudentsServerCall(students);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "error : " + error.toString());
+            }
+        });
+    }
+
+    private void getTestStudentsServerCall(List<Student> students) {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetTestStudents(String.valueOf(test.getLectureId()), new Callback<StudentDetailsForMarksResponse>() {
+            @Override
+            public void success(StudentDetailsForMarksResponse studentDetailsForMarksResponse, Response response) {
+                Log.d(TAG, "Response : " + new Gson().toJson(studentDetailsForMarksResponse));
+
+                setUIData(studentDetailsForMarksResponse, students);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "error : " + error.toString());
+            }
+        });
+
     }
 
     public class AttendancePagerAdapterHolly extends FragmentPagerAdapter {
@@ -262,64 +298,18 @@ public class FillMarksActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (position != pageCount) {
-                String rollNo = "Roll No. "+students.get(position).getRollno();
-                return rollNo;
+//                if ((students.get(position).getRollno()+"").length()<=2)
+//                {
+                return "" + (position + 1);
+//                }
+//                else {
+//                    return "Roll No. " + (position+1);
+//                }
+//                return students.get(position).getRollno()+"";
             } else {
                 return "Submit";
             }
         }
-
-    }
-
-    private void getTestMarksServerCall() {
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
-
-        RestClient.getApiServicePojo(xCookies,aCookies).apiCallGetTestMarks(String.valueOf(test.getId()), new Callback<TestMarksResponseData>() {
-            @Override
-            public void success(TestMarksResponseData testMarksResponseData, Response response) {
-                Log.d(TAG,"Response : "+new Gson().toJson(testMarksResponseData));
-                Prefs.with(FillMarksActivity.this).save(PrefsKeys.TEST_MARKS_DATA,testMarksResponseData);
-//                getTestStudentsServerCall();
-
-                List<Student> students = new ArrayList<Student>();
-                for (TestMark testMark : testMarksResponseData.getData().getTestMarks())
-                {
-                    Student student = new Student();
-                    student.setId(testMark.getStudent().getId());
-                    student.setBatchId(testMark.getStudent().getBatchId());
-                    student.setRollno(testMark.getStudent().getRollno());
-                    student.setStudentName(testMark.getStudent().getStudentName());
-
-                    students.add(student);
-                }
-                getTestStudentsServerCall(students);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG,"error : "+error.toString());
-            }
-        });
-    }
-
-    private void getTestStudentsServerCall(List<Student> students) {
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
-
-        RestClient.getApiServicePojo(xCookies,aCookies).apiCallGetTestStudents(String.valueOf(test.getLectureId()), new Callback<StudentDetailsForMarksResponse>() {
-            @Override
-            public void success(StudentDetailsForMarksResponse studentDetailsForMarksResponse, Response response) {
-                Log.d(TAG,"Response : "+new Gson().toJson(studentDetailsForMarksResponse));
-
-                setUIData(studentDetailsForMarksResponse,students);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG,"error : "+error.toString());
-            }
-        });
 
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -45,6 +47,8 @@ public class DashboardActivity extends BaseActivity {
     TextView textViewClass;
     TextView textViewContact;
     TextView textViewEmail;
+
+    ImageView imageViewProfilePic;
 
     Button buttonTakeAttd;
 
@@ -76,6 +80,8 @@ public class DashboardActivity extends BaseActivity {
         textViewContact = (TextView) findViewById(R.id.textViewContact);
         textViewEmail = (TextView) findViewById(R.id.textViewEmail);
 
+        imageViewProfilePic = (ImageView) findViewById(R.id.imageViewProfilePic);
+
         buttonTakeAttd = (Button) findViewById(R.id.buttonTakeAttd);
 
         progressBarDash = (ProgressBar) findViewById(R.id.progressBarDash);
@@ -102,7 +108,15 @@ public class DashboardActivity extends BaseActivity {
             textViewClass.setVisibility(View.GONE);
             textViewContact.setText("Contact No : "+checkLoginResponse.getData().getUserTypeDetails().getContactInfo());
             textViewEmail.setText("Email : "+checkLoginResponse.getData().getUserInfo().getEmail());
+
+            if (checkLoginResponse.getData().getUserTypeDetails().getPicture()!=null){
+
+                Picasso.with(this).load(checkLoginResponse.getData().getUserTypeDetails().getPicture().getUrl()).into(imageViewProfilePic);
+                Picasso.with(this).load(checkLoginResponse.getData().getUserTypeDetails().getPicture().getUrl()).into(profile_image);
+                Picasso.with(this).load(checkLoginResponse.getData().getUserTypeDetails().getPicture().getUrl()).into(littleProfilePic);
+            }
         }
+
     }
 
     @Override

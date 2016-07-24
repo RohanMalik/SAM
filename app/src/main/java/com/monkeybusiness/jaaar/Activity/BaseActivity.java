@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,9 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public TextView textViewRemarks;
     public TextView textViewMyclassDown;
 
+    ImageView profile_image;
+    ImageView littleProfilePic;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,9 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
     void initializationMenu() {
+
+        profile_image = (ImageView) findViewById(R.id.profile_image);
+        littleProfilePic = (ImageView) findViewById(R.id.littleProfilePic);
 
         linearlayoutDashboard = (LinearLayout) findViewById(R.id.linearlayoutDashboard);
         linearlayoutAttendance = (LinearLayout) findViewById(R.id.linearlayoutAttendance);
