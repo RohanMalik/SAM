@@ -479,7 +479,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String jsonUpload = new Gson().toJson(pictureUploadObject);
 
-        ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Uploading Image...", false);
+        ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Uploading Image...", true);
 
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));

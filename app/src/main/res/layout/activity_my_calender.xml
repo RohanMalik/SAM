@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.monkeybusiness.jaaar.Activity.MyCalenderActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:id="@+id/relativeLayoutMain"
+            android:layout_width="match_parent"
+            android:layout_height="400px"
+            android:background="@drawable/calender_backgroud">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:orientation="vertical"
+                android:background="#99A9A9A9"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24px"
+                    android:layout_marginLeft="45px"
+                    android:layout_marginRight="45px">
+
+                    <RelativeLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/textViewDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Day"
+                            android:gravity="center"
+                            android:textSize="28px"
+                            android:paddingBottom="8px"
+                            android:paddingTop="8px"
+                            android:layout_margin="16px"
+                            android:textStyle="bold"
+                            android:textColor="@color/calender_button_transarent"
+                            android:background="@drawable/day_button_white"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/textViewWeek"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Week"
+                            android:gravity="center"
+                            android:textSize="28px"
+                            android:layout_margin="16px"
+                            android:paddingBottom="8px"
+                            android:paddingTop="8px"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:background="@drawable/day_button_selector"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/textViewMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Month"
+                            android:gravity="center"
+                            android:layout_margin="16px"
+                            android:textSize="28px"
+                            android:paddingBottom="8px"
+                            android:paddingTop="8px"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:background="@drawable/day_button_selector"
+                            />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewCurrentDateCal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="25"
+                    android:textColor="@color/white"
+                    android:textSize="150px"
+                    android:layout_marginTop="16px"/>
+
+                <TextView
+                    android:id="@+id/textViewDayCal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28px"
+                    android:textColor="@color/white"
+                    android:text="WEDNESDAY"
+                    android:letterSpacing=".2"
+                    android:layout_gravity="center"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <com.rey.material.widget.FloatingActionButton
+            android:id="@+id/fabAddEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="340px"
+            android:layout_marginRight="16px"
+            app:fab_elevation="10px"
+            app:fab_iconSize="48px"
+            app:fab_iconSrc="@drawable/add_button"
+            app:fab_backgroundColor="@color/primary"
+            app:fab_animDuration="1000"
+            app:rd_rippleAnimDuration="500"
+            app:rd_rippleColor="@color/primary_lighter"
+            app:rd_enable="true"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayoutMain">
+
+            <ListView
+
+                android:id="@+id/listViewEvents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </ListView>
+            
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutNodataFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageViewCancel"
+                    android:layout_width="116px"
+                    android:layout_height="116px"
+                    android:background="@drawable/no_data_found"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No data found"
+                    android:layout_below="@+id/imageViewCancel"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16px"
+                    android:textSize="32px"
+
+                    />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

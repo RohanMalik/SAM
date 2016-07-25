@@ -348,9 +348,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
-                                    Intent intent = new Intent(AddEventActivity.this
-                                            , MyCalendarFragment.class);
-                                    startActivity(intent);
+//                                    Intent intent = new Intent(AddEventActivity.this
+//                                            , MyCalendarFragment.class);
+//                                    startActivity(intent);
                                 }
                             });
                             alert.show();
@@ -377,9 +377,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AddEventActivity.this
-                , MyCalendarFragment.class);
-        startActivity(intent);
+//        Intent intent = new Intent(AddEventActivity.this
+//                , MyCalendarFragment.class);
+//        startActivity(intent);
     }
 
     private void setCheckBoxes() {

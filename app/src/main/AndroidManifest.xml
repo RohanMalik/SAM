@@ -54,14 +54,15 @@
         <activity android:name=".Activity.MyLecturesActivity" />
         <activity android:name=".Activity.AddTestActivity" />
         <activity android:name=".Activity.MyBatchesActivity" />
-        <activity android:name=".Activity.AttendanceDetailsActivity"></activity>
+        <activity android:name=".Activity.AttendanceDetailsActivity" />
+        <activity android:name=".Activity.MyClassActivity" />
+        <activity android:name=".Fragment.FillMarksActivity" />
 
-        <activity android:name=".Activity.MyClassActivity"/>
-        
-        <activity android:name=".Fragment.FillMarksActivity"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9c79a8153da122bd9dd17ec0fc36c5be3a0ed1f8" />
+
+        <activity android:name=".Activity.MyCalenderActivity"></activity>
     </application>
 
 </manifest>

@@ -93,4 +93,8 @@
     <color name="batch_event_color">#00BCD4</color>
     <color name="lecture_event_color">#4CAF50</color>
 
+    <color name="calender_button_color">#DD6AD1</color>
+    <color name="calender_button_transarent">#99A9A9A9</color>
+
+
 </resources>
