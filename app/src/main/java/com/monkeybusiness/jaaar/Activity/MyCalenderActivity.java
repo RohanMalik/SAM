@@ -1,6 +1,5 @@
 package com.monkeybusiness.jaaar.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +17,7 @@ import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.FloatingActionButton;
@@ -179,21 +179,25 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
             toTime = ISO8601.fromCalendar(end);
         }
 
-        ProgressDialog dialog = ProgressDialog.show(this, "Please wait", "Loading Data...", true);
+        LoadingBox.showLoadingDialog(this,"Loading Data...");
 
         RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetEvents(fromTime, toTime, new Callback<EventResponseData>() {
             @Override
             public void success(EventResponseData eventResponseData, Response response) {
                 Log.d(TAG, "Response : " + new Gson().toJson(eventResponseData));
 
-                dialog.dismiss();
+                if (LoadingBox.isDialogShowing()){
+                    LoadingBox.dismissLoadingDialog();
+                }
                 Prefs.with(MyCalenderActivity.this).save(PrefsKeys.EVENT_RESPONSE_DATA, eventResponseData);
                 setUiData(eventResponseData);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                dialog.dismiss();
+                if (LoadingBox.isDialogShowing()){
+                    LoadingBox.dismissLoadingDialog();
+                }
                 Log.d(TAG, "error : " + error.toString());
             }
         });

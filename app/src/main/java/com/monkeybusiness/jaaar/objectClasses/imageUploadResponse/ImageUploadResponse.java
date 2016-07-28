@@ -39,5 +39,4 @@ public class ImageUploadResponse {
     public void setData(Data data) {
         this.data = data;
     }
-
 }

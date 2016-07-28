@@ -6,6 +6,7 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     PagerTabStrip pager_header;
     Intent intent;
     private TestPagerAdapter fragmentPagerAdapter;
+    ProgressBar progressBarTest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
 
         pager_header = (PagerTabStrip) findViewById(R.id.pager_header);
 
+        progressBarTest = (ProgressBar) findViewById(R.id.progressBarTest);
+
         pager_header.setBackgroundColor(getResources().getColor(R.color.primary_lighter));
 
         pager_header.setDrawFullUnderline(false);
@@ -95,6 +99,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setUiData(TestListResponse testListResponse) {
+
+        progressBarTest.setVisibility(View.GONE);
 
         fragmentPagerAdapter = new TestPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
@@ -202,7 +208,9 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void success(TestListResponse testListResponse, Response response) {
                 Log.d("TestByLectureId", "Response : " + new Gson().toJson(testListResponse));
-                setUiData(testListResponse);
+                if (!TestActivity.this.isFinishing()){
+                    setUiData(testListResponse);
+                }
             }
 
             @Override

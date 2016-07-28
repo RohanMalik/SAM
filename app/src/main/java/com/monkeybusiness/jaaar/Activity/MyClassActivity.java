@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class MyClassActivity extends BaseActivity {
     ListView listViewLectures;
     ClassAdapter classAdapter;
     private final String TAG = "MyBatches";
+
+    ProgressBar progressBarLectures;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class MyClassActivity extends BaseActivity {
 
         listViewLectures = (ListView) findViewById(R.id.listViewLectures);
 
+        progressBarLectures = (ProgressBar) findViewById(R.id.progressBarLectures);
+
     }
 
     @Override
@@ -82,6 +87,8 @@ public class MyClassActivity extends BaseActivity {
 
         if (!batchesResponseData.getData().getBatches().isEmpty())
         {
+            progressBarLectures.setVisibility(View.GONE);
+            listViewLectures.setVisibility(View.VISIBLE);
             classAdapter = new ClassAdapter(this,batchesResponseData);
             listViewLectures.setAdapter(classAdapter);
         }

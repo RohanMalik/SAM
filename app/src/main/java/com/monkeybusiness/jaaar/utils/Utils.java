@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
@@ -18,7 +19,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
- * Created by neeraj on 15/12/15.
+ * Created by rakesh on 15/12/15.
  */
 public class Utils {
 
@@ -120,4 +121,13 @@ public class Utils {
 
         return dateStr;
     }
+
+    public static boolean allowPermissionForHigherVersions(Context context,String permissionAccess) {
+        return hasPermission(context,permissionAccess);
+    }
+
+    public static boolean hasPermission(Context context,String perm) {
+        return (PackageManager.PERMISSION_GRANTED == context.checkSelfPermission(perm));
+    }
+
 }

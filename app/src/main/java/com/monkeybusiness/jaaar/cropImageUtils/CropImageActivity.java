@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -43,6 +44,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.CountDownLatch;
+
+import rmn.androidscreenlibrary.ASSL;
 
 /*
  * Modified from original in AOSP.
@@ -99,6 +102,8 @@ public class CropImageActivity extends MonitoredActivity {
     private void setupViews() {
         setContentView(R.layout.crop__activity_crop);
 
+        new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
+                false);
         imageView = (CropImageView) findViewById(R.id.crop_image);
         imageView.context = this;
         imageView.setRecycler(new ImageViewTouchBase.Recycler() {

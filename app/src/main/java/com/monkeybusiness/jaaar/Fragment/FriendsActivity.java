@@ -25,6 +25,8 @@ import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.yalantis.flipviewpager.adapter.BaseFlipAdapter;
 import com.yalantis.flipviewpager.utils.FlipSettings;
@@ -203,13 +205,17 @@ public class FriendsActivity extends BaseActivity {
                 case 1:
                     Log.d("1234", "image");
                     if (friend1.getPicture() != null) {
-                        Picasso.with(FriendsActivity.this).load(friend1.getPicture().getUrl()).into(holder.leftAvatar);
+                        Log.d(TAG,"url_photo : "+friend1.getPicture().getUrl());
+//                        Picasso.with(FriendsActivity.this).invalidate(friend1.getPicture().getUrl());
+                        Picasso.with(FriendsActivity.this).load(friend1.getPicture().getUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.leftAvatar);
                     } else {
                         holder.leftAvatar.setImageResource(R.drawable.anastasia);
                     }
                     if (friend2!=null){
                         if (friend2.getPicture() != null) {
-                            Picasso.with(FriendsActivity.this).load(friend2.getPicture().getUrl()).into(holder.rightAvatar);
+//                            Picasso.with(FriendsActivity.this).invalidate(friend2
+//                                    .getPicture().getUrl());
+                            Picasso.with(FriendsActivity.this).load(friend2.getPicture().getUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.rightAvatar);
                         } else {
                             holder.rightAvatar.setImageResource(R.drawable.irene);
                         }

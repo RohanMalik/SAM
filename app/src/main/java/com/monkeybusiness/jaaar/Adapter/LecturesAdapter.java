@@ -45,6 +45,7 @@ public class LecturesAdapter extends BaseAdapter {
         return lectureResponseData.getData().getLectures().size();
     }
 
+
     @Override
     public Object getItem(int position) {
         return position;

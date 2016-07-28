@@ -121,6 +121,9 @@ public interface ApiService {
     @POST("/upload")
     void apiCallSendStudentPicture(@Body TypedInput pictureObject,Callback<ImageUploadResponse> callback);
 
+    @PUT("/upload/{picture_id}")
+    void apiCallSendStudentPictureWithId(@Path("picture_id") String pictureId,@Body TypedInput pictureObject,Callback<ImageUploadResponse> callback);
+
     @PUT("/students/{id}")
     void apiCallPutStudentPicture(@Path("id") String id,@Body TypedInput pictureObject,Callback<String> callback);
 }

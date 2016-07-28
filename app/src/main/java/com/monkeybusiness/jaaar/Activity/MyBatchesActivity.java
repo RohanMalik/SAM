@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class MyBatchesActivity extends BaseActivity {
     BatchesAdapter batchesAdapter;
     private final String TAG = "MyBatches";
 
+    ProgressBar progressBarLectures;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +60,15 @@ public class MyBatchesActivity extends BaseActivity {
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
+        progressBarLectures = (ProgressBar) findViewById(R.id.progressBarLectures);
+
         relativeLayoutMenu.setOnClickListener(this);
         textViewActionTitle.setOnClickListener(this);
 
         textViewActionTitle.setText("My Batches");
 
         listViewLectures = (ListView) findViewById(R.id.listViewLectures);
+        listViewLectures.setVisibility(View.GONE);
 
     }
 
@@ -81,6 +87,8 @@ public class MyBatchesActivity extends BaseActivity {
 
         if (!batchesResponseData.getData().getBatches().isEmpty())
         {
+            progressBarLectures.setVisibility(View.GONE);
+            listViewLectures.setVisibility(View.VISIBLE);
             batchesAdapter = new BatchesAdapter(this,batchesResponseData);
             listViewLectures.setAdapter(batchesAdapter);
         }

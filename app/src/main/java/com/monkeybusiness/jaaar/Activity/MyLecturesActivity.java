@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class MyLecturesActivity extends BaseActivity {
     LecturesAdapter lecturesAdapter;
     private final String TAG = "MyLecture";
 
+    ProgressBar progressBarLectures;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,8 @@ public class MyLecturesActivity extends BaseActivity {
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
         textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+
+        progressBarLectures = (ProgressBar) findViewById(R.id.progressBarLectures);
 
         relativeLayoutMenu.setOnClickListener(this);
         textViewActionTitle.setOnClickListener(this);
@@ -78,6 +83,9 @@ public class MyLecturesActivity extends BaseActivity {
 
         if (!lectureResponseData.getData().getLectures().isEmpty())
         {
+            progressBarLectures.setVisibility(View.GONE);
+            listViewLectures.setVisibility(View.VISIBLE);
+
             lecturesAdapter = new LecturesAdapter(this,lectureResponseData);
             listViewLectures.setAdapter(lecturesAdapter);
         }

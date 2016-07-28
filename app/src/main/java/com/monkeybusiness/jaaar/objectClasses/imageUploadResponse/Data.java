@@ -8,6 +8,9 @@ public class Data {
     @SerializedName("image_url")
     @Expose
     private String imageUrl;
+    @SerializedName("picture")
+    @Expose
+    private Picture picture;
 
     /**
      * @return The imageUrl
@@ -23,4 +26,11 @@ public class Data {
         this.imageUrl = imageUrl;
     }
 
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 }
