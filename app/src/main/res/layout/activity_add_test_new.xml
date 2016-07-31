@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:descendantFocusability="beforeDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="400px">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/add_test_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#BF000000" />
+
+            <ImageView
+                android:id="@+id/imageViewCross"
+                android:layout_width="43px"
+                android:layout_height="43px"
+                android:layout_margin="45px"
+                android:background="@drawable/cancel_event" />
+
+            <ImageView
+                android:id="@+id/imageViewSave"
+                android:layout_width="53px"
+                android:layout_height="53px"
+                android:layout_gravity="right"
+                android:layout_margin="45px"
+                android:background="@drawable/done_test" />
+
+            <EditText
+                android:id="@+id/input_event_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="45px"
+                android:layout_marginRight="30px"
+                android:layout_marginTop="16px"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:hint="Add Title"
+                android:padding="16px"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="80px" />
+
+            <EditText
+                android:id="@+id/input_event_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="32px"
+                android:layout_marginLeft="45px"
+                android:layout_marginRight="30px"
+                android:background="@android:color/transparent"
+                android:cursorVisible="false"
+                android:hint="Short Description"
+                android:padding="16px"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="36px" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="32px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="Lecture"
+                android:textColor="@color/edit_text_grey"
+                android:textSize="32px" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/input_event_name"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave"
+                app:spn_arrowAnimDuration="500"
+                app:spn_arrowColor="@color/add_button_purple"
+                app:spn_arrowSize="24px"
+                app:spn_arrowSwitchMode="true"
+                app:spn_dividerAnimDuration="500"
+                app:spn_dividerColor="@color/add_button_purple"
+                app:spn_dividerHeight="5px"
+                app:spn_dividerPadding="10px"
+                app:spn_labelTextColor="@color/black_grey"
+                app:spn_labelTextSize="32px" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="16px"
+            android:layout_marginRight="16px"
+            android:background="@color/edit_text_divider" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:layout_marginTop="32px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="Date"
+                android:textColor="@color/edit_text_grey"
+                android:textSize="32px" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/textViewDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="100px"
+                    android:text=""
+                    android:hint="Select Date"
+                    android:textColorHint="@color/edit_text_grey"
+                    android:textColor="@color/black_grey"
+                    android:textSize="32px" />
+
+                <ImageView
+                    android:layout_width="43px"
+                    android:layout_height="43px"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/add_calender" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="16px"
+            android:layout_marginRight="16px"
+            android:background="@color/edit_text_divider" />
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="32px"-->
+            <!--android:layout_marginLeft="45px"-->
+            <!--android:layout_marginRight="45px"-->
+            <!--android:layout_marginTop="32px"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="4">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="From"-->
+                <!--android:textColor="@color/edit_text_grey"-->
+                <!--android:textSize="32px" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="To"-->
+                <!--android:textColor="@color/edit_text_grey"-->
+                <!--android:textSize="32px" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="32px"-->
+            <!--android:layout_marginLeft="45px"-->
+            <!--android:layout_marginRight="45px"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="4">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="9:00am"-->
+                <!--android:textColor="@color/black_grey"-->
+                <!--android:textSize="32px" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="10:00am"-->
+                <!--android:textColor="@color/black_grey"-->
+                <!--android:textSize="32px" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="2px"-->
+            <!--android:layout_marginLeft="16px"-->
+            <!--android:layout_marginRight="16px"-->
+            <!--android:background="@color/edit_text_divider" />-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:layout_marginTop="32px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="Maximum Marks"
+                android:textColor="@color/edit_text_grey"
+                android:textSize="32px" />
+
+            <EditText
+                android:id="@+id/editTextMax"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="00"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black_grey"
+                android:textColorHint="@color/edit_text_grey"
+                android:textCursorDrawable="@null"
+                android:textSize="32px" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="16px"
+            android:layout_marginRight="16px"
+            android:background="@color/edit_text_divider" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:layout_marginTop="32px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="Minimum Marks"
+                android:textColor="@color/edit_text_grey"
+                android:textSize="32px" />
+
+            <EditText
+                android:id="@+id/editTextMin"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="00"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black_grey"
+                android:textColorHint="@color/edit_text_grey"
+                android:textCursorDrawable="@null"
+                android:textSize="32px" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="16px"
+            android:layout_marginRight="16px"
+            android:background="@color/edit_text_divider" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32px"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:layout_marginTop="32px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:text="Test Duration"
+                android:textColor="@color/edit_text_grey"
+                android:textSize="32px" />
+
+            <EditText
+                android:id="@+id/editTextDuration"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:cursorVisible="true"
+                android:hint="00"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black_grey"
+                android:textColorHint="@color/edit_text_grey"
+                android:textCursorDrawable="@null"
+                android:textSize="32px" />
+
+        </RelativeLayout>
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2px"-->
+        <!--android:background="@color/edit_text_divider"-->
+        <!--android:layout_marginLeft="16px"-->
+        <!--android:layout_marginRight="16px"-->
+        <!--/>-->
+
+        <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+
+        <!--<com.rey.material.widget.RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100px"-->
+        <!--android:text=""-->
+        <!--android:textSize="32px"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@color/add_button_purple"-->
+        <!--android:textColor="#fff"-->
+        <!--app:rd_enable="true"-->
+        <!--app:rd_rippleColor="@color/add_button_purple_for_ripple"-->
+        <!--/>-->
+        <!---->
+        <!--<ImageView-->
+        <!--android:layout_width="58px"-->
+        <!--android:layout_height="58px"-->
+        <!--android:background="@drawable/done"-->
+        <!--android:layout_gravity="center|bottom"-->
+        <!--android:layout_marginBottom="20px"/>-->
+
+        <!--</FrameLayout>-->
+
+    </LinearLayout>
+</ScrollView>

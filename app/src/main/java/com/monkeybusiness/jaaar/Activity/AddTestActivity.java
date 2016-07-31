@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
@@ -57,14 +59,19 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
     TextView textViewDate;
 
-    Button buttonAddEvent;
+    ImageView imageViewCross;
+    ImageView imageViewSave;
 
-    RelativeLayout relativeLayoutMenu;
-    TextView textViewActionTitle;
+//    Button buttonAddEvent;
+
+//    RelativeLayout relativeLayoutMenu;
+//    TextView textViewActionTitle;
 
     EditText editTextMax;
     EditText editTextMin;
     EditText editTextDuration;
+
+    RelativeLayout relativeLayoutDate;
 
     boolean fromTo;
 
@@ -80,7 +87,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_add_test_new);
 
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
@@ -104,14 +111,18 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         input_event_name = (Spinner) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
         input_event_full_name = (EditText) findViewById(R.id.input_event_full_name);
+        relativeLayoutDate = (RelativeLayout) findViewById(R.id.relativeLayoutDate);
 
-        buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
+        imageViewCross = (ImageView) findViewById(R.id.imageViewCross);
+        imageViewSave = (ImageView) findViewById(R.id.imageViewSave);
+
+//        buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
 
         textViewDate = (TextView) findViewById(R.id.textViewDate);
 
 
-        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
-        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+//        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
+//        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
         editTextMax = (EditText) findViewById(R.id.editTextMax);
         editTextMin = (EditText) findViewById(R.id.editTextMin);
@@ -119,14 +130,16 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         editTextDuration = (EditText) findViewById(R.id.editTextDuration);
 
 
-        textViewActionTitle.setText("ADD TEST");
+//        textViewActionTitle.setText("ADD TEST");
+//
+//        relativeLayoutMenu.setOnClickListener(this);
+//        textViewActionTitle.setOnClickListener(this);
 
-        relativeLayoutMenu.setOnClickListener(this);
-        textViewActionTitle.setOnClickListener(this);
-
-        buttonAddEvent.setOnClickListener(this);
+//        buttonAddEvent.setOnClickListener(this);
         textViewDate.setOnClickListener(this);
-
+        relativeLayoutDate.setOnClickListener(this);
+        imageViewCross.setOnClickListener(this);
+        imageViewSave.setOnClickListener(this);
     }
 
     public void setUiData() {
@@ -140,6 +153,12 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         if (!lectureList.isEmpty()) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, lectureList);
+
+//            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                    R.array.example_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
 // Specify the layout to use when the list of choices appears
 //        adapter.setDropDownViewResource(android.R.layout.expandable_list_content);
 // Apply the adapter to the spinner
@@ -167,13 +186,19 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.textViewDate:
+            case R.id.relativeLayoutDate:
                 showDateDialog();
                 break;
             case android.R.id.home:
                 super.onBackPressed();
                 break;
             case R.id.buttonAddEvent:
+
+                break;
+            case R.id.relativeLayoutMenu:
+                toggle();
+                break;
+            case R.id.imageViewSave:
                 Log.d(TAG, "List Selection : " + input_event_name.getSelectedItem());
 
                 String lectureName = intent.getStringExtra(Constants.LECTURE_ID);
@@ -183,8 +208,8 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                     addTestServerCall();
                 }
                 break;
-            case R.id.relativeLayoutMenu:
-                toggle();
+            case R.id.imageViewCross:
+                finish();
                 break;
         }
     }
@@ -348,7 +373,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         String testDate;
-        if (!textViewDate.getText().toString().equalsIgnoreCase("Select Date") || !input_event_full_name.getText().toString().equalsIgnoreCase("")) {
+        if (!textViewDate.getHint().toString().equalsIgnoreCase("Select Date") || !input_event_full_name.getText().toString().equalsIgnoreCase("")) {
 
             Calendar calendar = Calendar.getInstance();
             calendar.set(date.getYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
@@ -381,8 +406,12 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             String addTestJson = new Gson().toJson(addTestObject);
 
             Log.d(TAG, "AddTest : " + addTestJson);
+//
+//
+//  ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Adding Test...", false);
 
-            ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Adding Test...", false);
+            LoadingBox.showLoadingDialog(this,"Saving Event...");
+
 
             try {
                 TypedInput typedInput = new TypedByteArray("application/json", addTestJson.getBytes("UTF-8"));
@@ -392,7 +421,9 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                     public void success(AddTestResponse addTestResponse, Response response) {
                         Log.d(TAG, "Response : " + new Gson().toJson(addTestResponse));
 
-                        progressDialog.dismiss();
+                        if (LoadingBox.isDialogShowing()){
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         if (addTestResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AddTestActivity.this);
                             alert.setTitle("Test Added");
@@ -412,6 +443,9 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void failure(RetrofitError error) {
                         Log.d(TAG, "error : " + error.toString());
+                        if (LoadingBox.isDialogShowing()){
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         Utils.failureDialog(AddTestActivity.this, "Something went wrong", "Something went wrong please try again.");
                     }
                 });
@@ -450,7 +484,7 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         formatDate.setHours(date.getHours());
         formatDate.setMinutes(date.getMinutes());
 
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MMMM  dd, yyyy   HH:mm");
 
         textViewDate.setText(format.format(formatDate));
     }

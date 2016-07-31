@@ -13,6 +13,9 @@ public class Events {
     @SerializedName("event_name")
     @Expose
     private String eventName;
+    @SerializedName("event_description")
+    @Expose
+    private String eventDescription;
     @SerializedName("start_time")
     @Expose
     private String startTime;
@@ -104,5 +107,13 @@ public class Events {
 
     public void setEventTypeId(List<Integer> eventTypeId) {
         this.eventTypeId = eventTypeId;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 }

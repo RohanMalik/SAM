@@ -1,9 +1,9 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimaryDark">@color/background_attd</item>
         <item name="android:windowBackground">@color/white</item>
 
         <item name="colorControlNormal">@color/iron</item>
@@ -120,4 +120,11 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">32px</item>
     </style>
+
+    <style name="checkBoxStyle" parent="Material.Drawable.CheckBox">
+        <item name="cbd_tickColor">@color/add_button_purple</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+
 </resources>

@@ -2,7 +2,6 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -11,16 +10,14 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.addEventObject.AddEventObject;
 import com.monkeybusiness.jaaar.objectClasses.addEventObject.Events;
@@ -32,10 +29,11 @@ import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseDat
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
-import com.rey.material.widget.Button;
-import com.rey.material.widget.Spinner;
+import com.rey.material.widget.CheckBox;
+import com.rey.material.widget.RadioButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -61,10 +59,14 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     EditText input_event_name;
     EditText input_event_desc;
 
+    ImageView imageViewCross;
+
     TextView textViewFrom;
     TextView textViewTo;
 
-    Button buttonAddEvent;
+//    Button buttonAddEvent;
+
+    com.rey.material.widget.RelativeLayout relativeLayoutAdd;
 
     RelativeLayout relativeLayoutMenu;
 
@@ -73,11 +75,13 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
     TextView textViewActionTitle;
 
-    Spinner spinner;
-
     ProgressBar progressBarAddEvent;
 
     LinearLayout linearLayoutMainAddEvent;
+
+    RadioButton radioButtonPersonal;
+    RadioButton radioButtonClass;
+    RadioButton radioButtonLecture;
 
     boolean fromTo;
     Date startDate;
@@ -92,7 +96,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_event);
+        setContentView(R.layout.activity_add_event_new);
 
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
@@ -116,13 +120,14 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         input_event_name = (EditText) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
 
-        buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
+        imageViewCross = (ImageView) findViewById(R.id.imageViewCross);
+
+//        buttonAddEvent = (Button) findViewById(R.id.buttonAddEvent);
+
+        relativeLayoutAdd = (com.rey.material.widget.RelativeLayout) findViewById(R.id.relativeLayoutAdd);
 
         textViewFrom = (TextView) findViewById(R.id.textViewFrom);
         textViewTo = (TextView) findViewById(R.id.textViewTo);
-
-        relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
-        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
 
         linearLayoutDynamicCheckBoxClass = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxClass);
         linearLayoutDynamicCheckBoxLecture = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxLecture);
@@ -131,40 +136,36 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
         progressBarAddEvent = (ProgressBar) findViewById(R.id.progressBarAddEvent);
 
-        spinner = (Spinner) findViewById(R.id.spinner);
+        radioButtonPersonal = (RadioButton) findViewById(R.id.radioButtonPersonal);
+        radioButtonClass = (RadioButton) findViewById(R.id.radioButtonClass);
+        radioButtonLecture = (RadioButton) findViewById(R.id.radioButtonLecture);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.example_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        radioButtonClass.setOnClickListener(this);
+        radioButtonLecture.setOnClickListener(this);
+        radioButtonPersonal.setOnClickListener(this);
+        imageViewCross.setOnClickListener(this);
 
-        spinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
-            @Override
-            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+//        spinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
+//            @Override
+//            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+//
+//                Log.d("abc", "Position : " + position);
+//                if (position == 1) {
+//                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+//                    linearLayoutDynamicCheckBoxClass.setVisibility(View.VISIBLE);
+//                } else if (position == 2) {
+//                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+//                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
+//                } else {
+//                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+//                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+//                }
+//                return true;
+//            }
+//        });
 
-                Log.d("abc", "Position : " + position);
-                if (position == 1) {
-                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
-                    linearLayoutDynamicCheckBoxClass.setVisibility(View.VISIBLE);
-                } else if (position == 2) {
-                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
-                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
-                } else {
-                    linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
-                    linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
-                }
-                return true;
-            }
-        });
 
-        textViewActionTitle.setText("ADD EVENT");
-
-        relativeLayoutMenu.setOnClickListener(this);
-        textViewActionTitle.setOnClickListener(this);
-
-        buttonAddEvent.setOnClickListener(this);
+        relativeLayoutAdd.setOnClickListener(this);
         textViewFrom.setOnClickListener(this);
         textViewTo.setOnClickListener(this);
 
@@ -185,13 +186,40 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
             case android.R.id.home:
                 super.onBackPressed();
                 break;
-            case R.id.buttonAddEvent:
+            case R.id.relativeLayoutAdd:
                 postEventServerCall();
                 break;
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;
+            case R.id.radioButtonClass:
+                toggleRadioButton(radioButtonClass);
+                linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+                linearLayoutDynamicCheckBoxClass.setVisibility(View.VISIBLE);
+                break;
+            case R.id.radioButtonPersonal:
+                linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+                toggleRadioButton(radioButtonPersonal);
+                break;
+            case R.id.radioButtonLecture:
+                linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
+                toggleRadioButton(radioButtonLecture);
+                break;
+            case R.id.imageViewCross:
+                finish();
+                break;
         }
+    }
+
+    public void toggleRadioButton(RadioButton radioButton) {
+
+        radioButtonClass.setChecked(false);
+        radioButtonPersonal.setChecked(false);
+        radioButtonLecture.setChecked(false);
+
+        radioButton.setChecked(true);
     }
 
     public void showTimeDialog() {
@@ -233,7 +261,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
             startDate.setHours(hourOfDay);
             startDate.setMinutes(minute);
 
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("MMMM  dd, yyyy    HH:mm");
 
             textViewFrom.setText(format.format(startDate));
         } else {
@@ -244,7 +272,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
             endDate.setHours(hourOfDay);
             endDate.setMinutes(minute);
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm, EEE, d MMM yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("MMMM  dd, yyyy    HH:mm");
 
             textViewTo.setText(format.format(endDate));
 
@@ -276,14 +304,14 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         String eventName = input_event_name.getText().toString();
-//        String eventDesc = input_event_desc.getText().toString();
+        String eventDesc = input_event_desc.getText().toString();
         String type = "";
 
         List<Integer> eventId = new ArrayList<>();
 
-        if (spinner.getSelectedItem().toString().equalsIgnoreCase("personal")) {
+        if (radioButtonPersonal.isChecked()) {
             type = "UserLogin";
-        } else if (spinner.getSelectedItem().toString().equalsIgnoreCase("class")) {
+        } else if (radioButtonClass.isChecked()) {
             type = "Batch";
         } else {
             type = "Lecture";
@@ -309,19 +337,22 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
             Utils.failureDialog(this, "Warning", "Please select date.");
         } else if (!type.equalsIgnoreCase("userLogin") && eventId.isEmpty()) {
             Utils.failureDialog(this, "Warning", "Please select event.");
+        } else if (eventName.equalsIgnoreCase("")) {
+            Utils.failureDialog(this, "Warning", "Please enter event name.");
         } else {
             AddEventObject object = new AddEventObject();
 
             Events events = new Events();
             events.setEventName(eventName);
+            events.setEventDescription(eventDesc);
             events.setEventTypeType(type);
             events.setEventTypeId(eventId);
 
             Calendar startCalendar = Calendar.getInstance();
-            startCalendar.set(startDate.getYear()+1900, startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes());
+            startCalendar.set(startDate.getYear() + 1900, startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes());
 
             Calendar endCalendar = Calendar.getInstance();
-            endCalendar.set(endDate.getYear()+1900, endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes());
+            endCalendar.set(endDate.getYear() + 1900, endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes());
 
             events.setStartTime(ISO8601.fromCalendar(startCalendar));
             events.setEndTime(ISO8601.fromCalendar(endCalendar));
@@ -332,14 +363,17 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
             String jsonObject = new Gson().toJson(object);
 
-            ProgressDialog dialog = ProgressDialog.show(this, "Please Wait...", "Adding Event");
+            LoadingBox.showLoadingDialog(this,"Adding Event...");
             try {
                 TypedInput typedInput = new TypedByteArray("application/json", jsonObject.getBytes("UTF-8"));
                 RestClient.getApiServicePojo(xCookies, aCookies).apiCallPostEvent(typedInput, new Callback<AddEventResponseData>() {
                     @Override
                     public void success(AddEventResponseData addEventResponseData, Response response) {
                         Log.d(TAG, "Response : " + new Gson().toJson(addEventResponseData));
-                        dialog.dismiss();
+
+                        if (LoadingBox.isDialogShowing()){
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         if (addEventResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AddEventActivity.this);
                             alert.setTitle("Event Added");
@@ -363,7 +397,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void failure(RetrofitError error) {
                         Log.d(TAG, "error : " + error.toString());
-                        dialog.dismiss();
+                        if (LoadingBox.isDialogShowing()){
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         Utils.failureDialog(AddEventActivity.this, "Something went wrong", "Plaese try again.");
                     }
                 });
@@ -395,6 +431,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 CheckBox checkBox = new CheckBox(this);
                 checkBox.setText(batch.getClassAlias());
                 checkBox.setTag(batch.getId());
+                checkBox.applyStyle(R.style.checkBoxStyle);
                 linearLayoutDynamicCheckBoxClass.addView(checkBox, params);
                 checkBoxesBatch.add(checkBox);
 
@@ -415,6 +452,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 CheckBox checkBox = new CheckBox(this);
                 checkBox.setText(lecture.getLectureName());
                 checkBox.setTag(lecture.getId());
+                checkBox.applyStyle(R.style.checkBoxStyle);
                 linearLayoutDynamicCheckBoxLecture.addView(checkBox, params);
                 checkBoxesLecture.add(checkBox);
 
@@ -426,6 +464,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
 
     public void getBatchesServerCall() {
+
+        LoadingBox.showLoadingDialog(this,"Loading...");
+
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
@@ -456,6 +497,10 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 com.monkeybusiness.jaaar.utils.Log.d(TAG, "Response : " + new Gson().toJson(lectureResponseData));
                 Prefs.with(AddEventActivity.this).save(PrefsKeys.LECTURE_RESPONSE_DATA, lectureResponseData);
                 setCheckBoxes();
+                if (LoadingBox.isDialogShowing())
+                {
+                    LoadingBox.dismissLoadingDialog();
+                }
                 progressBarAddEvent.setVisibility(View.GONE);
                 linearLayoutMainAddEvent.setVisibility(View.VISIBLE);
             }

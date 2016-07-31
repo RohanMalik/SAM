@@ -67,7 +67,6 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
 
         new CommonApiCalls(this).checkLoginServerCall();
 
-        getEventsServerCallDay(DAY);
     }
 
     private void initialization() {
@@ -267,5 +266,13 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE");
         textViewDayCal.setText(dateFormat.format(pickedDate));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        toggleDays(textViewDay);
+        getEventsServerCallDay(DAY);
     }
 }

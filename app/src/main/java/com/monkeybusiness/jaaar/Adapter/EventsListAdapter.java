@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
+import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import rmn.androidscreenlibrary.ASSL;
  */
 public class EventsListAdapter extends BaseAdapter {
 
+    private static final String TAG = "EventsListAdapter";
     Context context;
     LayoutInflater inflater;
     List<Event> events = new ArrayList<>();
@@ -74,11 +76,21 @@ public class EventsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        viewHolder.textViewEventDesc.setVisibility(View.VISIBLE);
         viewHolder.textViewEventTitle.setText(events.get(position).getEventName());
-        if (events.get(position).getEventDescription() != null) {
+
+        if (events.get(position).getEventDescription() != null && !events.get(position).getEventDescription().equalsIgnoreCase("")) {
             viewHolder.textViewEventDesc.setText(events.get(position).getEventDescription());
         } else {
             viewHolder.textViewEventDesc.setVisibility(View.GONE);
+        }
+
+        if (events.get(position).getEventTypeType().equalsIgnoreCase("userLogin")){
+            viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_blue));
+        }else if (events.get(position).getEventTypeType().equalsIgnoreCase("batch")){
+            viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_light_blue));
+        }else {
+            viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_green));
         }
 
         viewHolder.textViewEventTime.setText(Utils.formatDateAndTime(events.get(position).getStartTime()));

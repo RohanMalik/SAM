@@ -63,6 +63,11 @@
             android:value="9c79a8153da122bd9dd17ec0fc36c5be3a0ed1f8" />
 
         <activity android:name=".Activity.MyCalenderActivity"></activity>
+        <activity android:name=".Activity.AddEventsActivity">
+
+        </activity>
+        <activity android:name=".Activity.AddtestsActivity">
+        </activity>
     </application>
 
 </manifest>
