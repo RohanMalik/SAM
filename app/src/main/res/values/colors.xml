@@ -102,4 +102,7 @@
 
     <color name="add_button_purple">#6563A4</color>
     <color name="add_button_purple_for_ripple">#aaa9c2</color>
+
+    <color name="orange_color">#FF5E00</color>
+
 </resources>

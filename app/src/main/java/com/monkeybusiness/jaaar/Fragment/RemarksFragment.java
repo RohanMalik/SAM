@@ -1,30 +1,24 @@
 package com.monkeybusiness.jaaar.Fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.util.Rfc822Tokenizer;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.android.ex.chips.BaseRecipientAdapter;
-import com.android.ex.chips.RecipientEditTextView;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Activity.BaseActivity;
 import com.monkeybusiness.jaaar.Adapter.StudentNameAdapter;
+import com.monkeybusiness.jaaar.Adapter.StudentSearchListAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.Remarks;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.RemarksRequestObject;
@@ -35,14 +29,15 @@ import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
+import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Callback;
@@ -58,25 +53,27 @@ import rmn.androidscreenlibrary.ASSL;
 public class RemarksFragment extends BaseActivity {
 
     private static final String TAG = "RemarksFragment";
+    public ArrayList<Student> studentNameadapterList = new ArrayList<>();
+    public List<Student> studentListObject;
+    public List<HashMap<String, String>> studentsHashMap;
     RelativeLayout relativeLayoutMenu;
     TextView textViewActionTitle;
-
     AutoCompleteTextView recipientEditTextView;
-
     Button buttonSendRemarks;
-
     EditText editTextRemarks;
-    ArrayAdapter adapter;
-
+    //    ArrayAdapter adapter;
+    StudentSearchListAdapter adapter;
     GridView gridviewStudentName;
-
     ArrayList<String> studentList;
-
     StudentNameAdapter studentNameAdapter;
 
-    public ArrayList<Student> studentNameadapterList = new ArrayList<>();
-
-    public List<Student> studentListObject;
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//
+//
+//        return rootView;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +103,15 @@ public class RemarksFragment extends BaseActivity {
 
         recipientEditTextView = (AutoCompleteTextView) findViewById(R.id.recipientEditTextView);
 
-        studentList = new ArrayList<>();
-
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, studentList);
-
-        recipientEditTextView.setAdapter(adapter);
+//        studentList = new ArrayList<>();
+//
+////        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, studentList);
+//        studentListObject = new ArrayList<>();
+//        adapter = new StudentSearchListAdapter(this,studentListObject);
+//
+////        adapter.setData(studentListObject);
+//
+//        recipientEditTextView.setAdapter(adapter);
         recipientEditTextView.setThreshold(1);
 
         gridviewStudentName = (GridView) findViewById(R.id.gridviewStudentName);
@@ -124,32 +125,30 @@ public class RemarksFragment extends BaseActivity {
         recipientEditTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "Position : " + position + " name : " + studentList.get(position));
+                Log.d(TAG, "Position : " + position + " name : " + studentListObject.get(position).getId());
 
                 recipientEditTextView.setText("");
 
                 boolean isAvailable = false;
 
-                for (Student student : studentNameAdapter.studentNames)
-                {
-                    if (student.getId() == studentListObject.get(position).getId())
-                    {
+                for (Student student : studentNameAdapter.studentNames) {
+                    if (student.getId() == studentListObject.get(position).getId()) {
                         isAvailable = true;
                     }
                 }
 
-                if (!isAvailable)
-                {
+                if (!isAvailable) {
                     studentNameadapterList.add(studentListObject.get(position));
 
                     studentNameAdapter = new StudentNameAdapter(RemarksFragment.this, studentNameadapterList);
 
                     gridviewStudentName.setAdapter(studentNameAdapter);
+                    gridviewStudentName.smoothScrollToPosition(studentNameAdapter.getCount());
 
                 }
             }
         });
-
+//
         recipientEditTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -159,7 +158,15 @@ public class RemarksFragment extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(TAG, "text : " + s);
-                searchStudentServerCall(s + "");
+                String currentStr = s.toString();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (currentStr.equalsIgnoreCase(recipientEditTextView.getText().toString())) {
+                            searchStudentServerCall(s + "");
+                        }
+                    }
+                }, 1000);
             }
 
             @Override
@@ -168,15 +175,8 @@ public class RemarksFragment extends BaseActivity {
             }
         });
 
-    }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//
-//
-//        return rootView;
-//    }
+    }
 
     @Override
     public void onClick(View v) {
@@ -213,6 +213,8 @@ public class RemarksFragment extends BaseActivity {
                 studentList.add(student.getId());
             }
 
+            Log.d(TAG, "IDS : " + new Gson().toJson(studentList));
+
             remarks.setStudents(studentList);
 
             remarksRequestObject.setRemarks(remarks);
@@ -222,7 +224,8 @@ public class RemarksFragment extends BaseActivity {
 
             String jsonRemarks = new Gson().toJson(remarksRequestObject);
 
-            ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Sending Remarks...", false);
+//            ProgressDialog progressDialog = ProgressDialog.show(this, "Please Wait", "Sending Remarks...", false);
+            LoadingBox.showLoadingDialog(this, "Sending Remarks...");
 
             try {
                 TypedInput typedInput = new TypedByteArray("application/json", jsonRemarks.getBytes("UTF-8"));
@@ -230,8 +233,10 @@ public class RemarksFragment extends BaseActivity {
                     @Override
                     public void success(AddRemarksResponseData addRemarksResponseData, Response response) {
                         Log.d(TAG, "Response : " + new Gson().toJson(addRemarksResponseData));
-                        progressDialog.dismiss();
 
+                        if (LoadingBox.isDialogShowing()) {
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         if (addRemarksResponseData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                             Utils.failureDialog(RemarksFragment.this, "Success", "You have successfully sent remarks");
                         } else {
@@ -241,8 +246,10 @@ public class RemarksFragment extends BaseActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
+                        if (LoadingBox.isDialogShowing()) {
+                            LoadingBox.dismissLoadingDialog();
+                        }
                         Log.d(TAG, "error : " + error.toString());
-                        progressDialog.dismiss();
                         Utils.failureDialog(RemarksFragment.this, "Failure", "Something went wrong, please try again.");
                     }
                 });
@@ -266,14 +273,27 @@ public class RemarksFragment extends BaseActivity {
                 if (searchStudentData.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                     Log.d(TAG, "Student Name:" + new Gson().toJson(studentList));
 
+                    studentsHashMap = new ArrayList<HashMap<String, String>>();
                     studentListObject = searchStudentData.getData().getStudents();
-                    studentList.clear();
+
+                    studentsHashMap.clear();
                     for (Student student : searchStudentData.getData().getStudents()) {
-                        studentList.add(student.getStudentName());
+//                        studentList.add(student.getStudentName());
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("name", student.getStudentName());
+                        hashMap.put("class", student.getBatch().getClassAlias());
+                        hashMap.put("roll", student.getRollno().toString());
+                        studentsHashMap.add(hashMap);
                     }
 
                     Log.d(TAG, "Student Name:" + new Gson().toJson(studentList));
-                    adapter = new ArrayAdapter(RemarksFragment.this, android.R.layout.simple_list_item_1, studentList);
+//                    adapter = new ArrayAdapter(RemarksFragment.this, android.R.layout.simple_list_item_1, studentList);
+//                    adapter = new StudentSearchListAdapter(RemarksFragment.this,studentListObject);
+
+                    String[] from = {"name", "class", "roll"};
+
+                    int[] to = {R.id.textViewEventTitle, R.id.textViewEventDesc, R.id.textViewRollNo};
+                    SimpleAdapter adapter = new SimpleAdapter(RemarksFragment.this, studentsHashMap, R.layout.item_search_event, from, to);
                     recipientEditTextView.setAdapter(adapter);
                 }
             }
