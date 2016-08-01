@@ -18,8 +18,8 @@
             android:layout_alignParentLeft="true">
 
             <ImageView
-                android:layout_width="40px"
-                android:layout_height="30px"
+                android:layout_width="60px"
+                android:layout_height="60px"
                 android:layout_centerInParent="true"
                 android:background="@drawable/icon_menu_selector" />
 

@@ -43,7 +43,7 @@ public class MyClassActivity extends BaseActivity {
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
 
-        Utils.classFlag = 1;
+        Utils.classFlag = 4;
 
         toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
 

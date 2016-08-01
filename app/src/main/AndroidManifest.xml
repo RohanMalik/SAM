@@ -66,8 +66,6 @@
         <activity android:name=".Activity.AddEventsActivity">
 
         </activity>
-        <activity android:name=".Activity.AddtestsActivity">
-        </activity>
     </application>
 
 </manifest>

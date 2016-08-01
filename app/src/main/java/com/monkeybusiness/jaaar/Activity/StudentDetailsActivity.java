@@ -206,7 +206,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             if (studentsDetailsResponseData.getData().getStudent().getPicture() != null) {
                 Log.d(TAG,"Image_photo : "+studentsDetailsResponseData.getData().getStudent().getPicture().getUrl());
 //                Picasso.with(this).invalidate(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl());
-                Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewProfilePicStudent);
+                Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).into(imageViewProfilePicStudent);
 //                imageViewProfilePicStudent.setImageBitmap(getDecodedPhotos(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));4
 //                executorService.submit(new imageDownload(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));
             }

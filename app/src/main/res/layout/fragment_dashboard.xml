@@ -34,7 +34,7 @@
                     android:src="@drawable/ic_tmp_usr_placeholder"
                     app:border_color="@color/primary"
                     app:border_overlay="true"
-                    app:border_width="4px" />
+                     />
 
                 <TextView
                     android:id="@+id/textViewName"

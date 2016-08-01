@@ -207,7 +207,7 @@ public class FriendsActivity extends BaseActivity {
                     if (friend1.getPicture() != null) {
                         Log.d(TAG,"url_photo : "+friend1.getPicture().getUrl());
 //                        Picasso.with(FriendsActivity.this).invalidate(friend1.getPicture().getUrl());
-                        Picasso.with(FriendsActivity.this).load(friend1.getPicture().getUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.leftAvatar);
+                        Picasso.with(FriendsActivity.this).load(friend1.getPicture().getUrl()).fit().into(holder.leftAvatar);
                     } else {
                         holder.leftAvatar.setImageResource(R.drawable.anastasia);
                     }
@@ -215,7 +215,7 @@ public class FriendsActivity extends BaseActivity {
                         if (friend2.getPicture() != null) {
 //                            Picasso.with(FriendsActivity.this).invalidate(friend2
 //                                    .getPicture().getUrl());
-                            Picasso.with(FriendsActivity.this).load(friend2.getPicture().getUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.rightAvatar);
+                            Picasso.with(FriendsActivity.this).load(friend2.getPicture().getUrl()).fit().into(holder.rightAvatar);
                         } else {
                             holder.rightAvatar.setImageResource(R.drawable.irene);
                         }
