@@ -107,7 +107,7 @@
                 app:spn_arrowColor="@color/add_button_purple"
                 app:spn_arrowSize="24px"
                 app:spn_arrowSwitchMode="true"
-                app:spn_dividerAnimDuration="500"
+                app:spn_dividerAnimDuration="100"
                 app:spn_dividerColor="@color/add_button_purple"
                 app:spn_dividerHeight="5px"
                 app:spn_dividerPadding="10px"

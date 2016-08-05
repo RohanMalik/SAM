@@ -2,7 +2,6 @@ package com.monkeybusiness.jaaar.Activity;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,21 +15,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.gson.Gson;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.kbeanie.imagechooser.exceptions.ChooserException;
-import com.monkeybusiness.jaaar.Adapter.RemarksListAdapter;
+import com.monkeybusiness.jaaar.Adapter.EventsListStudentsAdapter;
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.Services.CircleImageView;
 import com.monkeybusiness.jaaar.cropImageUtils.Crop;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.Remarks;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksObject.RemarksRequestObject;
@@ -43,6 +43,8 @@ import com.monkeybusiness.jaaar.objectClasses.pictureUploadObject.PictureUploadO
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsResponse.StudentsDetailsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
+import com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Parent;
+import com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.StudentUpdateObject;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.ISO8601;
@@ -52,24 +54,16 @@ import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 
 import retrofit.Callback;
@@ -84,35 +78,48 @@ import rmn.androidscreenlibrary.ASSL;
  */
 public class StudentDetailsActivity extends BaseActivity implements ImageChooserListener {
 
+    private static final String[] STORAGE_PERMS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+    private static final int INITIAL_REQUEST = 1337;
+    private static final int STORAGE_REQUEST = INITIAL_REQUEST + 3;
     final String TAG = "StudentDetailsActivity";
-
     LinearLayout linearLayoutMainStudent;
-
     RelativeLayout relativeLayoutMenu;
-
-    TextView textViewActionTitle;
+    //    TextView textViewActionTitle;
     TextView textViewName;
     TextView textViewClass;
-    TextView textViewContact;
-    TextView textViewEmail;
-
+    //    TextView textViewContact;
+    TextView textViewEmailStudent;
     TextView textViewContactStudent;
-    TextView textViewRemarks;
 
-    Button buttonRemarksStudent;
+    TextView textViewFname;
+    TextView textViewMname;
+    TextView textViewDOB;
+    TextView textViewAddress;
+    TextView textViewCity;
+    TextView textViewState;
+    TextView textViewDOJ;
 
-    ProgressBar progressBarStudent;
+    ImageView imageViewEditNumber;
+    RelativeLayout relativeLayoutEditPic;
 
-    CircleImageView imageViewProfilePicStudent;
+    NonScrollListView listViewEventsStudents;
 
+    //    TextView textViewRemarks;
+//    Button buttonRemarksStudent;
+//    ProgressBar progressBarStudent;
+    ImageView imageViewProfilePicStudent;
     Dialog dialog;
     TextView textViewRollNoStudent;
-    NonScrollListView listViewRemarks;
+    //    NonScrollListView listViewRemarks;
     int studentId;
     StudentsDetailsResponseData studentsDetailsResponseData;
     Dialog subjectDialog;
     EditText editTextRemarks;
     Button buttonSend;
+    LinearLayout linearLayoutRemarks;
+    LinearLayout linearLayoutAttendances;
     private TextView textViewCamera;
     private TextView textViewGallery;
     private TextView textViewTitle;
@@ -121,17 +128,15 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     private Uri inputUri;
     private Uri outputUri;
 
-    private static final String[] STORAGE_PERMS = {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
-    private static final int INITIAL_REQUEST = 1337;
-    private static final int STORAGE_REQUEST = INITIAL_REQUEST + 3;
+    TextDrawable drawableAbsent;
+    TextDrawable drawablePresent;
 
+    com.rey.material.widget.Button buttonRemarksStudent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_details);
+        setContentView(R.layout.activity_student_details_new);
 
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
@@ -151,27 +156,44 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         linearLayoutMainStudent = (LinearLayout) findViewById(R.id.linearLayoutMainStudent);
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
+        relativeLayoutEditPic = (RelativeLayout) findViewById(R.id.relativeLayoutEditPic);
 
-        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
+        linearLayoutRemarks = (LinearLayout) findViewById(R.id.linearLayoutRemarks);
+        linearLayoutAttendances = (LinearLayout) findViewById(R.id.linearLayoutAttendances);
+
+//        textViewActionTitle = (TextView) findViewById(R.id.textViewActionTitle);
         textViewName = (TextView) findViewById(R.id.textViewNameStudent);
         textViewClass = (TextView) findViewById(R.id.textViewClassStudent);
-        textViewContact = (TextView) findViewById(R.id.textViewContactStudent);
-        textViewEmail = (TextView) findViewById(R.id.textViewEmailStudent);
+//        textViewContact = (TextView) findViewById(R.id.textViewContactStudent);
+        textViewEmailStudent = (TextView) findViewById(R.id.textViewEmailStudent);
         textViewRollNoStudent = (TextView) findViewById(R.id.textViewRollNoStudent);
 
-        textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
+        textViewFname = (TextView) findViewById(R.id.textViewFname);
+        textViewMname = (TextView) findViewById(R.id.textViewMname);
+        textViewDOB = (TextView) findViewById(R.id.textViewDOB);
+        textViewAddress = (TextView) findViewById(R.id.textViewAddress);
+        textViewCity = (TextView) findViewById(R.id.textViewCity);
+        textViewState = (TextView) findViewById(R.id.textViewState);
+        textViewDOJ = (TextView) findViewById(R.id.textViewDOJ);
 
-        buttonRemarksStudent = (Button) findViewById(R.id.buttonRemarksStudent);
+        imageViewEditNumber = (ImageView) findViewById(R.id.imageViewEditNumber);
 
-        progressBarStudent = (ProgressBar) findViewById(R.id.progressBarStudent);
+//        textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
+
+//        buttonRemarksStudent = (Button) findViewById(R.id.buttonRemarksStudent);
+
+//        progressBarStudent = (ProgressBar) findViewById(R.id.progressBarStudent);
 
         textViewContactStudent = (TextView) findViewById(R.id.textViewParentConatctStudent);
 
-        imageViewProfilePicStudent = (CircleImageView) findViewById(R.id.imageViewProfilePicStudent);
+        imageViewProfilePicStudent = (ImageView) findViewById(R.id.imageViewProfilePicStudent);
+        listViewEventsStudents = (NonScrollListView) findViewById(R.id.listViewEventsStudents);
 
-        listViewRemarks = (NonScrollListView) findViewById(R.id.listViewRemarks);
+        buttonRemarksStudent = (com.rey.material.widget.Button) findViewById(R.id.buttonRemarksStudent);
 
-        textViewActionTitle.setText("Student Profile");
+//        listViewRemarks = (NonScrollListView) findViewById(R.id.listViewRemarks);
+
+//        textViewActionTitle.setText("Student Profile");
 
         linearLayoutMainStudent.setVisibility(View.GONE);
 
@@ -183,30 +205,52 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         imageChooserManagerGallery.setImageChooserListener(this);
 
         relativeLayoutMenu.setOnClickListener(this);
-        textViewActionTitle.setOnClickListener(this);
+//        textViewActionTitle.setOnClickListener(this);
+//        buttonRemarksStudent.setOnClickListener(this);
+        relativeLayoutEditPic.setOnClickListener(this);
         buttonRemarksStudent.setOnClickListener(this);
-        imageViewProfilePicStudent.setOnClickListener(this);
+        imageViewEditNumber.setOnClickListener(this);
+
+        drawableAbsent = TextDrawable.builder()
+                .beginConfig()
+                .withBorder(4) /* thickness in px */
+                .endConfig()
+                .buildRound("A", getResources().getColor(R.color.absent_button));
+
+        drawablePresent = TextDrawable.builder()
+                .beginConfig()
+                .withBorder(4) /* thickness in px */
+                .endConfig()
+                .buildRound("P", getResources().getColor(R.color.normal_present_button));
     }
 
     private void setUIData(StudentsDetailsResponseData studentsDetailsResponseData) {
 
-        progressBarStudent.setVisibility(View.GONE);
+//        progressBarStudent.setVisibility(View.GONE);
         linearLayoutMainStudent.setVisibility(View.VISIBLE);
 
         this.studentsDetailsResponseData = studentsDetailsResponseData;
 
         if (studentsDetailsResponseData.getData().getStudent() != null) {
-            textViewName.setText("Name : " + studentsDetailsResponseData.getData().getStudent().getStudentName());
-            textViewClass.setText("Class : " + studentsDetailsResponseData.getData().getStudent().getBatch().getClassAlias());
-            textViewContact.setText("Address : " + studentsDetailsResponseData.getData().getStudent().getAddress());
-            textViewEmail.setText("Father's Name : " + studentsDetailsResponseData.getData().getStudent().getFatherName());
-            textViewRollNoStudent.setText("Roll No. " + studentsDetailsResponseData.getData().getStudent().getRollno());
-            textViewContactStudent.setText("Contact : " + studentsDetailsResponseData.getData().getStudent().getParent().getContactPhone());
+            textViewName.setText(studentsDetailsResponseData.getData().getStudent().getStudentName());
+            textViewClass.setText(studentsDetailsResponseData.getData().getStudent().getBatch().getClassAlias());
+//            textViewContact.setText("Address : " + studentsDetailsResponseData.getData().getStudent().getAddress());
+            textViewEmailStudent.setText(studentsDetailsResponseData.getData().getStudent().getParent().getContactEmail());
+            textViewRollNoStudent.setText("" + studentsDetailsResponseData.getData().getStudent().getRollno());
+            textViewContactStudent.setText("" + studentsDetailsResponseData.getData().getStudent().getParent().getContactPhone());
+
+            textViewFname.setText(studentsDetailsResponseData.getData().getStudent().getFatherName());
+            textViewMname.setText(studentsDetailsResponseData.getData().getStudent().getMotherName());
+            textViewDOB.setText(studentsDetailsResponseData.getData().getStudent().getDob());
+            textViewAddress.setText(studentsDetailsResponseData.getData().getStudent().getAddress());
+            textViewCity.setText(studentsDetailsResponseData.getData().getStudent().getCity());
+            textViewState.setText(studentsDetailsResponseData.getData().getStudent().getState());
+            textViewDOJ.setText(studentsDetailsResponseData.getData().getStudent().getDateOfJoining());
 
             if (studentsDetailsResponseData.getData().getStudent().getPicture() != null) {
-                Log.d(TAG,"Image_photo : "+studentsDetailsResponseData.getData().getStudent().getPicture().getUrl());
+                Log.d(TAG, "Image_photo : " + studentsDetailsResponseData.getData().getStudent().getPicture().getUrl());
 //                Picasso.with(this).invalidate(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl());
-                Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).into(imageViewProfilePicStudent);
+                Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).fit().into(imageViewProfilePicStudent);
 //                imageViewProfilePicStudent.setImageBitmap(getDecodedPhotos(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));4
 //                executorService.submit(new imageDownload(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));
             }
@@ -224,13 +268,16 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             case R.id.relativeLayoutMenu:
                 toggle();
                 break;
+            case R.id.imageViewEditNumber:
+                showNumberDialog(studentId);
+                break;
             case R.id.buttonRemarksStudent:
                 if (studentsDetailsResponseData != null) {
                     showRemarksDialog(studentsDetailsResponseData.getData().getStudent().getId());
                 }
                 Log.d(TAG, "button pressed");
                 break;
-            case R.id.imageViewProfilePicStudent:
+            case R.id.relativeLayoutEditPic:
 
                 int currentApiLevel = Build.VERSION.SDK_INT;
 
@@ -279,6 +326,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         editTextRemarks = (EditText) subjectDialog.findViewById(R.id.editTextRemarks);
 
         buttonSend = (Button) subjectDialog.findViewById(R.id.buttonSend);
+        buttonSend.setText("SEND");
+        editTextRemarks.setHint("Enter Remarks");
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,6 +344,36 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         subjectDialog.setCancelable(true);
         subjectDialog.setCanceledOnTouchOutside(true);
         subjectDialog.show();
+    }
+
+    Dialog mobileNumberDialog;
+
+    public void showNumberDialog(int id) {
+
+        mobileNumberDialog = new Dialog(this);
+        mobileNumberDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mobileNumberDialog.setContentView(R.layout.dialog_custom_msg_number);
+        editTextRemarks = (EditText) mobileNumberDialog.findViewById(R.id.editTextRemarks);
+        editTextRemarks.setHint("Enter Number");
+
+        buttonSend = (Button) mobileNumberDialog.findViewById(R.id.buttonSend);
+        buttonSend.setText("SAVE");
+
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editTextRemarks.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(StudentDetailsActivity.this, "Please Enter Number", Toast.LENGTH_SHORT).show();
+                } else {
+                    mobileNumberDialog.dismiss();
+                    upDateStudentNumberServerCall(id,editTextRemarks.getText().toString());
+                }
+            }
+        });
+
+        mobileNumberDialog.setCancelable(true);
+        mobileNumberDialog.setCanceledOnTouchOutside(true);
+        mobileNumberDialog.show();
     }
 
     public void showProfilePicDialog() {
@@ -337,8 +416,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 //                Picasso.with(this).load(file).into(imageViewProfilePicStudent);
 
                 if (studentsDetailsResponseData.getData().getStudent().getPicture() != null) {
-                    sendPictureToUploadsWithId(studentsDetailsResponseData.getData().getStudent().getPicture().getId(),filePath);
-                }else {
+                    sendPictureToUploadsWithId(studentsDetailsResponseData.getData().getStudent().getPicture().getId(), filePath);
+                } else {
                     sendPictureToUploads(filePath);
                 }
 
@@ -398,12 +477,16 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
     private void getStudentDetailsServerCall(int studentId) {
 
+        LoadingBox.showLoadingDialog(this, "Loading Data...");
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetStudentDetails(String.valueOf(studentId), new Callback<StudentsDetailsResponseData>() {
             @Override
             public void success(StudentsDetailsResponseData studentsDetailsResponseData, Response response) {
+                if (LoadingBox.isDialogShowing()) {
+                    LoadingBox.dismissLoadingDialog();
+                }
                 Log.d(TAG, "Response : " + new Gson().toJson(studentsDetailsResponseData));
                 Prefs.with(StudentDetailsActivity.this).save(PrefsKeys.STUDENT_DETAILS_RESPONSE_DATA, studentsDetailsResponseData);
                 setUIData(studentsDetailsResponseData);
@@ -411,6 +494,9 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
             @Override
             public void failure(RetrofitError error) {
+                if (LoadingBox.isDialogShowing()) {
+                    LoadingBox.dismissLoadingDialog();
+                }
                 Log.d(TAG, "error : " + error.toString());
             }
         });
@@ -439,7 +525,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String jsonRemarks = new Gson().toJson(remarksRequestObject);
 
-        LoadingBox.showLoadingDialog(this,"Sending Remarks...");
+        LoadingBox.showLoadingDialog(this, "Sending Remarks...");
 
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonRemarks.getBytes("UTF-8"));
@@ -447,7 +533,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 @Override
                 public void success(AddRemarksResponseData addRemarksResponseData, Response response) {
                     android.util.Log.d(TAG, "Response : " + new Gson().toJson(addRemarksResponseData));
-                    if (LoadingBox.isDialogShowing()){
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
 
@@ -462,7 +548,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 @Override
                 public void failure(RetrofitError error) {
                     android.util.Log.d(TAG, "error : " + error.toString());
-                    if (LoadingBox.isDialogShowing()){
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
                     Utils.failureDialog(StudentDetailsActivity.this, "Failure", "Something went wrong, please try again.");
@@ -497,17 +583,24 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
     private void setUiremarks(StudentsRemarksResponse studentsRemarksResponse) {
 
-        if (studentsRemarksResponse.getData().getRemarks().isEmpty()) {
-            textViewRemarks.setVisibility(View.GONE);
-        } else {
-            textViewRemarks.setVisibility(View.VISIBLE);
-        }
+//        if (studentsRemarksResponse.getData().getRemarks().isEmpty()) {
+//            textViewRemarks.setVisibility(View.GONE);
+//        } else {
+//            textViewRemarks.setVisibility(View.VISIBLE);
+//        }
 
         for (Remark remark : studentsRemarksResponse.getData().getRemarks()) {
             Log.d("adapter", "UIremark : " + new Gson().toJson(remark));
         }
-        RemarksListAdapter remarksListAdapter = new RemarksListAdapter(this, studentsRemarksResponse.getData().getRemarks());
-        listViewRemarks.setAdapter(remarksListAdapter);
+//        RemarksListAdapter remarksListAdapter = new RemarksListAdapter(this, studentsRemarksResponse.getData().getRemarks());
+//        listViewRemarks.setAdapter(remarksListAdapter);
+
+        if (studentsRemarksResponse.getData().getRemarks() != null && !studentsRemarksResponse.getData().getRemarks().isEmpty()) {
+            linearLayoutRemarks.setVisibility(View.VISIBLE);
+            Log.d(TAG,"remarks Size : "+studentsRemarksResponse.getData().getRemarks().size());
+            EventsListStudentsAdapter adapter = new EventsListStudentsAdapter(this, studentsRemarksResponse.getData().getRemarks());
+            listViewEventsStudents.setAdapter(adapter);
+        }
     }
 
     private void sendPictureToUploads(String filePath) {
@@ -522,7 +615,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String base64Str = bitmapToBase64(getBitmap(filePath));
 
-        base64Str = base64Str.replaceAll("\n","");
+        base64Str = base64Str.replaceAll("\n", "");
 
 //        String str  = base64Str;
 
@@ -532,36 +625,36 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String jsonUpload = new Gson().toJson(pictureUploadObject);
 
-        if (jsonUpload.contains("\\u")){
-            Log.d("matcher","it contains special character");
-            jsonUpload = jsonUpload.replaceAll(Matcher.quoteReplacement("\\u"),"");
+        if (jsonUpload.contains("\\u")) {
+            Log.d("matcher", "it contains special character");
+            jsonUpload = jsonUpload.replaceAll(Matcher.quoteReplacement("\\u"), "");
         }
 
-        LoadingBox.showLoadingDialog(this,"Uploading Image...");
+        LoadingBox.showLoadingDialog(this, "Uploading Image...");
 
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));
             RestClient.getApiServicePojo(xCookies, aCookies).apiCallSendStudentPicture(typedInput, new Callback<ImageUploadResponse>() {
                 @Override
                 public void success(ImageUploadResponse imageUploadResponse, Response response) {
-                    Log.d(TAG,"Response : "+imageUploadResponse);
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "Response : " + imageUploadResponse);
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
-                    if (imageUploadResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")){
+                    if (imageUploadResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
                         sendPutStudentPicture(imageUploadResponse.getData().getImageUrl());
-                    }else {
-                        Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                    } else {
+                        Utils.failureDialog(StudentDetailsActivity.this, "Image Upload failed", "Something went wrong, please try again");
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.d(TAG,"error : "+error.toString());
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "error : " + error.toString());
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
-                    Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                    Utils.failureDialog(StudentDetailsActivity.this, "Image Upload failed", "Something went wrong, please try again");
                 }
             });
         } catch (UnsupportedEncodingException e) {
@@ -569,7 +662,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         }
     }
 
-    private void sendPictureToUploadsWithId(int id,String filePath) {
+    private void sendPictureToUploadsWithId(int id, String filePath) {
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
@@ -581,7 +674,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String base64Str = bitmapToBase64(getBitmap(filePath));
 
-        base64Str = base64Str.replaceAll("\n","");
+        base64Str = base64Str.replaceAll("\n", "");
 
 //        String str  = base64Str;
 
@@ -591,38 +684,38 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         String jsonUpload = new Gson().toJson(pictureUploadObject);
 
-        if (jsonUpload.contains("\\u")){
-            Log.d("matcher","it contains special character");
-            jsonUpload = jsonUpload.replaceAll(Matcher.quoteReplacement("\\u"),"");
+        if (jsonUpload.contains("\\u")) {
+            Log.d("matcher", "it contains special character");
+            jsonUpload = jsonUpload.replaceAll(Matcher.quoteReplacement("\\u"), "");
         }
 
-        LoadingBox.showLoadingDialog(this,"Uploading Image...");
+        LoadingBox.showLoadingDialog(this, "Uploading Image...");
 
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));
             RestClient.getApiServicePojo(xCookies, aCookies).apiCallSendStudentPictureWithId(String.valueOf(id), typedInput, new Callback<ImageUploadResponse>() {
                 @Override
                 public void success(ImageUploadResponse imageUploadResponse, Response response) {
-                    Log.d(TAG,"Response : "+imageUploadResponse);
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "Response : " + imageUploadResponse);
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
-                    if (imageUploadResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")){
+                    if (imageUploadResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes")) {
 //                        Log.d(TAG,"Image_load"+imageUploadResponse.getData().getPicture().getUrl());
 //                        Picasso.with(StudentDetailsActivity.this).load(imageUploadResponse.getData().getPicture().getUrl()).into(imageViewProfilePicStudent);
                         getStudentDetailsServerCall(studentId);
-                    }else {
-                        Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                    } else {
+                        Utils.failureDialog(StudentDetailsActivity.this, "Image Upload failed", "Something went wrong, please try again");
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.d(TAG,"error : "+error.toString());
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "error : " + error.toString());
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
-                    Utils.failureDialog(StudentDetailsActivity.this,"Image Upload failed","Something went wrong, please try again");
+                    Utils.failureDialog(StudentDetailsActivity.this, "Image Upload failed", "Something went wrong, please try again");
                 }
             });
         } catch (UnsupportedEncodingException e) {
@@ -650,14 +743,14 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
         String jsonUpload = new Gson().toJson(imageStudentPutObject);
 
-        LoadingBox.showLoadingDialog(this,"Uploading Image...");
+        LoadingBox.showLoadingDialog(this, "Uploading Image...");
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonUpload.getBytes("UTF-8"));
             RestClient.getApiService(xCookies, aCookies).apiCallPutStudentPicture(String.valueOf(studentId), typedInput, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
-                    Log.d(TAG,"Response : "+s);
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "Response : " + s);
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
                     getStudentDetailsServerCall(studentId);
@@ -665,8 +758,8 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.d(TAG,"error : "+error.toString());
-                    if (LoadingBox.isDialogShowing()){
+                    Log.d(TAG, "error : " + error.toString());
+                    if (LoadingBox.isDialogShowing()) {
                         LoadingBox.dismissLoadingDialog();
                     }
                 }
@@ -729,14 +822,30 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     private String bitmapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    public class imageDownload implements Runnable{
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case STORAGE_REQUEST:
+                if (Utils.allowPermissionForHigherVersions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    showProfilePicDialog();
+                } else {
+
+                }
+
+                break;
+        }
+    }
+
+    public class imageDownload implements Runnable {
 
         String url;
-        imageDownload(String url){
+
+        imageDownload(String url) {
             this.url = url;
         }
 
@@ -746,7 +855,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
             try {
                 android.util.Log.d("ImageLoader", "Loading from web");
                 Bitmap bitmap = null;
-                URL imageUrl = new URL(url.replaceAll(" ","%20"));
+                URL imageUrl = new URL(url.replaceAll(" ", "%20"));
                 HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
                 conn.setConnectTimeout(30000);
                 conn.setReadTimeout(30000);
@@ -779,18 +888,49 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    private void upDateStudentNumberServerCall(int id,String number) {
 
-        switch (requestCode) {
-            case STORAGE_REQUEST:
-                if (Utils.allowPermissionForHigherVersions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    showProfilePicDialog();
-                } else {
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
+        StudentUpdateObject studentUpdateObject = new StudentUpdateObject();
+
+        com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student student = new com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student();
+
+        student.setId(id);
+
+        Parent parent = new Parent();
+        parent.setContactPhone(number);
+
+        student.setParent(parent);
+        studentUpdateObject.setStudent(student);
+
+        String jsonString = new Gson().toJson(studentUpdateObject);
+
+        LoadingBox.showLoadingDialog(this,"Saving Data...");
+        try {
+            TypedInput typedInput = new TypedByteArray("application/json", jsonString.getBytes("UTF-8"));
+            RestClient.getApiService(xCookies,aCookies).apiCallPutStudentNumber(String.valueOf(id), typedInput, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    if (LoadingBox.isDialogShowing()){
+                        LoadingBox.dismissLoadingDialog();
+                    }
+                    textViewContactStudent.setText(number);
+                    Log.d(TAG,"Response : "+s);
                 }
 
-                break;
+                @Override
+                public void failure(RetrofitError error) {
+                    if (LoadingBox.isDialogShowing()){
+                        LoadingBox.dismissLoadingDialog();
+                    }
+                    Log.d(TAG,"error : "+error.toString());
+                }
+            });
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 }

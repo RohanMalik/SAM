@@ -152,12 +152,12 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
         if (!lectureList.isEmpty()) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, lectureList);
+                    android.R.layout.simple_spinner_dropdown_item, lectureList);
 
 //            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 //                    R.array.example_array, android.R.layout.simple_spinner_item);
 // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
 // Specify the layout to use when the list of choices appears
 //        adapter.setDropDownViewResource(android.R.layout.expandable_list_content);

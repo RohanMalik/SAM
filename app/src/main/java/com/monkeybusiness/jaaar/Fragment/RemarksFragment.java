@@ -33,6 +33,7 @@ import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.LinearLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -294,6 +295,8 @@ public class RemarksFragment extends BaseActivity {
 
                     int[] to = {R.id.textViewEventTitle, R.id.textViewEventDesc, R.id.textViewRollNo};
                     SimpleAdapter adapter = new SimpleAdapter(RemarksFragment.this, studentsHashMap, R.layout.item_search_event, from, to);
+//                    ASSL.DoMagic(linearLayoutMain);
+
                     recipientEditTextView.setAdapter(adapter);
                 }
             }

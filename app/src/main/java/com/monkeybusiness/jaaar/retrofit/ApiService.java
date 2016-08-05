@@ -126,4 +126,7 @@ public interface ApiService {
 
     @PUT("/students/{id}")
     void apiCallPutStudentPicture(@Path("id") String id,@Body TypedInput pictureObject,Callback<String> callback);
+
+    @PUT("/students/{id}")
+    void apiCallPutStudentNumber(@Path("id") String id,@Body TypedInput NumberObject,Callback<String> callback);
 }

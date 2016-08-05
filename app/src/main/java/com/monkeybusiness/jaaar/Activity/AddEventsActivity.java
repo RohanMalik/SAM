@@ -18,7 +18,7 @@ public class AddEventsActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_dashboard_new);
+        setContentView(R.layout.activity_student_details_new);
 
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);

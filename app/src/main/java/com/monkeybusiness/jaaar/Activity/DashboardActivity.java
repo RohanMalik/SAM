@@ -56,7 +56,7 @@ public class DashboardActivity extends BaseActivity {
     TextView textViewName;
 //    TextView textViewClass;
 //    TextView textViewContact;
-//    TextView textViewEmail;
+//    TextView textViewEmailStudent;
 
     ImageView imageViewProfilePic;
 
@@ -106,7 +106,7 @@ public class DashboardActivity extends BaseActivity {
         textViewName = (TextView) findViewById(R.id.textViewName);
 //        textViewClass = (TextView) findViewById(R.id.textViewClass);
 //        textViewContact = (TextView) findViewById(R.id.textViewContact);
-//        textViewEmail = (TextView) findViewById(R.id.textViewEmail);
+//        textViewEmailStudent = (TextView) findViewById(R.id.textViewEmailStudent);
 
         relativeLayoutAdd = (RelativeLayout) findViewById(R.id.relativeLayoutAdd);
 
@@ -149,7 +149,7 @@ public class DashboardActivity extends BaseActivity {
             textViewName.setText("Hi!  "+checkLoginResponse.getData().getUserTypeDetails().getTeacherName());
 //            textViewClass.setVisibility(View.GONE);
 //            textViewContact.setText("Contact No : "+checkLoginResponse.getData().getUserTypeDetails().getContactInfo());
-//            textViewEmail.setText("Email : "+checkLoginResponse.getData().getUserInfo().getEmail());
+//            textViewEmailStudent.setText("Email : "+checkLoginResponse.getData().getUserInfo().getEmail());
 
             if (checkLoginResponse.getData().getUserTypeDetails().getPicture()!=null){
 
