@@ -65,6 +65,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/textViewAttdTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Attendances"
@@ -96,6 +97,7 @@
             android:background="@drawable/attd_icon"/>
 
         <TextView
+            android:id="@+id/textViewAttdText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Take Attendance For Today"
@@ -136,6 +138,7 @@
         android:background="@color/edit_text_divider"/>
 
     <TextView
+        android:id="@+id/textViewEventsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Events"

@@ -13,6 +13,7 @@ import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
+import com.monkeybusiness.jaaar.utils.FontClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,9 @@ public class ReviewListAdapter extends BaseAdapter {
             viewHolder.textViewNameListView = (TextView) view.findViewById(R.id.textViewNameListView);
             viewHolder.textViewRollnoListView = (TextView) view.findViewById(R.id.textViewRollnoListView1);
             viewHolder.linearLayoutMain = (LinearLayout) view.findViewById(R.id.root);
+
+            viewHolder.textViewRollnoListView.setTypeface(FontClass.proximaRegular(activity));
+            viewHolder.textViewNameListView.setTypeface(FontClass.proximaRegular(activity));
 
             view.setTag(viewHolder);
 

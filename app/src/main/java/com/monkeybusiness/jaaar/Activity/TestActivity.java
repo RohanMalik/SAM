@@ -21,6 +21,7 @@ import com.monkeybusiness.jaaar.objectClasses.testListResponseData.TestListRespo
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -96,6 +97,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         viewPager.setOffscreenPageLimit(3);
 
         relativeLayoutMenu.setOnClickListener(this);
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
     }
 
     public void setUiData(TestListResponse testListResponse) {

@@ -14,6 +14,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -65,6 +66,8 @@ public class MyLecturesActivity extends BaseActivity {
         textViewActionTitle.setText("My Lectures");
 
         listViewLectures = (ListView) findViewById(R.id.listViewLectures);
+
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
 
     }
 

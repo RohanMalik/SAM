@@ -19,6 +19,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDeta
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -92,6 +93,13 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
             holder.textViewBatchDate = (TextView) view.findViewById(R.id.textViewBatchDate);
 
             holder.textViewLectureNo = (TextView) view.findViewById(R.id.textViewLectureNo);
+
+            holder.textViewLectureNo.setTypeface(FontClass.proximaBold(context));
+            holder.textViewBatchDate.setTypeface(FontClass.proximaBold(context));
+            holder.textViewPresent.setTypeface(FontClass.proximaRegular(context));
+            holder.textViewTotal.setTypeface(FontClass.proximaRegular(context));
+            holder.textViewSubmitStatus.setTypeface(FontClass.proximaRegular(context));
+            holder.textViewAbsent.setTypeface(FontClass.proximaRegular(context));
 
             ASSL.DoMagic(holder.linearLayoutMainItemLecture);
 

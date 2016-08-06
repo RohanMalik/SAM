@@ -15,6 +15,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
@@ -38,15 +39,17 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
     public final String DAY = "day";
     public final String WEEK = "week";
     public final String MONTH = "month";
+
     TextView textViewDay;
     TextView textViewWeek;
     TextView textViewMonth;
     TextView textViewCurrentDateCal;
     TextView textViewDayCal;
+    TextView textViewActionTitle;
+
     FloatingActionButton fabAddEvent;
     ListView listViewEvents;
     RelativeLayout relativeLayoutMenu;
-    TextView textViewActionTitle;
     EventsListAdapter eventsListAdapter;
 
     RelativeLayout relativeLayoutNodataFound;
@@ -67,6 +70,16 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
 
         new CommonApiCalls(this).checkLoginServerCall();
 
+        setFont();
+    }
+
+    private void setFont() {
+        textViewDay.setTypeface(FontClass.proximaRegular(this));
+        textViewWeek.setTypeface(FontClass.proximaRegular(this));
+        textViewMonth.setTypeface(FontClass.proximaRegular(this));
+        textViewCurrentDateCal.setTypeface(FontClass.proximaBold(this));
+        textViewDayCal.setTypeface(FontClass.proximaRegular(this));
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
     }
 
     private void initialization() {

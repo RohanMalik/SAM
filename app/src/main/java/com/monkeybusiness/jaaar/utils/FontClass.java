@@ -14,7 +14,7 @@ public class FontClass {
     private static Typeface proximaRegular;
 
 
-    public static Typeface dinProLight(Context appContext) {
+    public static Typeface proximaLight(Context appContext) {
 
 
         if (proximaLight == null) {
@@ -24,16 +24,16 @@ public class FontClass {
         return proximaLight;
     }
 
-    public static Typeface dinProBold(Context appContext) {
+    public static Typeface proximaBold(Context appContext) {
 
         if (proximaBold == null) {
             proximaBold = Typeface.createFromAsset(appContext.getAssets(),
-                    "fonts/ProximaNova-Bold.ttf.ttf");
+                    "fonts/ProximaNova-Bold.ttf");
         }
         return proximaBold;
     }
 
-    public static Typeface dinProThin(Context appContext) {
+    public static Typeface proximaThin(Context appContext) {
 
         if (proximaThin == null) {
             proximaThin = Typeface.createFromAsset(appContext.getAssets(),
@@ -43,7 +43,7 @@ public class FontClass {
     }
 
 
-    public static Typeface dinProRegular(Context appContext) {
+    public static Typeface proximaRegular(Context appContext) {
 
         if (proximaRegular == null) {
             proximaRegular = Typeface.createFromAsset(appContext.getAssets(),

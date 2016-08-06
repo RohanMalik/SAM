@@ -32,6 +32,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDeta
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.NonScrollListView;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -65,10 +66,16 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
     Button buttonSubmit;
     Button buttonSave;
 
-    ObservableScrollView scrollView;
-
     TextView textViewAbsentStudents;
     TextView textViewPresentStudents;
+    TextView textViewTitleAbsent;
+    TextView textViewTitlePresent;
+    TextView textViewListTitle;
+    TextView textViewTitleRoll;
+    TextView textViewTitleName;
+
+    ObservableScrollView scrollView;
+
 
     public static AttendanceReviewFragment newInstance(int page,String title) {
 
@@ -85,7 +92,20 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
         new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
                 false);
         initialization();
+        setFont();
         return rootView;
+    }
+
+    private void setFont() {
+        buttonSubmit.setTypeface(FontClass.proximaBold(context));
+        buttonSave.setTypeface(FontClass.proximaBold(context));
+        textViewAbsentStudents.setTypeface(FontClass.proximaRegular(context));
+        textViewPresentStudents.setTypeface(FontClass.proximaRegular(context));
+        textViewTitleAbsent.setTypeface(FontClass.proximaBold(context));
+        textViewTitlePresent.setTypeface(FontClass.proximaBold(context));
+        textViewListTitle.setTypeface(FontClass.proximaBold(context));
+        textViewTitleRoll.setTypeface(FontClass.proximaBold(context));
+        textViewTitleName.setTypeface(FontClass.proximaBold(context));
     }
 
     public void initialization()
@@ -101,6 +121,11 @@ public class AttendanceReviewFragment extends Fragment implements ReviewAttdInte
         textViewAbsentStudents = (TextView) rootView.findViewById(R.id.textViewAbsentStudents);
 
         textViewPresentStudents = (TextView) rootView.findViewById(R.id.textViewPresentStudents);
+        textViewTitleAbsent = (TextView) rootView.findViewById(R.id.textViewTitleAbsent);
+        textViewTitlePresent = (TextView) rootView.findViewById(R.id.textViewTitlePresent);
+        textViewListTitle = (TextView) rootView.findViewById(R.id.textViewListTitle);
+        textViewTitleRoll = (TextView) rootView.findViewById(R.id.textViewTitleRoll);
+        textViewTitleName = (TextView) rootView.findViewById(R.id.textViewTitleName);
 
         String status = Prefs.with(this.getActivity()).getString(PrefsKeys.ATTD_STATUS,"");
 

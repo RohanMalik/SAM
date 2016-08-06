@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.LoginRequestObject;
@@ -23,13 +22,13 @@ import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.Session;
 import com.monkeybusiness.jaaar.objectClasses.loginResponseData.LoginResponse;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.dialogBox.CommonDialog;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.FloatingActionButton;
 
-import io.fabric.sdk.android.Fabric;
 import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
@@ -54,6 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     FloatingActionButton loginButton;
     @Bind(R.id.textViewForgotPass)
     TextView textViewforgotpass;
+    @Bind(R.id.textViewTitle)
+    TextView textViewTitle;
+    @Bind(R.id.textViewBrownCode)
+    TextView textViewBrownCode;
 //    @Bind(R.id.linearLayoutMain)
 //    LinearLayout linearLayoutMain;
 
@@ -112,14 +115,15 @@ public class LoginActivity extends AppCompatActivity {
                 .endConfig()
                 .buildRoundRect("", Color.WHITE, 10);
 
-        String verifiedUser = Prefs.with(this).getString(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
+        String verifiedUser = Prefs.with(this).getString(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
 
-        if (verifiedUser.equalsIgnoreCase(Constants.VERIFIED))
-        {
-            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+        if (verifiedUser.equalsIgnoreCase(Constants.VERIFIED)) {
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             startActivity(intent);
             finish();
         }
+
+        setFonts();
 
 //        linearLayoutMain.setBackgroundDrawable(drawable);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -130,12 +134,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public void setFonts() {
+
+        textViewTitle.setTypeface(FontClass.proximaRegular(this));
+        inputEmail.setTypeface(FontClass.proximaRegular(this));
+        inputPassword.setTypeface(FontClass.proximaRegular(this));
+        checkBoxRememberMe.setTypeface(FontClass.proximaBold(this));
+        textViewforgotpass.setTypeface(FontClass.proximaRegular(this));
+        textViewBrownCode.setTypeface(FontClass.proximaLight(this));
+    }
+
     public void login() {
 //        Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
 //        startActivity(i);
 //        finish();
 
-        ProgressDialog dialog = ProgressDialog.show(this, "Please wait", "Verifying...",true);
+        ProgressDialog dialog = ProgressDialog.show(this, "Please wait", "Verifying...", true);
 
         LoginRequestObject loginRequestObject = new LoginRequestObject();
 
@@ -144,12 +158,9 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean remember;
 
-        if (checkBoxRememberMe.isChecked())
-        {
+        if (checkBoxRememberMe.isChecked()) {
             remember = true;
-        }
-        else
-        {
+        } else {
             remember = false;
         }
 
@@ -163,10 +174,10 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             TypedInput in = new TypedByteArray("application/json", jsonObject.getBytes("UTF-8"));
-            String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES,"");
-            String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES,"");
+            String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+            String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-            RestClient.getApiServicePojo(xCookies,aCookies).apiCallLogin(in, new Callback<LoginResponse>() {
+            RestClient.getApiServicePojo(xCookies, aCookies).apiCallLogin(in, new Callback<LoginResponse>() {
                 @Override
                 public void success(LoginResponse loginResponse, Response response) {
                     Log.d(TAG, "Response : " + new Gson().toJson(loginResponse));
@@ -174,14 +185,11 @@ public class LoginActivity extends AppCompatActivity {
                     boolean isXcookies = true;
                     for (Header header : response.getHeaders()) {
                         if (header.getName().equalsIgnoreCase("set-cookie")) {
-                            if (isXcookies)
-                            {
+                            if (isXcookies) {
                                 Prefs.with(getApplicationContext()).save(PrefsKeys.X_COOKIES, header.getValue().replaceAll("; path=/", ""));
                                 Log.e("Cookies", "==" + header.getValue().replaceAll("; path=/", ""));
                                 isXcookies = false;
-                            }
-                            else
-                            {
+                            } else {
                                 Prefs.with(getApplicationContext()).save(PrefsKeys.A_COOKIES, header.getValue().replaceAll("; path=/; HttpOnly", ""));
                                 Log.e("Cookies", "==" + header.getValue().replaceAll("; path=/; HttpOnly", ""));
                                 break;
@@ -189,24 +197,19 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (loginResponse!=null)
-                    {
-                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("Teacher"))
-                        {
+                    if (loginResponse != null) {
+                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("Teacher")) {
                             Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.VERIFIED);
-                            Prefs.with(LoginActivity.this).save(PrefsKeys.LOGIN_RESPONSE_DATA,loginResponse);
-                            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.LOGIN_RESPONSE_DATA, loginResponse);
+                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                             startActivity(intent);
                             finish();
-                        }
-                        else if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("School"))
-                        {
+                        } else if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("School")) {
                             new CommonDialog(LoginActivity.this).Show("Something went wrong");
-                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
-                        }
-                        else {
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
+                        } else {
                             new CommonDialog(LoginActivity.this).Show(loginResponse.getResponseMetadata().getMessage());
-                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER,Constants.UNVERIFIED);
+                            Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
                         }
                     }
                 }

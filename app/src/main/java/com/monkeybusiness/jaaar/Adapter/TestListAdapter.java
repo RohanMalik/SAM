@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
@@ -14,6 +15,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.TestData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -68,10 +70,14 @@ public class TestListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 //            viewHolder.subjectName = (TextView) view.findViewById(R.id.subjectName);
 //            viewHolder.textViewDate = (TextView) view.findViewById(R.id.textViewDate);
-            viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewTime);
+            viewHolder.textViewTime = (TextView) view.findViewById(R.id.textViewDate);
             viewHolder.topicName = (TextView) view.findViewById(R.id.topicName);
             viewHolder.buttonFillMarksStudent = (Button) view.findViewById(R.id.buttonFillMarksStudent);
-            viewHolder.linearLayoutRoot = (LinearLayout) view.findViewById(R.id.root);
+            viewHolder.linearLayoutRoot = (RelativeLayout) view.findViewById(R.id.root);
+
+            viewHolder.textViewTime.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.topicName.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.buttonFillMarksStudent.setTypeface(FontClass.proximaRegular(context));
 
             ASSL.DoMagic(viewHolder.linearLayoutRoot);
             view.setTag(viewHolder);
@@ -102,7 +108,7 @@ public class TestListAdapter extends BaseAdapter {
         TextView topicName;
         Button buttonFillMarksStudent;
 
-        LinearLayout linearLayoutRoot;
+        RelativeLayout linearLayoutRoot;
     }
 
 }

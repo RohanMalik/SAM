@@ -1,6 +1,5 @@
 package com.monkeybusiness.jaaar.Fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -21,16 +18,14 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
+import com.monkeybusiness.jaaar.utils.FontClass;
 
-import java.util.List;
-
-import butterknife.ButterKnife;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
  * Created by rakesh on 1/1/16.
  */
-public class StudentAttendanceCardFargment extends Fragment implements View.OnClickListener{
+public class StudentAttendanceCardFargment extends Fragment implements View.OnClickListener {
 
     View rootView;
 
@@ -43,6 +38,7 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
     TextView textViewTitle;
     TextView textViewClass;
     TextView textViewRollNo;
+    Button buttonAbsent;
 
     StudentAttdData studentAttdData;
 
@@ -50,13 +46,13 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
     StudentsInfo studentsInfos;
     String classAlias;
 
-    Button buttonAbsent;
-
     AttendanceFragment attendanceFragment;
 
     ObservableScrollView scrollView;
+    TextDrawable drawableAbsent;
+    TextDrawable drawablePresent;
 
-    public static StudentAttendanceCardFargment newInstance(int page,String title) {
+    public static StudentAttendanceCardFargment newInstance(int page, String title) {
 
         StudentAttendanceCardFargment studentAttendanceCardFargment = new StudentAttendanceCardFargment();
 
@@ -66,19 +62,16 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         studentAttendanceCardFargment.classAlias = MasterClass.getInstance().getClassAlias();
 
         Bundle args = new Bundle();
-        args.putString("title",title);
+        args.putString("title", title);
         studentAttendanceCardFargment.setArguments(args);
         return studentAttendanceCardFargment;
     }
-
-    TextDrawable drawableAbsent;
-    TextDrawable drawablePresent;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_student_card,container,false);
+        rootView = inflater.inflate(R.layout.fragment_student_card, container, false);
 
 
         new ASSL(getActivity(), (ViewGroup) rootView.findViewById(R.id.scrollView), 1134, 720,
@@ -121,24 +114,30 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 //        setStudentRecord(attdP4,3);
 //        setStudentRecord(attdP5,4);
 
-        if (singleIdDetails.getStatus()!=null){
-            if (singleIdDetails.getStatus().equals("A"))
-            {
+        if (singleIdDetails.getStatus() != null) {
+            if (singleIdDetails.getStatus().equals("A")) {
                 buttonAbsent.setText("MARK PRESENT");
                 buttonAbsent.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
-            }
-            else
-            {
+            } else {
                 buttonAbsent.setText("MARK ABSENT");
                 buttonAbsent.setBackgroundColor(getResources().getColor(R.color.primary));
             }
         }
 
         textViewTitle.setText(studentsInfos.getStudentName());
-        textViewRollNo.setText("Roll No "+studentsInfos.getRollno());
-        textViewClass.setText("Class "+classAlias);
+        textViewRollNo.setText("Roll No " + studentsInfos.getRollno());
+        textViewClass.setText("Class " + classAlias);
+
+        setFont();
 
         return rootView;
+    }
+
+    private void setFont() {
+        textViewTitle.setTypeface(FontClass.proximaBold(getContext()));
+        textViewClass.setTypeface(FontClass.proximaRegular(getContext()));
+        textViewRollNo.setTypeface(FontClass.proximaRegular(getContext()));
+        buttonAbsent.setTypeface(FontClass.proximaBold(getContext()));
     }
 
 //    public void setStudentRecord(ImageView imageView, int pos)
@@ -155,8 +154,7 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.buttonAbsent:
                 toggleAttd(buttonAbsent);
 //                attendanceFragment.viewPagerAttd.setCurrentItem(attendanceFragment.viewPagerAttd.getCurrentItem()+1);
@@ -172,19 +170,15 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
     }
 
-    public void toggleAttd(Button button)
-    {
-        if (button.getText().toString().equalsIgnoreCase("mark absent"))
-        {
-            Log.d("abc","presentKaro");
+    public void toggleAttd(Button button) {
+        if (button.getText().toString().equalsIgnoreCase("mark absent")) {
+            Log.d("abc", "presentKaro");
 //            studentAttdData.setsCurrentAttd("0");
             singleIdDetails.setStatus("A");
             button.setText("MARK PRESENT");
             button.setBackgroundColor(getResources().getColor(R.color.normal_absent_button));
-        }
-        else
-        {
-            Log.d("abc","absent karo");
+        } else {
+            Log.d("abc", "absent karo");
             singleIdDetails.setStatus("P");
 //            studentAttdData.setsCurrentAttd("1");
             button.setText("MARK ABSENT");

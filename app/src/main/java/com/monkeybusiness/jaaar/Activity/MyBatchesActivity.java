@@ -15,6 +15,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -48,10 +49,16 @@ public class MyBatchesActivity extends BaseActivity {
 
 
         initialization();
+        setFont();
 
         new CommonApiCalls(this).checkLoginServerCall();
 
         getBatchesServerCall();
+
+    }
+
+    private void setFont() {
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
 
     }
 

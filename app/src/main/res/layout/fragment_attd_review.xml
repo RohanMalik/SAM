@@ -41,6 +41,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/textViewTitleAbsent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Absent Students"
@@ -51,6 +52,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/textViewTitlePresent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Present Students"
@@ -103,6 +105,7 @@
                         android:background="@drawable/shadow_down"/>
 
                     <TextView
+                        android:id="@+id/textViewListTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="List Of Absent Students"
@@ -123,6 +126,7 @@
                         >
 
                         <TextView
+                            android:id="@+id/textViewTitleRoll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Roll No."
@@ -133,6 +137,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/textViewTitleName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Name"

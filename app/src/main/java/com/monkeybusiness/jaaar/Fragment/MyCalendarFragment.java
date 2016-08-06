@@ -53,6 +53,7 @@ public class MyCalendarFragment extends BaseActivity implements View.OnClickList
 
     View rootView;
     AgendaCalendarView agendaCalendarView;
+
     TextView textViewCurrentDate;
 
     FloatingActionButton fabAdd;

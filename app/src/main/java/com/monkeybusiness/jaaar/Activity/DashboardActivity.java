@@ -24,6 +24,7 @@ import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginRespo
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
@@ -53,12 +54,17 @@ public class DashboardActivity extends BaseActivity {
     RelativeLayout relativeLayoutMenu;
 
 //    TextView textViewActionTitle;
-    TextView textViewName;
+
 //    TextView textViewClass;
 //    TextView textViewContact;
 //    TextView textViewEmailStudent;
 
     ImageView imageViewProfilePic;
+    TextView textViewName;
+    TextView textViewGreetings;
+    TextView textViewAttdText;
+    TextView textViewAttdTitle;
+    TextView textViewEventsText;
 
 //    Button buttonTakeAttd;
 
@@ -85,6 +91,7 @@ public class DashboardActivity extends BaseActivity {
         toggleLayouts(linearlayoutDashboard, textViewDashboard);
 
         initialization();
+        setFont();
         dashBoardServerCall();
 
         new Handler().postDelayed(new Runnable() {
@@ -107,6 +114,10 @@ public class DashboardActivity extends BaseActivity {
 //        textViewClass = (TextView) findViewById(R.id.textViewClass);
 //        textViewContact = (TextView) findViewById(R.id.textViewContact);
 //        textViewEmailStudent = (TextView) findViewById(R.id.textViewEmailStudent);
+        textViewGreetings= (TextView) findViewById(R.id.textViewGreetings);
+        textViewAttdText= (TextView) findViewById(R.id.textViewAttdText);
+        textViewAttdTitle= (TextView) findViewById(R.id.textViewAttdTitle);
+        textViewEventsText= (TextView) findViewById(R.id.textViewEventsText);
 
         relativeLayoutAdd = (RelativeLayout) findViewById(R.id.relativeLayoutAdd);
 
@@ -135,6 +146,14 @@ public class DashboardActivity extends BaseActivity {
 //        textViewActionTitle.setOnClickListener(this);
 //        buttonTakeAttd.setOnClickListener(this);
         relativeLayoutAdd.setOnClickListener(this);
+    }
+
+    public void setFont(){
+        textViewName.setTypeface(FontClass.proximaRegular(this));
+        textViewGreetings.setTypeface(FontClass.proximaBold(this));
+        textViewAttdText.setTypeface(FontClass.proximaRegular(this));
+        textViewAttdTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewEventsText.setTypeface(FontClass.proximaRegular(this));
     }
 
     private void setUIData() {

@@ -27,6 +27,7 @@ import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.Lecture;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
@@ -56,13 +57,17 @@ import rmn.androidscreenlibrary.ASSL;
 
 public class AddEventActivity extends BaseActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    EditText input_event_name;
-    EditText input_event_desc;
-
     ImageView imageViewCross;
 
+    EditText input_event_name;
+    EditText input_event_desc;
     TextView textViewFrom;
     TextView textViewTo;
+    TextView textViewTitleFrom;
+    TextView textViewTitleTo;
+    RadioButton radioButtonPersonal;
+    RadioButton radioButtonClass;
+    RadioButton radioButtonLecture;
 
 //    Button buttonAddEvent;
 
@@ -78,10 +83,6 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     ProgressBar progressBarAddEvent;
 
     LinearLayout linearLayoutMainAddEvent;
-
-    RadioButton radioButtonPersonal;
-    RadioButton radioButtonClass;
-    RadioButton radioButtonLecture;
 
     boolean fromTo;
     Date startDate;
@@ -102,7 +103,6 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 false);
         initialization();
 
-
         getBatchesServerCall();
 
         new Handler().postDelayed(new Runnable() {
@@ -111,6 +111,20 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 lectureServerCall();
             }
         }, 200);
+
+        setFont();
+    }
+
+    private void setFont() {
+        input_event_name.setTypeface(FontClass.proximaBold(this));
+        input_event_desc.setTypeface(FontClass.proximaRegular(this));
+        textViewFrom.setTypeface(FontClass.proximaRegular(this));
+        textViewTo.setTypeface(FontClass.proximaRegular(this));
+        textViewTitleFrom.setTypeface(FontClass.proximaRegular(this));
+        textViewTitleTo.setTypeface(FontClass.proximaRegular(this));
+        radioButtonPersonal.setTypeface(FontClass.proximaRegular(this));
+        radioButtonClass.setTypeface(FontClass.proximaRegular(this));
+        radioButtonLecture.setTypeface(FontClass.proximaRegular(this));
     }
 
     public void initialization() {
@@ -119,6 +133,8 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
         input_event_name = (EditText) findViewById(R.id.input_event_name);
         input_event_desc = (EditText) findViewById(R.id.input_event_desc);
+        textViewTitleFrom = (TextView) findViewById(R.id.textViewTitleFrom);
+        textViewTitleTo = (TextView) findViewById(R.id.textViewTitleTo);
 
         imageViewCross = (ImageView) findViewById(R.id.imageViewCross);
 

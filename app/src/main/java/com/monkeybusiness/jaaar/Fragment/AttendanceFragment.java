@@ -30,6 +30,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDeta
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -53,7 +54,7 @@ import retrofit.client.Response;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
- * Created by rohanmalik on 29/12/15.
+ * Created by rakesh on 29/12/15.
  */
 public class AttendanceFragment extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -136,7 +137,13 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
 //
 //            }
 //        });
+        
+        setFont();
 
+    }
+
+    private void setFont() {
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
     }
 
     public void setUIData(List<SingleIdDetail> singleIdDetails, List<StudentsInfo> studentsInfos, String classAlias) {
@@ -520,4 +527,24 @@ public class AttendanceFragment extends BaseActivity implements DatePickerDialog
 
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = Utils.failureDialogCanOverride(this,"Are You sure...","the date filled on this screen will be lost");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
 }

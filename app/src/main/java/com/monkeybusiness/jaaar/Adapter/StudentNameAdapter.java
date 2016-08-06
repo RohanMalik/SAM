@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
+import com.monkeybusiness.jaaar.utils.FontClass;
 
 import java.util.List;
 
@@ -20,14 +21,13 @@ import rmn.androidscreenlibrary.ASSL;
 /**
  * Created by rakesh on 15/6/16.
  */
-public class StudentNameAdapter extends BaseAdapter{
+public class StudentNameAdapter extends BaseAdapter {
 
+    public List<Student> studentNames;
     Context context;
     LayoutInflater inflater;
-    public List<Student> studentNames;
 
-    public StudentNameAdapter(Context context, List<Student> studentNames)
-    {
+    public StudentNameAdapter(Context context, List<Student> studentNames) {
         this.context = context;
         this.studentNames = studentNames;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,21 +54,19 @@ public class StudentNameAdapter extends BaseAdapter{
         View view = convertView;
 
         ViewHolder holder;
-        if (view == null)
-        {
-            view = inflater.inflate(R.layout.list_item_grid_view,parent,false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.list_item_grid_view, parent, false);
             holder = new ViewHolder();
 
             holder.textViewNameItem = (TextView) view.findViewById(R.id.textViewNameItem);
             holder.imageViewCross = (ImageView) view.findViewById(R.id.imageViewCross);
             holder.linearLayoutRoot = (LinearLayout) view.findViewById(R.id.root);
 
+            holder.textViewNameItem.setTypeface(FontClass.proximaRegular(context));
             ASSL.DoMagic(holder.linearLayoutRoot);
 
             view.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) view.getTag();
         }
 
@@ -78,7 +76,7 @@ public class StudentNameAdapter extends BaseAdapter{
         holder.imageViewCross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Adapter","cross clicked : "+studentNames.get(position));
+                Log.d("Adapter", "cross clicked : " + studentNames.get(position));
                 studentNames.remove(position);
                 notifyDataSetChanged();
             }
@@ -87,8 +85,7 @@ public class StudentNameAdapter extends BaseAdapter{
         return view;
     }
 
-    public class ViewHolder
-    {
+    public class ViewHolder {
         ImageView imageViewCross;
         TextView textViewNameItem;
 

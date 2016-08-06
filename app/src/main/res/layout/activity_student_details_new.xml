@@ -103,7 +103,7 @@
                     android:layout_marginTop="16px"
                     android:text="Personal Details"
                     android:textColor="@color/edit_text_grey"
-                    android:textSize="32px" />
+                    android:textSize="26px" />
 
                 <View
                     android:layout_width="match_parent"
@@ -417,7 +417,7 @@
                     android:layout_marginTop="24px"
                     android:text="Academic Details"
                     android:textColor="@color/edit_text_grey"
-                    android:textSize="32px" />
+                    android:textSize="26px" />
 
                 <View
                     android:layout_width="match_parent"
@@ -589,7 +589,7 @@
                         android:layout_marginTop="24px"
                         android:text="Remarks"
                         android:textColor="@color/edit_text_grey"
-                        android:textSize="32px" />
+                        android:textSize="26px" />
 
                     <View
                         android:layout_width="match_parent"

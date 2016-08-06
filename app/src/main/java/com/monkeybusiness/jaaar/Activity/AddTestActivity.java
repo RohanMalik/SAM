@@ -24,6 +24,7 @@ import com.monkeybusiness.jaaar.objectClasses.lectureResponse.Lecture;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
@@ -34,6 +35,8 @@ import com.rey.material.widget.Spinner;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -54,10 +57,18 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
     private static final String TAG = "AddTestActivity";
     Spinner input_event_name;
+
     EditText input_event_desc;
     EditText input_event_full_name;
-
+    EditText editTextMax;
+    EditText editTextMin;
+    EditText editTextDuration;
     TextView textViewDate;
+    TextView textViewLectureTitle;
+    TextView textViewDateTitle;
+    TextView textViewMM1Title;
+    TextView textViewMM2Title;
+    TextView textViewTestDurationTitle;
 
     ImageView imageViewCross;
     ImageView imageViewSave;
@@ -66,10 +77,6 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
 
 //    RelativeLayout relativeLayoutMenu;
 //    TextView textViewActionTitle;
-
-    EditText editTextMax;
-    EditText editTextMin;
-    EditText editTextDuration;
 
     RelativeLayout relativeLayoutDate;
 
@@ -104,6 +111,22 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
             lectureServerCall();
         }
 
+        setFont();
+
+    }
+
+    private void setFont() {
+        input_event_desc.setTypeface(FontClass.proximaBold(this));
+        input_event_full_name.setTypeface(FontClass.proximaBold(this));
+        editTextMax.setTypeface(FontClass.proximaRegular(this));
+        editTextMin.setTypeface(FontClass.proximaRegular(this));
+        editTextDuration.setTypeface(FontClass.proximaRegular(this));
+        textViewDate.setTypeface(FontClass.proximaRegular(this));
+        textViewLectureTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewDateTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewMM1Title.setTypeface(FontClass.proximaRegular(this));
+        textViewMM2Title.setTypeface(FontClass.proximaRegular(this));
+        textViewTestDurationTitle.setTypeface(FontClass.proximaRegular(this));
     }
 
     public void initialization() {
@@ -128,6 +151,12 @@ public class AddTestActivity extends BaseActivity implements View.OnClickListene
         editTextMin = (EditText) findViewById(R.id.editTextMin);
 
         editTextDuration = (EditText) findViewById(R.id.editTextDuration);
+
+        textViewLectureTitle = (TextView) findViewById(R.id.textViewLectureTitle);
+        textViewDateTitle = (TextView) findViewById(R.id.textViewDateTitle);
+        textViewMM1Title = (TextView) findViewById(R.id.textViewMM1Title);
+        textViewMM2Title = (TextView) findViewById(R.id.textViewMM2Title);
+        textViewTestDurationTitle = (TextView) findViewById(R.id.textViewTestDurationTitle);
 
 
 //        textViewActionTitle.setText("ADD TEST");

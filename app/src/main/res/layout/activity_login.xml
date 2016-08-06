@@ -19,6 +19,7 @@
     android:background="@color/primary_dark">
 
     <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hi! I'm SAM \n Please login to enter"
@@ -140,12 +141,13 @@
 
 
     <TextView
+        android:id="@+id/textViewBrownCode"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Copyright ByteDreams Technologies."
+        android:text="2016 © BrownCode Software LLP | all rights reserved."
         android:gravity="bottom"
         android:textColor="#fff"
-        android:textSize="32px"
+        android:textSize="29px"
         android:layout_marginBottom="8px"
         android:lineSpacingExtra="8px"/>
 

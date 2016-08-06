@@ -27,6 +27,7 @@ import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.SearchStudentDat
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
@@ -58,11 +59,13 @@ public class RemarksFragment extends BaseActivity {
     public List<Student> studentListObject;
     public List<HashMap<String, String>> studentsHashMap;
     RelativeLayout relativeLayoutMenu;
+
     TextView textViewActionTitle;
     AutoCompleteTextView recipientEditTextView;
     Button buttonSendRemarks;
     EditText editTextRemarks;
     //    ArrayAdapter adapter;
+
     StudentSearchListAdapter adapter;
     GridView gridviewStudentName;
     ArrayList<String> studentList;
@@ -176,7 +179,10 @@ public class RemarksFragment extends BaseActivity {
             }
         });
 
-
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
+        recipientEditTextView.setTypeface(FontClass.proximaRegular(this));
+        buttonSendRemarks.setTypeface(FontClass.proximaRegular(this));
+        editTextRemarks.setTypeface(FontClass.proximaRegular(this));
     }
 
     @Override

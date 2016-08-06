@@ -1,10 +1,12 @@
 package com.monkeybusiness.jaaar.Fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMark;
 import com.monkeybusiness.jaaar.objectClasses.testMarksResponseData.TestMarksResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
@@ -40,7 +43,7 @@ import retrofit.client.Response;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
- * Created by rohanmalik on 29/12/15.
+ * Created by rakesh on 29/12/15.
  */
 public class FillMarksActivity extends BaseActivity {
 
@@ -311,5 +314,26 @@ public class FillMarksActivity extends BaseActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = Utils.failureDialogCanOverride(this,"Are You sure...","the date filled on this screen will be lost");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
     }
 }

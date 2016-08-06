@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 
@@ -69,6 +70,10 @@ public class EventsListAdapter extends BaseAdapter {
             viewHolder.textViewEventTitle = (TextView) view.findViewById(R.id.textViewEventTitle);
             viewHolder.textViewEventDesc = (TextView) view.findViewById(R.id.textViewEventDesc);
             viewHolder.textViewEventTime = (TextView) view.findViewById(R.id.textViewEventTime);
+
+            viewHolder.textViewEventTitle.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.textViewEventDesc.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.textViewEventTime.setTypeface(FontClass.proximaRegular(context));
 
             ASSL.DoMagic(viewHolder.linearLayoutMain);
             view.setTag(viewHolder);

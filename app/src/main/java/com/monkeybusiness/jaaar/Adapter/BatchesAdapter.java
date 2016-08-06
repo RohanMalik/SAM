@@ -17,6 +17,7 @@ import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
@@ -71,6 +72,11 @@ public class BatchesAdapter extends BaseAdapter {
             viewHolder.textViewSubjectName = (TextView) view.findViewById(R.id.textViewSubjectName);
 
             viewHolder.linearLayoutMainItemLecture = (LinearLayout) view.findViewById(R.id.linearLayoutMainItemLecture);
+
+            viewHolder.textViewLectDesc.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.textViewLectureName.setTypeface(FontClass.proximaBold(context));
+            viewHolder.textViewLectureNo.setTypeface(FontClass.proximaBold(context));
+            viewHolder.textViewSubjectName.setTypeface(FontClass.proximaRegular(context));
 
             ASSL.DoMagic(viewHolder.linearLayoutMainItemLecture);
 

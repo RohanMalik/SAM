@@ -26,6 +26,7 @@ import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDeta
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -72,11 +73,17 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
                 false);
 
         initialization();
+        setFont();
 
         batchId = getIntent().getIntExtra(Constants.BATCH_ID, 0);
 
 
 //        getMonthAttdServerCall(batchId);
+    }
+
+    private void setFont() {
+        textViewActionTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewDate.setTypeface(FontClass.proximaRegular(this));
     }
 
     private void initialization() {

@@ -8,19 +8,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="100px"
         android:background="#3B5998">
 
         <RelativeLayout
             android:id="@+id/btn_cancel"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="100px"
+            android:layout_height="100px"
 
             >
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="31px"
+                android:layout_height="31px"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:src="@drawable/c_close" />
@@ -37,13 +37,13 @@
 
         <RelativeLayout
             android:id="@+id/btn_done"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_alignParentRight="true">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="18dp"
+                android:layout_width="38px"
+                android:layout_height="29px"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_savefilters" />

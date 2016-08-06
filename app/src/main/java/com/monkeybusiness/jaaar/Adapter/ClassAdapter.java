@@ -14,6 +14,7 @@ import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 
 import rmn.androidscreenlibrary.ASSL;
 
@@ -63,6 +64,11 @@ public class ClassAdapter extends BaseAdapter {
             viewHolder.textViewSubjectName = (TextView) view.findViewById(R.id.textViewSubjectName);
 
             viewHolder.linearLayoutMainItemLecture = (LinearLayout) view.findViewById(R.id.linearLayoutMainItemLecture);
+
+            viewHolder.textViewLectDesc.setTypeface(FontClass.proximaRegular(context));
+            viewHolder.textViewLectureName.setTypeface(FontClass.proximaBold(context));
+            viewHolder.textViewLectureNo.setTypeface(FontClass.proximaBold(context));
+            viewHolder.textViewSubjectName.setTypeface(FontClass.proximaRegular(context));
 
             ASSL.DoMagic(viewHolder.linearLayoutMainItemLecture);
 
