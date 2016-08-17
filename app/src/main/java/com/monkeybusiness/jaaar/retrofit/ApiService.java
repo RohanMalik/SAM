@@ -1,12 +1,15 @@
 package com.monkeybusiness.jaaar.retrofit;
 
 
+import com.monkeybusiness.jaaar.objectClasses.ExamGroupData.ExamGroupData;
 import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
 import com.monkeybusiness.jaaar.objectClasses.attdSavedResponse.AttdSavedResponseData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
+import com.monkeybusiness.jaaar.objectClasses.examData.ExamData;
+import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
 import com.monkeybusiness.jaaar.objectClasses.imageUploadResponse.ImageUploadResponse;
 import com.monkeybusiness.jaaar.objectClasses.simpleResponseDaa.SimpleResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
@@ -129,4 +132,19 @@ public interface ApiService {
 
     @PUT("/students/{id}")
     void apiCallPutStudentNumber(@Path("id") String id,@Body TypedInput NumberObject,Callback<String> callback);
+
+    @GET("/exam_groups")
+    void apiCallGetExamGroupByBatch(Callback<ExamGroupData> callback);
+
+    @GET("/exam_groups/{group_id}/exams")
+    void apiCallGetExamsByBatch(@Path("group_id") String grpId,@Query("grade_id") String gradeId,Callback<ExamData> callback);
+
+    @GET("/students")
+    void apiCallGetExamStudents(@Query("batch_id") String batchId, Callback<StudentDetailsForMarksResponse> callback);
+
+    @GET("/exams/{exam_id}/exam_marks")
+    void apiCallGetExamMarks(@Path("exam_id") String examId,@Query("batch_id") String batchId,Callback<ExamStudentMarks> callback);
+
+    @POST("/exams/{exam_id}/exam_marks")
+    void apiCallSendStudentExamMarks(@Path("exam_id") String examId,@Body TypedInput marksPostObject,Callback<SimpleResponseData> callback);
 }

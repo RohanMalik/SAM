@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +46,7 @@ import com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Parent;
 import com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.StudentUpdateObject;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.NonScrollListView;
@@ -86,13 +86,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     final String TAG = "StudentDetailsActivity";
     LinearLayout linearLayoutMainStudent;
     RelativeLayout relativeLayoutMenu;
-    //    TextView textViewActionTitle;
+
     TextView textViewName;
     TextView textViewClass;
-    //    TextView textViewContact;
     TextView textViewEmailStudent;
     TextView textViewContactStudent;
-
     TextView textViewFname;
     TextView textViewMname;
     TextView textViewDOB;
@@ -100,6 +98,22 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     TextView textViewCity;
     TextView textViewState;
     TextView textViewDOJ;
+    TextView textViewRollNoStudent;
+    com.rey.material.widget.Button buttonRemarksStudent;
+    TextView textViewPersonalTitle;
+    TextView textViewFNameTitle;
+    TextView textViewMNameTitle;
+    TextView textViewNumberTitle;
+    TextView textViewEmailTitle;
+    TextView textViewDOBTitle;
+    TextView textViewAddressTitle;
+    TextView textViewCityTitle;
+    TextView textViewStateTitle;
+    TextView textViewAcademicTitle;
+    TextView textViewRollNoTitle;
+    TextView textViewClassTitle;
+    TextView textViewDOJTitle;
+    TextView textViewRemarksTitle;
 
     ImageView imageViewEditNumber;
     RelativeLayout relativeLayoutEditPic;
@@ -111,7 +125,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 //    ProgressBar progressBarStudent;
     ImageView imageViewProfilePicStudent;
     Dialog dialog;
-    TextView textViewRollNoStudent;
+
     //    NonScrollListView listViewRemarks;
     int studentId;
     StudentsDetailsResponseData studentsDetailsResponseData;
@@ -120,6 +134,10 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     Button buttonSend;
     LinearLayout linearLayoutRemarks;
     LinearLayout linearLayoutAttendances;
+    TextDrawable drawableAbsent;
+    TextDrawable drawablePresent;
+
+    Dialog mobileNumberDialog;
     private TextView textViewCamera;
     private TextView textViewGallery;
     private TextView textViewTitle;
@@ -127,11 +145,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     private ImageChooserManager imageChooserManagerCamera;
     private Uri inputUri;
     private Uri outputUri;
-
-    TextDrawable drawableAbsent;
-    TextDrawable drawablePresent;
-
-    com.rey.material.widget.Button buttonRemarksStudent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,10 +159,42 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 //        toggleLayouts(linearlayoutDashboard, textViewDashboard);
 
         initialization();
+        setFont();
 
         Intent intent = getIntent();
         studentId = intent.getIntExtra(Constants.STUDENT_ID, 0);
 
+    }
+
+    private void setFont() {
+
+        textViewName.setTypeface(FontClass.proximaRegular(this));
+        textViewClass.setTypeface(FontClass.proximaRegular(this));
+        textViewEmailStudent.setTypeface(FontClass.proximaRegular(this));
+        textViewContactStudent.setTypeface(FontClass.proximaRegular(this));
+        textViewFname.setTypeface(FontClass.proximaRegular(this));
+        textViewMname.setTypeface(FontClass.proximaRegular(this));
+        textViewDOB.setTypeface(FontClass.proximaRegular(this));
+        textViewAddress.setTypeface(FontClass.proximaRegular(this));
+        textViewCity.setTypeface(FontClass.proximaRegular(this));
+        textViewState.setTypeface(FontClass.proximaRegular(this));
+        textViewDOJ.setTypeface(FontClass.proximaRegular(this));
+        textViewRollNoStudent.setTypeface(FontClass.proximaRegular(this));
+        buttonRemarksStudent.setTypeface(FontClass.proximaRegular(this));
+        textViewPersonalTitle.setTypeface(FontClass.proximaBold(this));
+        textViewFNameTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewMNameTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewNumberTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewEmailTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewDOBTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewAddressTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewCityTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewStateTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewAcademicTitle.setTypeface(FontClass.proximaBold(this));
+        textViewRollNoTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewClassTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewDOJTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewRemarksTitle.setTypeface(FontClass.proximaBold(this));
     }
 
     public void initialization() {
@@ -175,6 +220,21 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         textViewCity = (TextView) findViewById(R.id.textViewCity);
         textViewState = (TextView) findViewById(R.id.textViewState);
         textViewDOJ = (TextView) findViewById(R.id.textViewDOJ);
+
+        textViewPersonalTitle = (TextView) findViewById(R.id.textViewPersonalTitle);
+        textViewFNameTitle = (TextView) findViewById(R.id.textViewFNameTitle);
+        textViewMNameTitle = (TextView) findViewById(R.id.textViewMNameTitle);
+        textViewNumberTitle = (TextView) findViewById(R.id.textViewNumberTitle);
+        textViewEmailTitle = (TextView) findViewById(R.id.textViewEmailTitle);
+        textViewDOBTitle = (TextView) findViewById(R.id.textViewDOBTitle);
+        textViewAddressTitle = (TextView) findViewById(R.id.textViewAddressTitle);
+        textViewCityTitle = (TextView) findViewById(R.id.textViewCityTitle);
+        textViewStateTitle = (TextView) findViewById(R.id.textViewStateTitle);
+        textViewAcademicTitle = (TextView) findViewById(R.id.textViewAcademicTitle);
+        textViewRollNoTitle = (TextView) findViewById(R.id.textViewRollNoTitle);
+        textViewClassTitle = (TextView) findViewById(R.id.textViewClassTitle);
+        textViewDOJTitle = (TextView) findViewById(R.id.textViewDOJTitle);
+        textViewRemarksTitle = (TextView) findViewById(R.id.textViewRemarksTitle);
 
         imageViewEditNumber = (ImageView) findViewById(R.id.imageViewEditNumber);
 
@@ -224,6 +284,9 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 .buildRound("P", getResources().getColor(R.color.normal_present_button));
     }
 
+
+//    ExecutorService executorService = Executors.newFixedThreadPool(5);
+
     private void setUIData(StudentsDetailsResponseData studentsDetailsResponseData) {
 
 //        progressBarStudent.setVisibility(View.GONE);
@@ -257,9 +320,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         }
 
     }
-
-
-//    ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     @Override
     public void onClick(View v) {
@@ -346,8 +406,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         subjectDialog.show();
     }
 
-    Dialog mobileNumberDialog;
-
     public void showNumberDialog(int id) {
 
         mobileNumberDialog = new Dialog(this);
@@ -366,7 +424,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                     Toast.makeText(StudentDetailsActivity.this, "Please Enter Number", Toast.LENGTH_SHORT).show();
                 } else {
                     mobileNumberDialog.dismiss();
-                    upDateStudentNumberServerCall(id,editTextRemarks.getText().toString());
+                    upDateStudentNumberServerCall(id, editTextRemarks.getText().toString());
                 }
             }
         });
@@ -597,7 +655,7 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
 
         if (studentsRemarksResponse.getData().getRemarks() != null && !studentsRemarksResponse.getData().getRemarks().isEmpty()) {
             linearLayoutRemarks.setVisibility(View.VISIBLE);
-            Log.d(TAG,"remarks Size : "+studentsRemarksResponse.getData().getRemarks().size());
+            Log.d(TAG, "remarks Size : " + studentsRemarksResponse.getData().getRemarks().size());
             EventsListStudentsAdapter adapter = new EventsListStudentsAdapter(this, studentsRemarksResponse.getData().getRemarks());
             listViewEventsStudents.setAdapter(adapter);
         }
@@ -841,6 +899,52 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         }
     }
 
+    private void upDateStudentNumberServerCall(int id, String number) {
+
+        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
+        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
+
+        StudentUpdateObject studentUpdateObject = new StudentUpdateObject();
+
+        com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student student = new com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student();
+
+        student.setId(id);
+
+        Parent parent = new Parent();
+        parent.setContactPhone(number);
+
+        student.setParent(parent);
+        studentUpdateObject.setStudent(student);
+
+        String jsonString = new Gson().toJson(studentUpdateObject);
+
+        LoadingBox.showLoadingDialog(this, "Saving Data...");
+        try {
+            TypedInput typedInput = new TypedByteArray("application/json", jsonString.getBytes("UTF-8"));
+            RestClient.getApiService(xCookies, aCookies).apiCallPutStudentNumber(String.valueOf(id), typedInput, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    if (LoadingBox.isDialogShowing()) {
+                        LoadingBox.dismissLoadingDialog();
+                    }
+                    textViewContactStudent.setText(number);
+                    Log.d(TAG, "Response : " + s);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (LoadingBox.isDialogShowing()) {
+                        LoadingBox.dismissLoadingDialog();
+                    }
+                    Log.d(TAG, "error : " + error.toString());
+                }
+            });
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public class imageDownload implements Runnable {
 
         String url;
@@ -885,52 +989,6 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                     imageViewProfilePicStudent.setImageBitmap(bitmap);
                 }
             });
-        }
-    }
-
-    private void upDateStudentNumberServerCall(int id,String number) {
-
-        String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
-        String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
-
-        StudentUpdateObject studentUpdateObject = new StudentUpdateObject();
-
-        com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student student = new com.monkeybusiness.jaaar.objectClasses.updateStudentNumber.Student();
-
-        student.setId(id);
-
-        Parent parent = new Parent();
-        parent.setContactPhone(number);
-
-        student.setParent(parent);
-        studentUpdateObject.setStudent(student);
-
-        String jsonString = new Gson().toJson(studentUpdateObject);
-
-        LoadingBox.showLoadingDialog(this,"Saving Data...");
-        try {
-            TypedInput typedInput = new TypedByteArray("application/json", jsonString.getBytes("UTF-8"));
-            RestClient.getApiService(xCookies,aCookies).apiCallPutStudentNumber(String.valueOf(id), typedInput, new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    if (LoadingBox.isDialogShowing()){
-                        LoadingBox.dismissLoadingDialog();
-                    }
-                    textViewContactStudent.setText(number);
-                    Log.d(TAG,"Response : "+s);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    if (LoadingBox.isDialogShowing()){
-                        LoadingBox.dismissLoadingDialog();
-                    }
-                    Log.d(TAG,"error : "+error.toString());
-                }
-            });
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
     }
 }

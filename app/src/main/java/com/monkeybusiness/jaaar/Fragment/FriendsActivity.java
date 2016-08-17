@@ -70,7 +70,7 @@ public class FriendsActivity extends BaseActivity {
 //        toggleLayouts(linearlayoutMyclass, textViewMyclass);
 //        Utils.classFlag = 2;
 
-        Utils.classFlag = 1;
+        Utils.classFlag = 6;
 
         toggleLayouts(linearlayoutMyclassDown, textViewMyclassDown);
 

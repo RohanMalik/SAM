@@ -3,6 +3,7 @@ package com.monkeybusiness.jaaar;
 import android.app.Application;
 import android.util.Log;
 
+import com.monkeybusiness.jaaar.Activity.FillMarksForExamsCategoryActivity;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
@@ -24,6 +25,7 @@ public class MasterClass extends Application {
 
     public AttendanceFragment attendanceFragment;
     public FillMarksActivity fillMarksActivity;
+    public FillMarksForExamsCategoryActivity fillMarksForExamsCategoryActivity;
 
     List<SingleIdDetail> singleIdDetails;
     List<StudentsInfo> studentsInfos;
@@ -108,4 +110,11 @@ public class MasterClass extends Application {
         this.studentsForMarks = studentsForMarks;
     }
 
+    public FillMarksForExamsCategoryActivity getFillMarksForExamsCategoryActivity() {
+        return fillMarksForExamsCategoryActivity;
+    }
+
+    public void setFillMarksForExamsCategoryActivity(FillMarksForExamsCategoryActivity fillMarksForExamsCategoryActivity) {
+        this.fillMarksForExamsCategoryActivity = fillMarksForExamsCategoryActivity;
+    }
 }

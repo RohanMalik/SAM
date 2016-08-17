@@ -161,6 +161,17 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         radioButtonPersonal.setOnClickListener(this);
         imageViewCross.setOnClickListener(this);
 
+        startDate = new Date();
+
+        SimpleDateFormat format = new SimpleDateFormat("MMMM  dd, yyyy    HH:mm");
+
+        textViewFrom.setText(format.format(startDate));
+
+        endDate = new Date();
+        endDate.setDate(endDate.getDate()+1);
+        textViewTo.setText(format.format(endDate));
+
+
 //        spinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
 //            @Override
 //            public boolean onItemClick(Spinner parent, View view, int position, long id) {

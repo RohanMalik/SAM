@@ -63,7 +63,7 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
 
-        Utils.classFlag = 5;
+        Utils.classFlag = 6;
         toggleLayouts(linearlayoutCalender, textViewCalendar);
 
         initialization();
@@ -178,12 +178,13 @@ public class MyCalenderActivity extends BaseActivity implements View.OnClickList
             Date startDate = new Date();
             startDate.setHours(0);
             startDate.setMinutes(0);
+            startDate.setDate(1);
             start.setTime(startDate);
 
             Calendar end = Calendar.getInstance();
 
             Date date = new Date();
-            date.setDate(date.getDate() + 30);
+            date.setDate(30);
 
             end.setTime(date);
 

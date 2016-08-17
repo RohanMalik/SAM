@@ -78,7 +78,7 @@ public class AttendanceDetailsActivity extends BaseActivity implements View.OnCl
         batchId = getIntent().getIntExtra(Constants.BATCH_ID, 0);
 
 
-//        getMonthAttdServerCall(batchId);
+//        getMonthAttdServerCall(examGrpId);
     }
 
     private void setFont() {

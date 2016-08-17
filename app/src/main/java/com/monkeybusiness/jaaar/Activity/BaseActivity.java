@@ -12,6 +12,7 @@ import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.utils.Constants;
+import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -31,6 +32,8 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public LinearLayout linearlayoutNotification;
     public LinearLayout linearlayoutRemarks;
     public LinearLayout linearlayoutMyclassDown;
+    public LinearLayout linearlayoutMyclassExams;
+
 
     public TextView textViewDashboard;
     public TextView textViewAttendance;
@@ -39,6 +42,10 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public TextView textViewCalendar;
     public TextView textViewRemarks;
     public TextView textViewMyclassDown;
+    public TextView textViewMyclassExams;
+    public TextView textViewNotification;
+    public TextView username;
+
 
     ImageView profile_image;
     ImageView littleProfilePic;
@@ -50,6 +57,21 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
         initializationMenu();
+        setFont();
+    }
+
+    private void setFont() {
+
+        textViewDashboard.setTypeface(FontClass.proximaBold(this));
+        textViewAttendance.setTypeface(FontClass.proximaBold(this));
+        textViewMyclass.setTypeface(FontClass.proximaBold(this));
+        textViewTest.setTypeface(FontClass.proximaBold(this));
+        textViewCalendar.setTypeface(FontClass.proximaBold(this));
+        textViewRemarks.setTypeface(FontClass.proximaBold(this));
+        textViewMyclassDown.setTypeface(FontClass.proximaBold(this));
+        textViewMyclassExams.setTypeface(FontClass.proximaBold(this));
+        textViewNotification.setTypeface(FontClass.proximaBold(this));
+        username.setTypeface(FontClass.proximaBold(this));
     }
 
     void initializationMenu() {
@@ -65,6 +87,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutNotification = (LinearLayout) findViewById(R.id.linearlayoutNotification);
         linearlayoutRemarks = (LinearLayout) findViewById(R.id.linearlayoutRemarks);
         linearlayoutMyclassDown = (LinearLayout) findViewById(R.id.linearlayoutMyclassDown);
+        linearlayoutMyclassExams = (LinearLayout) findViewById(R.id.linearlayoutMyclassExams);
 
         textViewDashboard = (TextView) findViewById(R.id.textViewDashboard);
         textViewAttendance = (TextView) findViewById(R.id.textViewAttendance);
@@ -73,6 +96,9 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         textViewCalendar = (TextView) findViewById(R.id.textViewCalendar);
         textViewRemarks = (TextView) findViewById(R.id.textViewRemarks);
         textViewMyclassDown = (TextView) findViewById(R.id.textViewMyclassDown);
+        textViewMyclassExams = (TextView) findViewById(R.id.textViewMyclassExams);
+        textViewNotification = (TextView) findViewById(R.id.textViewNotification);
+        username = (TextView) findViewById(R.id.username);
 
         linearlayoutDashboard.setOnClickListener(this);
         linearlayoutMyclass.setOnClickListener(this);
@@ -82,6 +108,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutAttendance.setOnClickListener(this);
         linearlayoutRemarks.setOnClickListener(this);
         linearlayoutMyclassDown.setOnClickListener(this);
+        linearlayoutMyclassExams.setOnClickListener(this);
 
         SlidingMenu sm = getSlidingMenu();
         sm.setFadeDegree(0.50f);
@@ -163,9 +190,22 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                     toggle();
                 }
                 break;
+            case R.id.linearlayoutMyclassExams:
+                if (Utils.classFlag != 5) {
+
+                    toggleLayouts(linearlayoutMyclassExams, textViewMyclassExams);
+                    Intent intent = new Intent(BaseActivity.this, MyClassExamActivity.class);
+                    startActivity(intent);
+                    finish();
+//                    overridePendingTransition(R.anim.slide_in_right,
+//                            R.anim.slide_out_left);
+                } else {
+                    toggle();
+                }
+                break;
             case R.id.linearlayoutCalender:
 
-                if (Utils.classFlag != 5) {
+                if (Utils.classFlag != 6) {
 
                     toggleLayouts(linearlayoutCalender, textViewCalendar);
                     Intent intent = new Intent(BaseActivity.this, MyCalenderActivity.class);
@@ -179,7 +219,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
 //
             case R.id.linearlayoutRemarks:
-                if (Utils.classFlag != 6) {
+                if (Utils.classFlag != 7) {
 
                     toggleLayouts(linearlayoutRemarks, textViewRemarks);
                     Intent intent = new Intent(BaseActivity.this, RemarksFragment.class);
@@ -230,6 +270,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         linearlayoutCalender.setBackgroundColor(getResources().getColor(R.color.white));
         linearlayoutNotification.setBackgroundColor(getResources().getColor(R.color.white));
         linearlayoutRemarks.setBackgroundColor(getResources().getColor(R.color.white));
+        linearlayoutMyclassExams.setBackgroundColor(getResources().getColor(R.color.white));
 
         linearLayout.setBackgroundColor(getResources().getColor(R.color.primary));
 
@@ -239,6 +280,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         textViewTest.setTextColor(getResources().getColor(R.color.black));
         textViewCalendar.setTextColor(getResources().getColor(R.color.black));
         textViewRemarks.setTextColor(getResources().getColor(R.color.black));
+        textViewMyclassExams.setTextColor(getResources().getColor(R.color.black));
 
         textView.setTextColor(getResources().getColor(R.color.white));
     }

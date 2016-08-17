@@ -96,6 +96,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textViewPersonalTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12px"
@@ -115,6 +116,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewFNameTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -151,6 +153,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewMNameTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -187,6 +190,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewNumberTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -233,6 +237,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewEmailTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -270,6 +275,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewDOBTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -306,6 +312,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewAddressTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -342,6 +349,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewCityTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -378,6 +386,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewStateTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -410,6 +419,7 @@
                     android:background="@color/edit_text_grey" />
 
                 <TextView
+                    android:id="@+id/textViewAcademicTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12px"
@@ -429,6 +439,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewRollNoTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -466,6 +477,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewClassTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -503,6 +515,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textViewDOJTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -582,6 +595,7 @@
                         android:background="@color/edit_text_grey" />
 
                     <TextView
+                        android:id="@+id/textViewRemarksTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12px"

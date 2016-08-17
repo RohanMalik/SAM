@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutMainItemLecture"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32px"
+        android:layout_margin="32px"
+        android:elevation="10px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLectureNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. "
+                android:textStyle="bold"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/textViewBatchDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date : "
+                android:textSize="32px"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@drawable/shadow_down"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="16px">
+
+            <TextView
+                android:id="@+id/textViewDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="32px"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@drawable/shadow_down"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min Marks"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Max Marks"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewPresent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+            <TextView
+                android:id="@+id/textViewAbsent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="5"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@drawable/shadow_down"/>
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total : 10"
+            android:gravity="center"
+            android:layout_marginTop="10px"
+            android:layout_marginBottom="10px"
+            android:textSize="36px"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4px"
+            android:background="@drawable/shadow_down"/>
+
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewSubmitStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status : Submitted"
+                android:layout_marginTop="10px"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+            <TextView
+                android:id="@+id/textViewType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status : Submitted"
+                android:layout_marginTop="10px"
+                android:layout_marginLeft="16px"
+                android:layout_weight="1"
+                android:textSize="36px"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

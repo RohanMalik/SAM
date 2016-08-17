@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="550px"
-            android:layout_height="320px"
+            android:layout_height="240px"
             android:background="@color/primary">
 
             <View
@@ -197,6 +197,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="My Class"
+                android:textSize="32px"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_marginLeft="40px"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayoutMyclassExams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20px"
+            android:gravity="left">
+
+            <ImageView
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:layout_marginLeft="32px"
+                android:src="@drawable/exams"
+                />
+
+            <TextView
+                android:id="@+id/textViewMyclassExams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class Exams"
                 android:textSize="32px"
                 android:textColor="#000"
                 android:textStyle="bold"

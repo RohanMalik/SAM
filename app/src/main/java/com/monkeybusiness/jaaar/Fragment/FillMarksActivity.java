@@ -179,7 +179,7 @@ public class FillMarksActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 Log.d(TAG, "pageSelected : " + position);
 
-                if (position == 10) {
+                if (position == pageCount) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
                     reviewAttdInterface.onResumeFragment();
                 } else {

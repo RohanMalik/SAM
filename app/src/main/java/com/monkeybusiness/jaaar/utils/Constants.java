@@ -10,6 +10,10 @@ public class Constants {
 
     public static final String LECTURE_ID = "lectureId";
     public static final String BATCH_ID = "batchId";
+    public static final String CLASS_ALIAS = "classAlias";
+    public static final String GRADE_ID = "gradeId";
+    public static final String EXAM_GROUP_ID = "examGroupId";
+    public static final String EXAM_GROUP_NAME = "examGroupName";
     public static final String STUDENT_ID = "studentId";
 
     public static final String UPCOMING = "new";

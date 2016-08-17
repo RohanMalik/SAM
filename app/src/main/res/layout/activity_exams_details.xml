@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background_color_lecture">
+
+    <include layout="@layout/toolbar"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listViewLectures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </ListView>
+
+        <com.rey.material.widget.FloatingActionButton
+            android:id="@+id/fabAddAttd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="32px"
+            app:fab_elevation="10px"
+            app:fab_iconSize="48px"
+            app:fab_iconSrc="@drawable/add_button"
+            app:fab_backgroundColor="@color/primary"
+            app:fab_animDuration="1000"
+            app:rd_rippleAnimDuration="500"
+            app:rd_rippleColor="@color/primary_lighter"
+            app:rd_enable="true"
+            android:visibility="gone"
+            />
+    </FrameLayout>
+
+</LinearLayout>

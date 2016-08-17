@@ -87,7 +87,7 @@ public class RemarksFragment extends BaseActivity {
         new ASSL(this, (ViewGroup) findViewById(R.id.root), 1134, 720,
                 false);
 
-        Utils.classFlag = 6;
+        Utils.classFlag = 7;
 
         new CommonApiCalls(this).checkLoginServerCall();
 

@@ -24,7 +24,8 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,39 +34,75 @@
         </activity>
         <activity
             android:name=".Activity.LandingPageActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
         <!-- <activity android:name=".Activity.DayViewActivity" /> -->
         <activity android:name=".Activity.AddEventActivity" />
         <activity
             android:name=".Activity.BaseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Fragment.AttendanceFragment" />
-        <activity android:name=".Activity.DashboardActivity" />
-        <activity android:name=".Fragment.FriendsActivity" />
-        <activity android:name=".Fragment.TestListFragment" />
-        <activity android:name=".Fragment.RemarksFragment" />
-        <activity android:name=".Fragment.MyCalendarFragment" />
-        <activity android:name=".Fragment.DayViewActivity" />
-        <activity android:name=".Activity.StudentDetailsActivity" />
+        <activity android:name=".Fragment.AttendanceFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.DashboardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.FriendsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.TestListFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.RemarksFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.MyCalendarFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.DayViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.StudentDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".cropImageUtils.CropImageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.TestActivity" />
-        <activity android:name=".Activity.MyLecturesActivity" />
-        <activity android:name=".Activity.AddTestActivity" />
-        <activity android:name=".Activity.MyBatchesActivity" />
-        <activity android:name=".Activity.AttendanceDetailsActivity" />
-        <activity android:name=".Activity.MyClassActivity" />
-        <activity android:name=".Fragment.FillMarksActivity" />
+        <activity android:name=".Activity.TestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.MyLecturesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.AddTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.MyBatchesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.AttendanceDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.MyClassActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Fragment.FillMarksActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9c79a8153da122bd9dd17ec0fc36c5be3a0ed1f8" />
 
-        <activity android:name=".Activity.MyCalenderActivity"></activity>
-        <activity android:name=".Activity.AddEventsActivity">
+        <activity android:name=".Activity.MyCalenderActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activity.AddEventsActivity"
+            android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name=".Activity.MyClassExamActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Activity.AllExamsActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Activity.ExamGroupActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Activity.FillMarksForExamsCategoryActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

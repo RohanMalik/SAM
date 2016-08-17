@@ -31,9 +31,15 @@ public class PrefsKeys {
 
     public static final String BATCHES_RESPONSE_DATA = "batchesResponseData";
 
+    public static final String EXAM_GROUP_RESPONSE_DATA = "examGroupResponseData";
+
     public static final String TEST_DATA = "testData";
 
+    public static final String EXAM_DATA = "examData";
+
     public static final String TEST_MARKS_DATA = "testMarksData";
+
+    public static final String EXAM_MARKS_DATA = "examMarksData";
 
     public static final String ATTD_DATE = "attdDate";
 
