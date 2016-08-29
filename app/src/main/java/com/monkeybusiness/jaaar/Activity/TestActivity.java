@@ -171,7 +171,10 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
             public void success(TestListResponse testListResponse, Response response) {
                 Log.d(TAG, "Response : " + new Gson().toJson(testListResponse));
 //                Prefs.with(TestActivity.this).save(PrefsKeys.TEST_RESPONSE_DATA, testListResponse);
-                setUiData(testListResponse);
+
+                if (active){
+                    setUiData(testListResponse);
+                }
             }
 
             @Override
@@ -210,7 +213,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void success(TestListResponse testListResponse, Response response) {
                 Log.d("TestByLectureId", "Response : " + new Gson().toJson(testListResponse));
-                if (!TestActivity.this.isFinishing()){
+                if (active){
                     setUiData(testListResponse);
                 }
             }
@@ -222,5 +225,19 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
         });
 
 
+    }
+
+    boolean active;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
 }

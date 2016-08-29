@@ -155,7 +155,7 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
             }
         });
 
-        Prefs.with(FillMarksForExamsCategoryActivity.this).save(PrefsKeys.STUDENT_DATA_TEST, studentDetailsForMarksResponse);
+        Prefs.with(FillMarksForExamsCategoryActivity.this).save(PrefsKeys.STUDENT_EXAM_TEST, studentDetailsForMarksResponse);
 
         Log.d("sort", "after students : " + new Gson().toJson(students));
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.github.florent37.hollyviewpager.HollyViewPagerBus;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.google.gson.Gson;
+import com.monkeybusiness.jaaar.Adapter.ExamsMarksListAdapter;
 import com.monkeybusiness.jaaar.Adapter.MarksListAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
@@ -53,7 +54,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     private static final String TAG = "AttdReviewFrag";
     View rootView;
     NonScrollListView listViewReviewAttd;
-    MarksListAdapter reviewListAdapter;
+    ExamsMarksListAdapter reviewListAdapter;
 
     Button buttonSubmit;
     Button buttonSave;
@@ -222,7 +223,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     private void setUiData() {
 //        absentStudents = 0;
 //        studentIds = getAbsentStudents();
-        reviewListAdapter = new MarksListAdapter(getActivity(), MasterClass.getInstance().getStudentsForMarks());
+        reviewListAdapter = new ExamsMarksListAdapter(getActivity(), MasterClass.getInstance().getStudentsForMarks());
         listViewReviewAttd.setAdapter(reviewListAdapter);
     }
 

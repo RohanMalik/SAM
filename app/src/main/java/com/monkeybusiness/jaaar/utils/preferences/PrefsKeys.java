@@ -54,6 +54,7 @@ public class PrefsKeys {
     public static final String VERIFIED_USER = "verifiedUser";
 
     public static final String STUDENT_DATA_TEST = "studentDataTest";
+    public static final String STUDENT_EXAM_TEST = "studentExamTest";
 
     public static final String REFERRER_CODE = "referrerCode";
 

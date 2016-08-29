@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="32px"
-            android:visibility="gone"
             app:fab_animDuration="1000"
             app:fab_backgroundColor="@color/primary"
             app:fab_elevation="10px"

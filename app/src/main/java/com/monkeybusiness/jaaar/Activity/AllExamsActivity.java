@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.ExamsDetailsAdapter;
+import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.examData.ExamData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
@@ -35,7 +36,7 @@ public class AllExamsActivity extends BaseActivity implements View.OnClickListen
     int examGrpId;
     String examGrpName;
 
-//    FloatingActionButton fabAddAttd;
+    //    FloatingActionButton fabAddAttd;
     private RelativeLayout relativeLayoutMenu;
     private TextView textViewActionTitle;
 
@@ -316,6 +317,7 @@ public class AllExamsActivity extends BaseActivity implements View.OnClickListen
     protected void onResume() {
         super.onResume();
 
+        MasterClass.getInstance().getStudentsForMarks().clear();
     }
 
     private void getExamsServerCall(int examGrpId) {
