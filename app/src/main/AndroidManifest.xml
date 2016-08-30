@@ -102,6 +102,10 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Activity.AnnouncementsActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

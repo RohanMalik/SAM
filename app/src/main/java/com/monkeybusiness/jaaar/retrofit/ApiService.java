@@ -5,8 +5,10 @@ import com.monkeybusiness.jaaar.objectClasses.ExamGroupData.ExamGroupData;
 import com.monkeybusiness.jaaar.objectClasses.addEventResponse.AddEventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addRemarksResponseData.AddRemarksResponseData;
 import com.monkeybusiness.jaaar.objectClasses.addTestResponse.AddTestResponse;
+import com.monkeybusiness.jaaar.objectClasses.announcementResponse.AnnouncementsResponseData;
 import com.monkeybusiness.jaaar.objectClasses.attdSavedResponse.AttdSavedResponseData;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
+import com.monkeybusiness.jaaar.objectClasses.busListResponse.BusListResponse;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.examData.ExamData;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
@@ -147,4 +149,15 @@ public interface ApiService {
 
     @POST("/exams/{exam_id}/exam_marks")
     void apiCallSendStudentExamMarks(@Path("exam_id") String examId,@Body TypedInput marksPostObject,Callback<SimpleResponseData> callback);
+
+    //for posting announcements
+    @POST("/announcements")
+    void apiCallPostAnnouncment(@Body TypedInput announceObject, Callback<String> callback);
+
+    //for getting announcements
+    @GET("/announcements")
+    void apiCallGetAnnouncements(@Query("from_time") String fromDate,@Query("to_time") String toDate, Callback<AnnouncementsResponseData> callback);
+
+    @GET("/bus")
+    void apiCallGetBusList(Callback<BusListResponse> callback);
 }

@@ -113,5 +113,4 @@ public class MyLecturesActivity extends BaseActivity {
             }
         });
     }
-
 }

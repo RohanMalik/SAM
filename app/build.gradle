@@ -44,6 +44,12 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
@@ -94,6 +100,12 @@ dependencies {
     compile 'com.github.rey5137:material:1.2.2'
     compile 'com.kbeanie:image-chooser-library:1.5.2@aar'
     compile files('libs/assl_sdk_rmn.jar')
+
+    //for menu
+    compile ('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
+        transitive = true;
+    }
+
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
     }

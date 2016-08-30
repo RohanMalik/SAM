@@ -21,6 +21,7 @@ import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.LoginRequestObject;
 import com.monkeybusiness.jaaar.objectClasses.loginRequestObject.Session;
 import com.monkeybusiness.jaaar.objectClasses.loginResponseData.LoginResponse;
+import com.monkeybusiness.jaaar.objectClasses.loginResponseData.UserRole;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
@@ -200,7 +201,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     if (loginResponse != null) {
-                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && loginResponse.getData().getUserRoles().get(0).getRoleName().equalsIgnoreCase("Teacher")) {
+                        boolean validRole = false;
+                        for (UserRole userRole : loginResponse.getData().getUserRoles())
+                        {
+                            if (userRole.getRoleName().equalsIgnoreCase("Teacher")){
+                                validRole = true;
+                            }
+                        }
+
+                        if (loginResponse.getResponseMetadata().getSuccess().equalsIgnoreCase("yes") && validRole) {
                             Prefs.with(LoginActivity.this).save(PrefsKeys.VERIFIED_USER, Constants.VERIFIED);
                             Prefs.with(LoginActivity.this).save(PrefsKeys.LOGIN_RESPONSE_DATA, loginResponse);
                             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);

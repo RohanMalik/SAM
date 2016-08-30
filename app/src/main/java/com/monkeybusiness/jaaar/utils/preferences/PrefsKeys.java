@@ -55,6 +55,7 @@ public class PrefsKeys {
 
     public static final String STUDENT_DATA_TEST = "studentDataTest";
     public static final String STUDENT_EXAM_TEST = "studentExamTest";
+    public static final String BUS_LIST_RESPONSE = "busListResponse_teacher";
 
     public static final String REFERRER_CODE = "referrerCode";
 

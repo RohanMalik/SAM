@@ -29,6 +29,20 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayoutLeftMenu"
+                android:layout_width="120px"
+                android:layout_height="120px"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/right_menu"/>
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/textViewGreetings"
                 android:layout_width="wrap_content"
@@ -62,6 +76,16 @@
                 />
 
         </RelativeLayout>
+
+        <io.codetail.widget.RevealFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="100px">
+
+            <include
+                layout="@layout/item_menu"/>
+        </io.codetail.widget.RevealFrameLayout>
+
     </FrameLayout>
 
     <TextView

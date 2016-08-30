@@ -37,6 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="48px"
                 android:layout_marginBottom="80px"
+                android:layout_marginTop="24px"
                 android:src="@drawable/ic_tmp_usr_placeholder"
                 app:border_color="@color/primary_dark"
                 app:border_width="4px"
