@@ -237,6 +237,9 @@ public class DashboardActivity extends BaseActivity {
                 hideMenu();
                 break;
             case R.id.btnRemarks:
+                Intent classIntent = new Intent(this, HomeWorkActivity.class);
+                startActivity(classIntent);
+                hideMenu();
                 break;
         }
     }
@@ -396,4 +399,5 @@ public class DashboardActivity extends BaseActivity {
         attachmentLayout.setVisibility(View.GONE);
         isHidden = true;
     }
+
 }

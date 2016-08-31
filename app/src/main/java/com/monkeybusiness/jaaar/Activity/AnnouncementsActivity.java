@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -112,6 +111,10 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         imageViewToolbaar.setBackgroundDrawable(getResources().getDrawable(R.drawable.cancel_event));
 
         linearLayoutList = (LinearLayout) findViewById(R.id.linearLayoutList);
+
+        imageViewToolbaar.requestLayout();
+        imageViewToolbaar.getLayoutParams().height = 40;
+        imageViewToolbaar.getLayoutParams().width = 40;
 
         buttonPost.setOnClickListener(this);
         relativeLayoutMenu.setOnClickListener(this);
@@ -333,8 +336,14 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         busListSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
+                Log.d(TAG,"position : "+position);
                 switch (position)
                 {
+                    case 0:
+                        Log.d(TAG,"position : "+position);
+                        linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
+                        linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                        break;
                     case 1:
                         linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
                         linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);

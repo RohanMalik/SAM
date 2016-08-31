@@ -76,7 +76,8 @@
                 android:textColor="@color/black_grey"
                 android:textColorHint="@color/edit_text_grey"
                 android:textCursorDrawable="@null"
-                android:textSize="32px" />
+                android:textSize="32px"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"

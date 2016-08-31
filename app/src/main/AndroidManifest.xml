@@ -106,7 +106,10 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Activity.HomeWorkActivity"
+            android:screenOrientation="portrait">
 
+        </activity>
     </application>
 
 </manifest>

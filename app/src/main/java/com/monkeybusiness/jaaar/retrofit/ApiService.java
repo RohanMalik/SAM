@@ -12,6 +12,7 @@ import com.monkeybusiness.jaaar.objectClasses.busListResponse.BusListResponse;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.EventResponseData;
 import com.monkeybusiness.jaaar.objectClasses.examData.ExamData;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
+import com.monkeybusiness.jaaar.objectClasses.homeWorkResponseData.HomeWorkResponseData;
 import com.monkeybusiness.jaaar.objectClasses.imageUploadResponse.ImageUploadResponse;
 import com.monkeybusiness.jaaar.objectClasses.simpleResponseDaa.SimpleResponseData;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
@@ -160,4 +161,10 @@ public interface ApiService {
 
     @GET("/bus")
     void apiCallGetBusList(Callback<BusListResponse> callback);
+
+    @GET("/hws")
+    void apiCallGetCWHW(@Query("from_time") String fromTime,@Query("to_time") String toTime,@Query("type") String type, Callback<HomeWorkResponseData> callback);
+
+    @POST("/hws")
+    void apiCallPOSTCWHW(@Body TypedInput object, Callback<String> callback);
 }
