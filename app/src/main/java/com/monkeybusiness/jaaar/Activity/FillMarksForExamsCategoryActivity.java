@@ -224,21 +224,22 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
         RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamMarks(String.valueOf(exam.getId()), batchId, new Callback<ExamStudentMarks>() {
             @Override
             public void success(ExamStudentMarks examStudentMarks, Response response) {
-                Log.d(TAG, "Response : " + new Gson().toJson(examStudentMarks));
+                Log.d(TAG, "ExamsMarksResponse : " + new Gson().toJson(examStudentMarks));
 
-//                Prefs.with(FillMarksForExamsCategoryActivity.this).save(PrefsKeys.EXAM_MARKS_DATA, examStudentMarks);
+                Prefs.with(FillMarksForExamsCategoryActivity.this).save(PrefsKeys.EXAM_MARKS_DATA, examStudentMarks);
 
                 Log.d(TAG,"size : "+examStudentMarks.getData().getExamMarks().size());
                 List<Student> students = new ArrayList<Student>();
-//                for (ExamMark examMark : examStudentMarks.getData().getExamMarks()) {
-//                    Student student = new Student();
-//                    student.setId(examMark.getStudent().getId());
-////                    student.setBatchId(examMark.getStudent().getBatchId());
-//                    student.setRollno(examMark.getStudent().getRollno());
-//                    student.setStudentName(examMark.getStudent().getStudentName());
-//
-//                    students.add(student);
-//                }
+                for (ExamMark examMark : examStudentMarks.getData().getExamMarks()) {
+                    Student student = new Student();
+                    student.setId(examMark.getStudent().getId());
+                    Log.d(TAG,"id : "+examMark.getStudent().getId());
+//                    student.setBatchId(examMark.getStudent().getBatchId());
+                    student.setRollno(examMark.getStudent().getRollno());
+                    student.setStudentName(examMark.getStudent().getStudentName());
+
+                    students.add(student);
+                }
                 getTestStudentsServerCall(students);
             }
 
@@ -253,10 +254,11 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamStudents(String.valueOf(Prefs.with(this).getString(Constants.BATCH_ID,"")), new Callback<StudentDetailsForMarksResponse>() {
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamStudents(String.valueOf(exam.getId()),String.valueOf(Prefs.with(this).getString(Constants.BATCH_ID,"")), new Callback<StudentDetailsForMarksResponse>() {
             @Override
             public void success(StudentDetailsForMarksResponse studentDetailsForMarksResponse, Response response) {
                 Log.d(TAG, "Response : " + new Gson().toJson(studentDetailsForMarksResponse));
+                Log.d(TAG, "size api : " + studentDetailsForMarksResponse.getData().getStudents().size());
 
                 setUIData(studentDetailsForMarksResponse, students);
             }

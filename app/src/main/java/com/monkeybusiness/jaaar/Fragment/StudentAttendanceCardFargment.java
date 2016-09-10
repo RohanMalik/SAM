@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -19,6 +20,7 @@ import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.utils.FontClass;
+import com.squareup.picasso.Picasso;
 
 import rmn.androidscreenlibrary.ASSL;
 
@@ -39,6 +41,7 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
     TextView textViewClass;
     TextView textViewRollNo;
     Button buttonAbsent;
+    ImageView imageViewStudent;
 
     StudentAttdData studentAttdData;
 
@@ -89,6 +92,7 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         textViewTitle = (TextView) rootView.findViewById(R.id.textViewTitle);
         textViewClass = (TextView) rootView.findViewById(R.id.textViewClass);
         textViewRollNo = (TextView) rootView.findViewById(R.id.textViewRollNo);
+        imageViewStudent = (ImageView) rootView.findViewById(R.id.imageViewStudent);
 
         scrollView = (ObservableScrollView) rootView.findViewById(R.id.scrollView);
 
@@ -127,6 +131,10 @@ public class StudentAttendanceCardFargment extends Fragment implements View.OnCl
         textViewTitle.setText(studentsInfos.getStudentName());
         textViewRollNo.setText("Roll No " + studentsInfos.getRollno());
         textViewClass.setText("Class " + classAlias);
+        if (studentsInfos.getPicture()!=null)
+        {
+            Picasso.with(this.getContext()).load(studentsInfos.getPicture().getUrl()).into(imageViewStudent);
+        }
 
         setFont();
 

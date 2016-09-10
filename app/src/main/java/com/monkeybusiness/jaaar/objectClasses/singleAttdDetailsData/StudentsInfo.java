@@ -1,8 +1,8 @@
-
 package com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.Picture;
 
 public class StudentsInfo {
 
@@ -66,365 +66,295 @@ public class StudentsInfo {
     @SerializedName("parent_id")
     @Expose
     private int parentId;
+    @SerializedName("picture")
+    @Expose
+    private Picture picture;
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     public int getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The studentName
+     * @return The studentName
      */
     public String getStudentName() {
         return studentName;
     }
 
     /**
-     * 
-     * @param studentName
-     *     The student_name
+     * @param studentName The student_name
      */
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
 
     /**
-     * 
-     * @return
-     *     The fatherName
+     * @return The fatherName
      */
     public String getFatherName() {
         return fatherName;
     }
 
     /**
-     * 
-     * @param fatherName
-     *     The father_name
+     * @param fatherName The father_name
      */
     public void setFatherName(String fatherName) {
         this.fatherName = fatherName;
     }
 
     /**
-     * 
-     * @return
-     *     The motherName
+     * @return The motherName
      */
     public String getMotherName() {
         return motherName;
     }
 
     /**
-     * 
-     * @param motherName
-     *     The mother_name
+     * @param motherName The mother_name
      */
     public void setMotherName(String motherName) {
         this.motherName = motherName;
     }
 
     /**
-     * 
-     * @return
-     *     The dob
+     * @return The dob
      */
     public String getDob() {
         return dob;
     }
 
     /**
-     * 
-     * @param dob
-     *     The dob
+     * @param dob The dob
      */
     public void setDob(String dob) {
         this.dob = dob;
     }
 
     /**
-     * 
-     * @return
-     *     The gender
+     * @return The gender
      */
     public String getGender() {
         return gender;
     }
 
     /**
-     * 
-     * @param gender
-     *     The gender
+     * @param gender The gender
      */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
     /**
-     * 
-     * @return
-     *     The schoolId
+     * @return The schoolId
      */
     public int getSchoolId() {
         return schoolId;
     }
 
     /**
-     * 
-     * @param schoolId
-     *     The school_id
+     * @param schoolId The school_id
      */
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
     }
 
     /**
-     * 
-     * @return
-     *     The batchId
+     * @return The batchId
      */
     public int getBatchId() {
         return batchId;
     }
 
     /**
-     * 
-     * @param batchId
-     *     The batch_id
+     * @param batchId The batch_id
      */
     public void setBatchId(int batchId) {
         this.batchId = batchId;
     }
 
     /**
-     * 
-     * @return
-     *     The courseId
+     * @return The courseId
      */
     public int getCourseId() {
         return courseId;
     }
 
     /**
-     * 
-     * @param courseId
-     *     The course_id
+     * @param courseId The course_id
      */
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
     /**
-     * 
-     * @return
-     *     The createdAt
+     * @return The createdAt
      */
     public String getCreatedAt() {
         return createdAt;
     }
 
     /**
-     * 
-     * @param createdAt
-     *     The created_at
+     * @param createdAt The created_at
      */
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
     /**
-     * 
-     * @return
-     *     The updatedAt
+     * @return The updatedAt
      */
     public String getUpdatedAt() {
         return updatedAt;
     }
 
     /**
-     * 
-     * @param updatedAt
-     *     The updated_at
+     * @param updatedAt The updated_at
      */
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     /**
-     * 
-     * @return
-     *     The address
+     * @return The address
      */
     public String getAddress() {
         return address;
     }
 
     /**
-     * 
-     * @param address
-     *     The address
+     * @param address The address
      */
     public void setAddress(String address) {
         this.address = address;
     }
 
     /**
-     * 
-     * @return
-     *     The city
+     * @return The city
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * 
-     * @param city
-     *     The city
+     * @param city The city
      */
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * 
-     * @return
-     *     The state
+     * @return The state
      */
     public String getState() {
         return state;
     }
 
     /**
-     * 
-     * @param state
-     *     The state
+     * @param state The state
      */
     public void setState(String state) {
         this.state = state;
     }
 
     /**
-     * 
-     * @return
-     *     The pinCode
+     * @return The pinCode
      */
     public int getPinCode() {
         return pinCode;
     }
 
     /**
-     * 
-     * @param pinCode
-     *     The pin_code
+     * @param pinCode The pin_code
      */
     public void setPinCode(int pinCode) {
         this.pinCode = pinCode;
     }
 
     /**
-     * 
-     * @return
-     *     The rollno
+     * @return The rollno
      */
     public int getRollno() {
         return rollno;
     }
 
     /**
-     * 
-     * @param rollno
-     *     The rollno
+     * @param rollno The rollno
      */
     public void setRollno(int rollno) {
         this.rollno = rollno;
     }
 
     /**
-     * 
-     * @return
-     *     The dateOfJoining
+     * @return The dateOfJoining
      */
     public String getDateOfJoining() {
         return dateOfJoining;
     }
 
     /**
-     * 
-     * @param dateOfJoining
-     *     The date_of_joining
+     * @param dateOfJoining The date_of_joining
      */
     public void setDateOfJoining(String dateOfJoining) {
         this.dateOfJoining = dateOfJoining;
     }
 
     /**
-     * 
-     * @return
-     *     The dateOfLeaving
+     * @return The dateOfLeaving
      */
     public Object getDateOfLeaving() {
         return dateOfLeaving;
     }
 
     /**
-     * 
-     * @param dateOfLeaving
-     *     The date_of_leaving
+     * @param dateOfLeaving The date_of_leaving
      */
     public void setDateOfLeaving(Object dateOfLeaving) {
         this.dateOfLeaving = dateOfLeaving;
     }
 
     /**
-     * 
-     * @return
-     *     The lockedStatus
+     * @return The lockedStatus
      */
     public Object getLockedStatus() {
         return lockedStatus;
     }
 
     /**
-     * 
-     * @param lockedStatus
-     *     The locked_status
+     * @param lockedStatus The locked_status
      */
     public void setLockedStatus(Object lockedStatus) {
         this.lockedStatus = lockedStatus;
     }
 
     /**
-     * 
-     * @return
-     *     The parentId
+     * @return The parentId
      */
     public int getParentId() {
         return parentId;
     }
 
     /**
-     * 
-     * @param parentId
-     *     The parent_id
+     * @param parentId The parent_id
      */
     public void setParentId(int parentId) {
         this.parentId = parentId;
     }
 
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 }

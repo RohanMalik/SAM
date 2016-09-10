@@ -235,7 +235,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 Prefs.with(this).save(PrefsKeys.VERIFIED_USER, Constants.UNVERIFIED);
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
-                finish();
+                finishAffinity();
 //            case R.id.linearLayoutContactUsMenu:
 //
 //                updateUI(6);

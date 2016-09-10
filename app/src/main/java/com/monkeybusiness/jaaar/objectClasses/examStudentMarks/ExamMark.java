@@ -7,16 +7,16 @@ public class ExamMark {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("exam_id")
     @Expose
-    private Integer examId;
+    private int examId;
     @SerializedName("student_id")
     @Expose
-    private Integer studentId;
+    private int studentId;
     @SerializedName("marks")
     @Expose
-    private Integer marks;
+    private int marks;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -33,56 +33,56 @@ public class ExamMark {
     /**
      * @return The id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * @return The examId
      */
-    public Integer getExamId() {
+    public int getExamId() {
         return examId;
     }
 
     /**
      * @param examId The exam_id
      */
-    public void setExamId(Integer examId) {
+    public void setExamId(int examId) {
         this.examId = examId;
     }
 
     /**
      * @return The studentId
      */
-    public Integer getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
     /**
      * @param studentId The student_id
      */
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
 
     /**
      * @return The marks
      */
-    public Integer getMarks() {
+    public int getMarks() {
         return marks;
     }
 
     /**
      * @param marks The marks
      */
-    public void setMarks(Integer marks) {
+    public void setMarks(int marks) {
         this.marks = marks;
     }
 

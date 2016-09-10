@@ -61,7 +61,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
     ObservableScrollView scrollView;
 
 //    TestMarksResponseData testMarksResponseData;
-//    ExamStudentMarks examStudentMarks;
+    ExamStudentMarks examStudentMarks;
     TextDrawable drawableAbsent;
     TextDrawable drawablePresent;
     TextView textViewMarks;
@@ -122,7 +122,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
 
 //        testMarksResponseData = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_MARKS_DATA, TestMarksResponseData.class);
 
-//        examStudentMarks = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_MARKS_DATA, ExamStudentMarks.class);
+        examStudentMarks = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_MARKS_DATA, ExamStudentMarks.class);
 
 //        test = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_DATA, Test.class);
         exam = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_DATA, Exam.class);
@@ -163,14 +163,14 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
             }
         });
 
-//        for (ExamMark examMark: examStudentMarks.getData().getExamMarks())
-//        {
-//            if (student.getId() == examMark.getStudentId())
-//            {
-//                marks = examMark.getMarks();
-//                remarks = examMark.getRemarks();
-//            }
-//        }
+        for (ExamMark examMark: examStudentMarks.getData().getExamMarks())
+        {
+            if (student.getId() == examMark.getStudentId())
+            {
+                marks = examMark.getMarks();
+                remarks = examMark.getRemarks();
+            }
+        }
 
         if (marks == -777)
         {
