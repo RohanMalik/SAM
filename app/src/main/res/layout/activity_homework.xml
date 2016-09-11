@@ -101,6 +101,25 @@
                 android:layout_height="5px"
                 android:background="@color/background_color"/>
 
+
+            <TextView
+                android:id="@+id/textViewType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Type"
+                android:textColor="@color/edit_text_grey"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="16px"
+                android:layout_marginLeft="32px"
+                android:layout_marginBottom="4px"
+                android:textSize="29px"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/edit_text_divider"/>
+
             <com.rey.material.widget.Spinner
                 android:id="@+id/spinnerHomeWork"
                 style="@style/Material.Widget.Spinner"
@@ -166,6 +185,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
+
+                <include layout="@layout/empty_results"/>
 
             </RelativeLayout>
 

@@ -1,17 +1,22 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,7 +60,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
     EditText editTextAnnouncements;
     Spinner busListSpinner;
     Button buttonPost;
-    NonScrollListView listViewAnnouncements;
+    ListView listViewAnnouncements;
     LinearLayout linearLayoutList;
 
     RelativeLayout relativeLayoutMenu;
@@ -73,6 +78,8 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
     LinearLayout linearLayoutDynamicCheckBoxClass;
     List<CheckBox> checkBoxesBatch;
     List<CheckBox> checkBoxesLecture;
+
+    RelativeLayout relativeLayoutNodataFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +104,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         editTextAnnouncements = (EditText) findViewById(R.id.editTextAnnouncements);
         busListSpinner = (Spinner) findViewById(R.id.busListSpinner);
         buttonPost = (Button) findViewById(R.id.buttonPost);
-        listViewAnnouncements = (NonScrollListView) findViewById(R.id.listViewAnnouncements);
+        listViewAnnouncements = (ListView) findViewById(R.id.listViewAnnouncements);
         progressBarAnnouncements = (ProgressBar) findViewById(R.id.progressBarAnnouncements);
 
         relativeLayoutMenu = (RelativeLayout) findViewById(R.id.relativeLayoutMenu);
@@ -105,6 +112,8 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         imageViewToolbaar = (ImageView) findViewById(R.id.imageViewToolbaar);
         linearLayoutDynamicCheckBoxLecture = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxLecture);
         linearLayoutDynamicCheckBoxClass = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxClass);
+
+        relativeLayoutNodataFound = (RelativeLayout) findViewById(R.id.relativeLayoutNodataFound);
 
         textViewActionTitle.setText("Announcements");
 
@@ -249,9 +258,14 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
     private void setUiData(AnnouncementsResponseData announcementsResponseData) {
         if (!announcementsResponseData.getData().getAnnouncements().isEmpty()) {
             progressBarAnnouncements.setVisibility(View.GONE);
+            relativeLayoutNodataFound.setVisibility(View.GONE);
             linearLayoutList.setVisibility(View.VISIBLE);
             announcementAdapter = new AnnouncementAdapter(this, announcementsResponseData.getData().getAnnouncements());
             listViewAnnouncements.setAdapter(announcementAdapter);
+        }else {
+            progressBarAnnouncements.setVisibility(View.GONE);
+            relativeLayoutNodataFound.setVisibility(View.VISIBLE);
+            linearLayoutList.setVisibility(View.GONE);
         }
     }
 
@@ -318,7 +332,29 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+
+
+    LinearLayout linearLayoutCheckBoxLecture;
+
     private void setCheckBoxes() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.lectures_list, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = dialogBuilder.create();
+
+//        new ASSL(this, (ViewGroup) dialogView.findViewById(R.id.root), 1134, 720,
+//                false);
+
+        linearLayoutCheckBoxLecture = (LinearLayout) dialogView.findViewById(R.id.linearLayoutCheckBoxLecture);
 
         if (LoadingBox.isDialogShowing()){
             LoadingBox.dismissLoadingDialog();
@@ -345,8 +381,9 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
                         linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
                         break;
                     case 1:
-                        linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
+//                        linearLayoutDynamicCheckBoxLecture.setVisibility(View.VISIBLE);
                         linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
+                        alertDialog.show();
                         break;
                     case 2:
                         linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
@@ -389,12 +426,11 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
                 checkBox.setText(lecture.getLectureName());
                 checkBox.setTag(lecture.getId());
                 checkBox.applyStyle(R.style.checkBoxStyle);
-                linearLayoutDynamicCheckBoxLecture.addView(checkBox, params);
+                linearLayoutCheckBoxLecture.addView(checkBox, params);
                 checkBoxesLecture.add(checkBox);
 
                 Log.d("events", "adding : " + lecture.getId());
             }
-
         }
     }
 }

@@ -10,13 +10,13 @@
 
     <include layout="@layout/toolbar"/>
     
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:descendantFocusability="beforeDescendants"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -108,7 +108,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <LinearLayout
                     android:id="@+id/linearLayoutList"
@@ -135,7 +136,7 @@
                         android:layout_height="2px"
                         android:background="@color/edit_text_divider"/>
 
-                    <com.monkeybusiness.jaaar.utils.NonScrollListView
+                    <ListView
                         android:id="@+id/listViewAnnouncements"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -148,9 +149,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"/>
 
+                <include layout="@layout/empty_results"/>
             </RelativeLayout>
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </LinearLayout>

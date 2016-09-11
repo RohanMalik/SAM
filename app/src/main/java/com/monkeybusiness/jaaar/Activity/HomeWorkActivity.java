@@ -1,5 +1,6 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -83,6 +85,8 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
     List<CheckBox> checkBoxesBatch;
     List<CheckBox> checkBoxesLecture;
 
+    RelativeLayout relativeLayoutNodataFound;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +122,8 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
         linearLayoutDynamicCheckBoxLecture = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxLecture);
         linearLayoutDynamicCheckBoxClass = (LinearLayout) findViewById(R.id.linearLayoutDynamicCheckBoxClass);
 
+        relativeLayoutNodataFound = (RelativeLayout) findViewById(R.id.relativeLayoutNodataFound);
+
         textViewActionTitle.setText("Class Work/Home Work");
 
         imageViewToolbaar.setBackgroundDrawable(getResources().getDrawable(R.drawable.cancel_event));
@@ -132,6 +138,20 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
         relativeLayoutMenu.setOnClickListener(this);
         progressBarAnnouncements.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.add_button_purple), PorterDuff.Mode.MULTIPLY);
 
+        listViewAnnouncements.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG,"clicked");
+                Intent intent = new Intent(HomeWorkActivity.this,HomeWorkListActivity.class);
+                if (spinnerHomeWork.getSelectedItemPosition() == 0)
+                {
+                    intent.putExtra("type",CW);
+                }else {
+                    intent.putExtra("type",HW);
+                }
+                startActivity(intent);
+            }
+        });
 //        busList = new ArrayList<>();
 //        busListResponse = Prefs.with(this).getObject(PrefsKeys.BUS_LIST_RESPONSE, BusListResponse.class);
 //
@@ -147,6 +167,7 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
             case R.id.relativeLayoutMenu:
                 finish();
                 break;
+
         }
     }
 
@@ -291,8 +312,13 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
         if (!hws.isEmpty()) {
             progressBarAnnouncements.setVisibility(View.GONE);
             linearLayoutList.setVisibility(View.VISIBLE);
+            relativeLayoutNodataFound.setVisibility(View.GONE);
             HomeWorkAdapter homeWorkAdapter = new HomeWorkAdapter(this,hws);
             listViewAnnouncements.setAdapter(homeWorkAdapter);
+        }else {
+            relativeLayoutNodataFound.setVisibility(View.VISIBLE);
+            progressBarAnnouncements.setVisibility(View.GONE);
+            linearLayoutList.setVisibility(View.GONE);
         }
     }
 
