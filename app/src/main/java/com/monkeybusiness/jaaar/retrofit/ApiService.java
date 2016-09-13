@@ -163,7 +163,7 @@ public interface ApiService {
     void apiCallGetBusList(Callback<BusListResponse> callback);
 
     @GET("/hws")
-    void apiCallGetCWHW(@Query("from_time") String fromTime,@Query("to_time") String toTime,@Query("type") String type, Callback<HomeWorkResponseData> callback);
+    void apiCallGetCWHW(@Query("from_time") String fromTime,@Query("to_time") String toTime,@Query("type") String type,@Query("lecture_id") String lectureId, Callback<HomeWorkResponseData> callback);
 
     @POST("/hws")
     void apiCallPOSTCWHW(@Body TypedInput object, Callback<String> callback);

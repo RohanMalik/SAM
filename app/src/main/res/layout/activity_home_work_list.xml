@@ -26,8 +26,50 @@
         android:layout_height="2px"
         android:background="@color/edit_text_divider"/>
 
+        <com.rey.material.widget.Spinner
+            android:id="@+id/spinnerHomeWork"
+            style="@style/Material.Widget.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_margin="24px"
+            app:rd_style="@style/Material.Drawable.Ripple.Wave"
+            app:spn_arrowAnimDuration="500"
+            app:spn_arrowColor="@color/add_button_purple"
+            app:spn_arrowSize="24px"
+            app:spn_arrowSwitchMode="true"
+            app:spn_dividerAnimDuration="100"
+            app:spn_dividerColor="@color/add_button_purple"
+            app:spn_dividerHeight="5px"
+            app:spn_dividerPadding="10px"
+            app:spn_labelTextColor="@color/black_grey"
+            app:spn_labelTextSize="32px" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/edit_text_divider"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Lecture"
+        android:textColor="@color/edit_text_grey"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="24px"
+        android:layout_marginLeft="32px"
+        android:layout_marginBottom="4px"
+        android:textSize="29px"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/edit_text_divider"/>
+
+
     <com.rey.material.widget.Spinner
-        android:id="@+id/spinnerHomeWork"
+        android:id="@+id/spinnerLectures"
         style="@style/Material.Widget.Spinner"
         android:layout_width="match_parent"
         android:layout_height="60px"

@@ -76,7 +76,15 @@ public class HomeWorkAdapter extends BaseAdapter {
         }
 
         viewHolder.textViewEventDesc.setVisibility(View.VISIBLE);
-        viewHolder.textViewEventTitle.setText(hws.get(position).getLecture().getLectureName());
+
+        String title = "";
+        if (hws.get(position).getLecture() == null)
+        {
+            title  = hws.get(position).getTeacher().getName();
+        }else {
+            title = hws.get(position).getLecture().getLectureName()+" - "+hws.get(position).getTeacher().getName();
+        }
+        viewHolder.textViewEventTitle.setText(title);
 
         viewHolder.textViewEventDesc.setText(hws.get(position).getHwDate());
 

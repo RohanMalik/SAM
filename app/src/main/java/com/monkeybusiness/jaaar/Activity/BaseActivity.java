@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.monkeybusiness.jaaar.Fragment.MyCalendarFragment;
 import com.monkeybusiness.jaaar.Fragment.RemarksFragment;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.objectClasses.checkLoginResponse.CheckLoginResponse;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
@@ -18,6 +18,7 @@ import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.squareup.picasso.Picasso;
 
 import rmn.androidscreenlibrary.ASSL;
 
@@ -58,6 +59,14 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 false);
         initializationMenu();
         setFont();
+
+        CheckLoginResponse checkLoginResponse = Prefs.with(this).getObject(PrefsKeys.CHECK_LOGIN_DATA, CheckLoginResponse.class);
+        if (checkLoginResponse != null) {
+            if (checkLoginResponse.getData().getUserTypeDetails().getPicture() != null) {
+                Picasso.with(this).load(checkLoginResponse.getData().getUserTypeDetails().getPicture().getUrl()).into(profile_image);
+                Picasso.with(this).load(checkLoginResponse.getData().getUserTypeDetails().getPicture().getUrl()).into(littleProfilePic);
+            }
+        }
     }
 
     private void setFont() {

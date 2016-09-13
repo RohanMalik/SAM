@@ -289,7 +289,9 @@ public class HomeWorkActivity extends AppCompatActivity implements View.OnClickL
         RestClient.getApiServicePojo(xCookies,aCookies).apiCallGetCWHW(
                 Utils.simpleDateFormatter(fromDate),
                 Utils.simpleDateFormatter(toDate),
-                type, new Callback<HomeWorkResponseData>() {
+                type,
+                null,
+                new Callback<HomeWorkResponseData>() {
             @Override
             public void success(HomeWorkResponseData homeWorkResponseData, Response response) {
                 Log.d(TAG,"Response : "+new Gson().toJson(homeWorkResponseData));
