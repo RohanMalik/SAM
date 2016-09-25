@@ -6,23 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.TestData;
 import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
-import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.ISO8601;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 import com.rey.material.widget.Button;
 
-import java.text.ParseException;
 import java.util.List;
 
 import rmn.androidscreenlibrary.ASSL;
@@ -93,7 +88,7 @@ public class TestListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FillMarksActivity.class);
-                Prefs.with(context).save(PrefsKeys.TEST_DATA,testDatas.get(position));
+                Prefs.with(context).save(PrefsKeys.TEST_DATA, testDatas.get(position));
                 context.startActivity(intent);
             }
         });

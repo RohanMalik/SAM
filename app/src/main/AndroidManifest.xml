@@ -104,6 +104,9 @@
             android:name=".Activity.MyClassExamActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".Activity.MyClassExamsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".Activity.AllExamsActivity"
             android:screenOrientation="portrait"></activity>
         <activity

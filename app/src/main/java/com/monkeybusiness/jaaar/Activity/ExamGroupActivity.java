@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Adapter.ExamGroupAdapter;
-import com.monkeybusiness.jaaar.Adapter.ExamsAdapter;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.ExamGroupData.ExamGroupData;
 import com.monkeybusiness.jaaar.retrofit.CommonApiCalls;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
+import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -101,7 +101,9 @@ public class ExamGroupActivity extends BaseActivity {
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamGroupByBatch(new Callback<ExamGroupData>() {
+        String lectureId = Prefs.with(this).getString(Constants.LECTURE_ID_EXAMS,"");
+
+        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamGroupByLecture(lectureId,new Callback<ExamGroupData>() {
             @Override
             public void success(ExamGroupData examGroupData, Response response) {
                 android.util.Log.d(TAG, "Response : " + new Gson().toJson(examGroupData));

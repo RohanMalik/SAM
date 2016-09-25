@@ -9,9 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.monkeybusiness.jaaar.Activity.AllExamsActivity;
 import com.monkeybusiness.jaaar.Activity.ExamGroupActivity;
-import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
 import com.monkeybusiness.jaaar.utils.Constants;
@@ -81,18 +79,18 @@ public class ExamsAdapter extends BaseAdapter {
 
         viewHolder.textViewLectureNo.setText(String.valueOf(position + 1) + ". ");
         viewHolder.textViewLectureName.setText(batchesResponseData.getData().getBatches().get(position).getClassAlias());
-        viewHolder.textViewSubjectName.setText("Students : "+batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
-        viewHolder.textViewLectDesc.setText("Section : "+batchesResponseData.getData().getBatches().get(position).getSection());
+        viewHolder.textViewSubjectName.setText("Students : " + batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
+        viewHolder.textViewLectDesc.setText("Section : " + batchesResponseData.getData().getBatches().get(position).getSection());
 
 
         viewHolder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,ExamGroupActivity.class);
+                Intent intent = new Intent(context, ExamGroupActivity.class);
 //                intent.putExtra(Constants.GRADE_ID,batchesResponseData.getData().getBatches().get(position).getGradeId());
-                Prefs.with(context).save(Constants.GRADE_ID,String.valueOf(batchesResponseData.getData().getBatches().get(position).getGradeId()));
-                Prefs.with(context).save(Constants.BATCH_ID,String.valueOf(batchesResponseData.getData().getBatches().get(position).getId()));
-                Prefs.with(context).save(Constants.CLASS_ALIAS,batchesResponseData.getData().getBatches().get(position).getClassAlias());
+                Prefs.with(context).save(Constants.GRADE_ID, String.valueOf(batchesResponseData.getData().getBatches().get(position).getGradeId()));
+                Prefs.with(context).save(Constants.BATCH_ID, String.valueOf(batchesResponseData.getData().getBatches().get(position).getId()));
+                Prefs.with(context).save(Constants.CLASS_ALIAS, batchesResponseData.getData().getBatches().get(position).getClassAlias());
                 context.startActivity(intent);
             }
         });

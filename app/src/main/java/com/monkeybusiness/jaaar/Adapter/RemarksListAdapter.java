@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
-import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.StudentsRemarksResponse;
-import com.monkeybusiness.jaaar.objectClasses.testListResponseData.Test;
 import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 
@@ -32,9 +30,8 @@ public class RemarksListAdapter extends BaseAdapter {
     public RemarksListAdapter(Context context, List<Remark> remarks) {
         this.context = context;
         this.remarks = remarks;
-        for (Remark remark : remarks)
-        {
-            Log.d("adapter","remark : "+new Gson().toJson(remark));
+        for (Remark remark : remarks) {
+            Log.d("adapter", "remark : " + new Gson().toJson(remark));
         }
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

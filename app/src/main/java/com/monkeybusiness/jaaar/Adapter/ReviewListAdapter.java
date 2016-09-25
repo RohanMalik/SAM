@@ -15,7 +15,6 @@ import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.utils.FontClass;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rmn.androidscreenlibrary.ASSL;
@@ -109,7 +108,7 @@ public class ReviewListAdapter extends BaseAdapter {
 
 
         viewHolder.textViewNameListView.setText(studentsInfos.get(index).getStudentName());
-        viewHolder.textViewRollnoListView.setText(studentsInfos.get(index).getRollno()+"");
+        viewHolder.textViewRollnoListView.setText(studentsInfos.get(index).getRollno() + "");
 
 
         return view;
@@ -118,8 +117,7 @@ public class ReviewListAdapter extends BaseAdapter {
     private int getIndexOfId(int id) {
 
         for (int i = 0; i < studentsInfos.size(); i++) {
-            if (studentsInfos.get(i).getId() == id)
-            {
+            if (studentsInfos.get(i).getId() == id) {
                 return i;
             }
         }

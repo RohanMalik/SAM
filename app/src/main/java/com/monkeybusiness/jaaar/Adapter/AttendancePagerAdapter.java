@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.ClassHistoryFragment;
 import com.monkeybusiness.jaaar.Fragment.RandomFragment;
 

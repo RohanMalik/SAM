@@ -10,10 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.announcementResponse.Announcement;
 import com.monkeybusiness.jaaar.objectClasses.homeWorkResponseData.Hw;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.Utils;
 
 import java.util.List;
 
@@ -78,11 +76,10 @@ public class HomeWorkAdapter extends BaseAdapter {
         viewHolder.textViewEventDesc.setVisibility(View.VISIBLE);
 
         String title = "";
-        if (hws.get(position).getLecture() == null)
-        {
-            title  = hws.get(position).getTeacher().getName();
-        }else {
-            title = hws.get(position).getLecture().getLectureName()+" - "+hws.get(position).getTeacher().getName();
+        if (hws.get(position).getLecture() == null) {
+            title = hws.get(position).getTeacher().getName();
+        } else {
+            title = hws.get(position).getLecture().getLectureName() + " - " + hws.get(position).getTeacher().getName();
         }
         viewHolder.textViewEventTitle.setText(title);
 

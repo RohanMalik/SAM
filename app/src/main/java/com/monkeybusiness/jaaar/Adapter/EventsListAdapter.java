@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.Log;
 import com.monkeybusiness.jaaar.utils.Utils;
 
 import java.util.ArrayList;
@@ -90,11 +89,11 @@ public class EventsListAdapter extends BaseAdapter {
             viewHolder.textViewEventDesc.setVisibility(View.GONE);
         }
 
-        if (events.get(position).getEventTypeType().equalsIgnoreCase("userLogin")){
+        if (events.get(position).getEventTypeType().equalsIgnoreCase("userLogin")) {
             viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_blue));
-        }else if (events.get(position).getEventTypeType().equalsIgnoreCase("batch")){
+        } else if (events.get(position).getEventTypeType().equalsIgnoreCase("batch")) {
             viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_light_blue));
-        }else {
+        } else {
             viewHolder.imageViewEventType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.dot_green));
         }
 

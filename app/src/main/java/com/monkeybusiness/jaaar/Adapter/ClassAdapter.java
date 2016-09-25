@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.monkeybusiness.jaaar.Activity.AttendanceDetailsActivity;
 import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
@@ -79,15 +78,15 @@ public class ClassAdapter extends BaseAdapter {
 
         viewHolder.textViewLectureNo.setText(String.valueOf(position + 1) + ". ");
         viewHolder.textViewLectureName.setText(batchesResponseData.getData().getBatches().get(position).getClassAlias());
-        viewHolder.textViewSubjectName.setText("Students : "+batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
-        viewHolder.textViewLectDesc.setText("Section : "+batchesResponseData.getData().getBatches().get(position).getSection());
+        viewHolder.textViewSubjectName.setText("Students : " + batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
+        viewHolder.textViewLectDesc.setText("Section : " + batchesResponseData.getData().getBatches().get(position).getSection());
 
 
         viewHolder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,FriendsActivity.class);
-                intent.putExtra(Constants.BATCH_ID,batchesResponseData.getData().getBatches().get(position).getId());
+                Intent intent = new Intent(context, FriendsActivity.class);
+                intent.putExtra(Constants.BATCH_ID, batchesResponseData.getData().getBatches().get(position).getId());
                 context.startActivity(intent);
             }
         });

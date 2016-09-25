@@ -24,8 +24,7 @@ public class TestPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 return UpcomingTest.newInstance(0, "Upcoming Test");
             case 1:
@@ -43,10 +42,9 @@ public class TestPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position)
-        {
+        switch (position) {
             case 0:
-                return  "Upcoming";
+                return "Upcoming";
             case 1:
                 return "Pending";
             case 2:

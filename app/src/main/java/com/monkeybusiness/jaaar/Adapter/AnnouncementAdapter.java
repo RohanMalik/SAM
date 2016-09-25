@@ -77,16 +77,15 @@ public class AnnouncementAdapter extends BaseAdapter {
         viewHolder.textViewEventDesc.setVisibility(View.VISIBLE);
 
         String title = "";
-        if (announcements.get(position).getAnnouncementMaps().get(0).getAnnouncementTypeType().equalsIgnoreCase("lecture"))
-        {
+        if (announcements.get(position).getAnnouncementMaps().get(0).getAnnouncementTypeType().equalsIgnoreCase("lecture")) {
             title = "Lecture Announcement";
-        }else {
+        } else {
             title = "Batch Announcement";
         }
 
         String teacherName = announcements.get(position).getUserLogin().getUserType().getName();
 //        String className = announcements.get(position).getAnnouncementMaps().get(0).getAnnouncementType().getName();
-        viewHolder.textViewEventTitle.setText(title+" By "+teacherName);
+        viewHolder.textViewEventTitle.setText(title + " By " + teacherName);
 
         viewHolder.textViewEventDesc.setText(Utils.formatDateAndTime(announcements.get(position).getCreatedAt()));
 

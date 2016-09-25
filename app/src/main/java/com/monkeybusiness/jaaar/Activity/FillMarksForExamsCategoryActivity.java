@@ -221,6 +221,7 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
         String batchId = String.valueOf(Prefs.with(this).getString(Constants.BATCH_ID,""));
+
         RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamMarks(String.valueOf(exam.getId()), batchId, new Callback<ExamStudentMarks>() {
             @Override
             public void success(ExamStudentMarks examStudentMarks, Response response) {

@@ -10,20 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Activity.TestActivity;
-import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
-import com.monkeybusiness.jaaar.Fragment.TestListFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
-import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.Log;
-import com.monkeybusiness.jaaar.utils.preferences.Prefs;
-import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
@@ -95,7 +86,7 @@ public class LecturesAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, TestActivity.class);
                 intent.putExtra(Constants.LECTURE_ID, lectureResponseData.getData().getLectures().get(position).getId());
-                intent.putExtra(Constants.FROM_MAIN,false);
+                intent.putExtra(Constants.FROM_MAIN, false);
                 context.startActivity(intent);
 
 //                getTestByLectureIdServerCall(lectureResponseData.getData().getLectures().get(position).getId());

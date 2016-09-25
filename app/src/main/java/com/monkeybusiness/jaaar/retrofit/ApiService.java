@@ -136,8 +136,9 @@ public interface ApiService {
     @PUT("/students/{id}")
     void apiCallPutStudentNumber(@Path("id") String id,@Body TypedInput NumberObject,Callback<String> callback);
 
+
     @GET("/exam_groups")
-    void apiCallGetExamGroupByBatch(Callback<ExamGroupData> callback);
+    void apiCallGetExamGroupByLecture(@Query("lecture_id") String lectureId, Callback<ExamGroupData> callback);
 
     @GET("/exam_groups/{group_id}/exams")
     void apiCallGetExamsByBatch(@Path("group_id") String grpId,@Query("grade_id") String gradeId,Callback<ExamData> callback);

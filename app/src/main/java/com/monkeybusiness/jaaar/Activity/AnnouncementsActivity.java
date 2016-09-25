@@ -1,6 +1,5 @@
 package com.monkeybusiness.jaaar.Activity;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ import com.monkeybusiness.jaaar.objectClasses.busListResponse.BusListResponse;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.Lecture;
 import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
 import com.monkeybusiness.jaaar.retrofit.RestClient;
-import com.monkeybusiness.jaaar.utils.NonScrollListView;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -80,6 +78,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
     List<CheckBox> checkBoxesLecture;
 
     RelativeLayout relativeLayoutNodataFound;
+    LinearLayout linearLayoutCheckBoxLecture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +153,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
             return;
         }
 
-        if (busListSpinner.getSelectedItemPosition() == 0)
-        {
+        if (busListSpinner.getSelectedItemPosition() == 0) {
             Utils.failureDialog(this, "Something went wrong", "Please select lecture or batch");
             return;
         }
@@ -179,8 +177,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
             }
         }
 
-        if (annIds.isEmpty())
-        {
+        if (annIds.isEmpty()) {
             Utils.failureDialog(this, "Something went wrong", "Please select atleast one checkbox");
             return;
         }
@@ -262,7 +259,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
             linearLayoutList.setVisibility(View.VISIBLE);
             announcementAdapter = new AnnouncementAdapter(this, announcementsResponseData.getData().getAnnouncements());
             listViewAnnouncements.setAdapter(announcementAdapter);
-        }else {
+        } else {
             progressBarAnnouncements.setVisibility(View.GONE);
             relativeLayoutNodataFound.setVisibility(View.VISIBLE);
             linearLayoutList.setVisibility(View.GONE);
@@ -291,7 +288,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
 
     public void lectureServerCall() {
 
-        LoadingBox.showLoadingDialog(this,"Loading Announcements...");
+        LoadingBox.showLoadingDialog(this, "Loading Announcements...");
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
@@ -332,10 +329,6 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-
-
-    LinearLayout linearLayoutCheckBoxLecture;
-
     private void setCheckBoxes() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -356,7 +349,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
 
         linearLayoutCheckBoxLecture = (LinearLayout) dialogView.findViewById(R.id.linearLayoutCheckBoxLecture);
 
-        if (LoadingBox.isDialogShowing()){
+        if (LoadingBox.isDialogShowing()) {
             LoadingBox.dismissLoadingDialog();
         }
 
@@ -372,11 +365,10 @@ public class AnnouncementsActivity extends AppCompatActivity implements View.OnC
         busListSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner parent, View view, int position, long id) {
-                Log.d(TAG,"position : "+position);
-                switch (position)
-                {
+                Log.d(TAG, "position : " + position);
+                switch (position) {
                     case 0:
-                        Log.d(TAG,"position : "+position);
+                        Log.d(TAG, "position : " + position);
                         linearLayoutDynamicCheckBoxLecture.setVisibility(View.GONE);
                         linearLayoutDynamicCheckBoxClass.setVisibility(View.GONE);
                         break;

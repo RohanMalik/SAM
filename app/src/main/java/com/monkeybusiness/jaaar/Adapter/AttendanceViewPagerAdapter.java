@@ -3,7 +3,6 @@ package com.monkeybusiness.jaaar.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.ClassHistoryFragment;
 import com.monkeybusiness.jaaar.Fragment.RandomFragment;
 
@@ -26,17 +25,17 @@ public class AttendanceViewPagerAdapter extends BaseViewPagerFragmentStatAdapter
     public Fragment getFragmentItem(int position) {
         switch (position) {
             case 0:
-             //   AttendanceFragment attendanceFragment = new AttendanceFragment();
+                //   AttendanceFragment attendanceFragment = new AttendanceFragment();
 //                AttendanceFragment attendanceFragment = new AttendanceFragment();
 //
 //
 //                return attendanceFragment;
             case 1:
-            //    ClassHistoryFragment classHistoryFragment = new ClassHistoryFragment();
-                ClassHistoryFragment classHistoryFragment =ClassHistoryFragment.getInstance();
+                //    ClassHistoryFragment classHistoryFragment = new ClassHistoryFragment();
+                ClassHistoryFragment classHistoryFragment = ClassHistoryFragment.getInstance();
                 return classHistoryFragment;
             case 2:
-              //  RandomFragment randomFragment = new RandomFragment();
+                //  RandomFragment randomFragment = new RandomFragment();
                 RandomFragment randomFragment = RandomFragment.getInstance();
                 return randomFragment;
         }
@@ -46,7 +45,7 @@ public class AttendanceViewPagerAdapter extends BaseViewPagerFragmentStatAdapter
     @Override
     public void updateFragmentItem(int position, Fragment fragment) {
 
-        switch (position){
+        switch (position) {
             case 0:
 //                ((AttendanceFragment) fragment).getFragmentManager();
 

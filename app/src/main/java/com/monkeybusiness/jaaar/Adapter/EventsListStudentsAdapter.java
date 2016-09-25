@@ -10,12 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
 import com.monkeybusiness.jaaar.objectClasses.studentRemarksData.Remark;
 import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rmn.androidscreenlibrary.ASSL;

@@ -2,7 +2,6 @@ package com.monkeybusiness.jaaar.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Activity.AttendanceDetailsActivity;
-import com.monkeybusiness.jaaar.Fragment.FriendsActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.batchesData.BatchesResponseData;
-import com.monkeybusiness.jaaar.objectClasses.lectureResponse.LectureResponseData;
-import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.preferences.Prefs;
-import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
@@ -87,8 +78,8 @@ public class BatchesAdapter extends BaseAdapter {
 
         viewHolder.textViewLectureNo.setText(String.valueOf(position + 1) + ". ");
         viewHolder.textViewLectureName.setText(batchesResponseData.getData().getBatches().get(position).getClassAlias());
-        viewHolder.textViewSubjectName.setText("Students : "+batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
-        viewHolder.textViewLectDesc.setText("Section : "+batchesResponseData.getData().getBatches().get(position).getSection());
+        viewHolder.textViewSubjectName.setText("Students : " + batchesResponseData.getData().getBatches().get(position).getStudents().getCount());
+        viewHolder.textViewLectDesc.setText("Section : " + batchesResponseData.getData().getBatches().get(position).getSection());
 
 
         viewHolder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {

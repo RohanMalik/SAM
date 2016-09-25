@@ -10,12 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.Activity.FillMarksForExamsCategoryActivity;
-import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.attendanceResponse.Datum;
 import com.monkeybusiness.jaaar.objectClasses.examData.Exam;
 import com.monkeybusiness.jaaar.objectClasses.examData.ExamData;
-import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
 import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
@@ -104,10 +101,10 @@ public class ExamsDetailsAdapter extends BaseAdapter {
 
         holder.textViewBatchDate.setText(" " + exams.get(position).getExamName());
         holder.textViewDesc.setText(exams.get(position).getDescription());
-        holder.textViewSubmitStatus.setText("Status : " +exams.get(position).getStatus());
+        holder.textViewSubmitStatus.setText("Status : " + exams.get(position).getStatus());
         holder.textViewTotal.setText("Date : " + Utils.formatDateAndTime(exams.get(position).getExamDate()));
         holder.textViewPresent.setText(exams.get(position).getMinMarks() + "");
-        holder.textViewAbsent.setText(exams.get(position).getMaxMarks()+ "");
+        holder.textViewAbsent.setText(exams.get(position).getMaxMarks() + "");
         holder.textViewType.setText(examGrpName);
 //
         holder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +112,7 @@ public class ExamsDetailsAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, FillMarksForExamsCategoryActivity.class);
-                Prefs.with(context).save(PrefsKeys.EXAM_DATA,exams.get(position));
+                Prefs.with(context).save(PrefsKeys.EXAM_DATA, exams.get(position));
                 context.startActivity(intent);
             }
         });

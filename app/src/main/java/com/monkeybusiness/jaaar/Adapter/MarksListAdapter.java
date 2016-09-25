@@ -34,14 +34,14 @@ public class MarksListAdapter extends BaseAdapter {
 
     public MarksListAdapter(Activity activity, List<Student> studentsForMarks) {
 
-        Log.d("MarksListAdapter","Students size : "+studentsForMarks.size());
+        Log.d("MarksListAdapter", "Students size : " + studentsForMarks.size());
 
         this.studentsForMarks = studentsForMarks;
         this.activity = activity;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         studentDetailsForMarksResponse = Prefs.with(activity).getObject(PrefsKeys.STUDENT_DATA_TEST, StudentDetailsForMarksResponse.class);
 
-        Log.d("MarksListAdapter","studentsfor marks : "+studentDetailsForMarksResponse.getData().getStudents().size());
+        Log.d("MarksListAdapter", "studentsfor marks : " + studentDetailsForMarksResponse.getData().getStudents().size());
 
 //        studentAttdDatas = new ArrayList<>();
 
@@ -112,18 +112,28 @@ public class MarksListAdapter extends BaseAdapter {
 //        int id = studentId.get(position);
 //        int index = getIndexOfId(id);
 
-        viewHolder.textViewNameListView.setText(studentDetailsForMarksResponse.getData().getStudents().get(position).getStudentName()+"");
-        viewHolder.textViewRollnoListView.setText(studentDetailsForMarksResponse.getData().getStudents().get(position).getRollno()+"");
-        if (studentsForMarks.get(position).getMarks()!=null)
-        {
-            int marks = studentsForMarks.get(position).getMarks();
+        int id = studentsForMarks.get(position).getStudentId();
+//        int index = getIndexOfId(id);
 
-            if (marks==-777 || marks == -999)
-            {
-                marks = 0;
+        com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student studentObj = null;
+        for (com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student student : studentDetailsForMarksResponse.getData().getStudents()) {
+            if (id == student.getId()) {
+                studentObj = student;
             }
+        }
 
-            viewHolder.textViewMarksListView.setText(marks+"");
+        if (studentObj != null) {
+            viewHolder.textViewNameListView.setText(studentObj.getStudentName() + "");
+            viewHolder.textViewRollnoListView.setText(studentObj.getRollno() + "");
+            if (studentsForMarks.get(position).getMarks() != null) {
+                int marks = studentsForMarks.get(position).getMarks();
+
+                if (marks == -777 || marks == -999) {
+                    marks = 0;
+                }
+
+                viewHolder.textViewMarksListView.setText(marks + "");
+            }
         }
 
 

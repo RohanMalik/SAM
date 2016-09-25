@@ -34,14 +34,14 @@ public class ExamsMarksListAdapter extends BaseAdapter {
 
     public ExamsMarksListAdapter(Activity activity, List<Student> studentsForMarks) {
 
-        Log.d("MarksListAdapter","Students size : "+studentsForMarks.size());
+        Log.d("MarksListAdapter", "Students size : " + studentsForMarks.size());
 
         this.studentsForMarks = studentsForMarks;
         this.activity = activity;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         studentDetailsForMarksResponse = Prefs.with(activity).getObject(PrefsKeys.STUDENT_EXAM_TEST, StudentDetailsForMarksResponse.class);
 
-        Log.d("MarksListAdapter","studentsfor marks : "+studentDetailsForMarksResponse.getData().getStudents().size());
+        Log.d("MarksListAdapter", "studentsfor marks : " + studentDetailsForMarksResponse.getData().getStudents().size());
 
 //        studentAttdDatas = new ArrayList<>();
 
@@ -109,23 +109,29 @@ public class ExamsMarksListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 //
-//        int id = studentId.get(position);
+        int id = studentsForMarks.get(position).getStudentId();
 //        int index = getIndexOfId(id);
 
-        viewHolder.textViewNameListView.setText(studentDetailsForMarksResponse.getData().getStudents().get(position).getStudentName()+"");
-        viewHolder.textViewRollnoListView.setText(studentDetailsForMarksResponse.getData().getStudents().get(position).getRollno()+"");
-        if (studentsForMarks.get(position).getMarks()!=null)
-        {
-            int marks = studentsForMarks.get(position).getMarks();
-
-            if (marks==-777 || marks == -999)
-            {
-                marks = 0;
+        com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student studentObj = null;
+        for (com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student student : studentDetailsForMarksResponse.getData().getStudents()) {
+            if (id == student.getId()) {
+                studentObj = student;
             }
-
-            viewHolder.textViewMarksListView.setText(marks+"");
         }
 
+        if (studentObj != null) {
+            viewHolder.textViewNameListView.setText(studentObj.getStudentName() + "");
+            viewHolder.textViewRollnoListView.setText(studentObj.getRollno() + "");
+            if (studentsForMarks.get(position).getMarks() != null) {
+                int marks = studentsForMarks.get(position).getMarks();
+
+                if (marks == -777 || marks == -999) {
+                    marks = 0;
+                }
+
+                viewHolder.textViewMarksListView.setText(marks + "");
+            }
+        }
 
         return view;
     }

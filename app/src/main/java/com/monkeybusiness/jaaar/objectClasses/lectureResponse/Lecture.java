@@ -3,6 +3,9 @@ package com.monkeybusiness.jaaar.objectClasses.lectureResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Lecture {
 
     @SerializedName("id")
@@ -32,6 +35,10 @@ public class Lecture {
     @SerializedName("subject")
     @Expose
     private Subject subject;
+    @SerializedName("batches")
+    @Expose
+    private List<Batch> batches= new ArrayList<Batch>();
+
 
     /**
      * @return The id
@@ -159,4 +166,11 @@ public class Lecture {
         this.subject = subject;
     }
 
+    public List<Batch> getBatches() {
+        return batches;
+    }
+
+    public void setBatches(List<Batch> batches) {
+        this.batches = batches;
+    }
 }

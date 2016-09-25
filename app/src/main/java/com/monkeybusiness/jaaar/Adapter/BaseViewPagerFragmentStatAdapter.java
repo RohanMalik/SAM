@@ -10,61 +10,50 @@ import java.util.WeakHashMap;
 /**
  * Created by rohanmalik on 29/12/15.
  */
-public abstract class BaseViewPagerFragmentStatAdapter extends FragmentStatePagerAdapter
-{
+public abstract class BaseViewPagerFragmentStatAdapter extends FragmentStatePagerAdapter {
     private WeakHashMap<Integer, Fragment> mFragments;
 
-    public BaseViewPagerFragmentStatAdapter(FragmentManager fm)
-    {
+    public BaseViewPagerFragmentStatAdapter(FragmentManager fm) {
         super(fm);
         mFragments = new WeakHashMap<Integer, Fragment>();
     }
 
     @Override
-    public Fragment getItem(int position)
-    {
+    public Fragment getItem(int position) {
         Fragment item = getFragmentItem(position);
         mFragments.put(Integer.valueOf(position), item);
         return item;
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object)
-    {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
         Integer key = Integer.valueOf(position);
-        if (mFragments.containsKey(key))
-        {
+        if (mFragments.containsKey(key)) {
             mFragments.remove(key);
         }
     }
 
     @Override
-    public void notifyDataSetChanged()
-    {
+    public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        for (Integer position : mFragments.keySet())
-        {
+        for (Integer position : mFragments.keySet()) {
             //Make sure we only update fragments that should be seen
-            if (position != null && mFragments.get(position) != null && position.intValue() < getCount())
-            {
+            if (position != null && mFragments.get(position) != null && position.intValue() < getCount()) {
                 updateFragmentItem(position, mFragments.get(position));
             }
         }
     }
 
     @Override
-    public int getItemPosition(Object object)
-    {
+    public int getItemPosition(Object object) {
         //If the object is a fragment, check to see if we have it in the hashmap
-        if (object instanceof Fragment)
-        {
+        if (object instanceof Fragment) {
             int position = findFragmentPositionHashMap((Fragment) object);
             //If fragment found in the hashmap check if it should be shown
-            if (position >= 0)
-            {
+            if (position >= 0) {
                 //Return POSITION_NONE if it shouldn't be display
-                return (position >= getCount()? POSITION_NONE : position);
+                return (position >= getCount() ? POSITION_NONE : position);
             }
         }
 
@@ -73,17 +62,15 @@ public abstract class BaseViewPagerFragmentStatAdapter extends FragmentStatePage
 
     /**
      * Find the location of a fragment in the hashmap if it being view
+     *
      * @param object the Fragment we want to check for
      * @return the position if found else -1
      */
-    protected int findFragmentPositionHashMap(Fragment object)
-    {
-        for (Integer position : mFragments.keySet())
-        {
+    protected int findFragmentPositionHashMap(Fragment object) {
+        for (Integer position : mFragments.keySet()) {
             if (position != null &&
                     mFragments.get(position) != null &&
-                    mFragments.get(position) == object)
-            {
+                    mFragments.get(position) == object) {
                 return position;
             }
         }
@@ -92,5 +79,6 @@ public abstract class BaseViewPagerFragmentStatAdapter extends FragmentStatePage
     }
 
     public abstract Fragment getFragmentItem(int position);
+
     public abstract void updateFragmentItem(int position, Fragment fragment);
 }

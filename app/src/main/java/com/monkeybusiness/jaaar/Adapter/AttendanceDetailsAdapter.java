@@ -2,7 +2,6 @@ package com.monkeybusiness.jaaar.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,35 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.attendanceResponse.Datum;
-import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.BatchInfo;
-import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
-import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
-import com.monkeybusiness.jaaar.retrofit.RestClient;
 import com.monkeybusiness.jaaar.utils.Constants;
 import com.monkeybusiness.jaaar.utils.FontClass;
-import com.monkeybusiness.jaaar.utils.ISO8601;
-import com.monkeybusiness.jaaar.utils.preferences.Prefs;
-import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import rmn.androidscreenlibrary.ASSL;
 
 /**
@@ -52,7 +30,7 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
     List<Datum> datumList;
     int id;
 
-    public AttendanceDetailsAdapter(Context context, List<Datum> datumList,int id) {
+    public AttendanceDetailsAdapter(Context context, List<Datum> datumList, int id) {
         this.id = id;
         this.context = context;
         this.datumList = datumList;
@@ -112,9 +90,9 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
         holder.textViewLectureNo.setText(String.valueOf(position + 1) + ". ");
 
         holder.textViewBatchDate.setText("Date : " + datumList.get(position).getDate());
-        holder.textViewSubmitStatus.setText("Status : " +datumList.get(position).getAttendanceStatus());
+        holder.textViewSubmitStatus.setText("Status : " + datumList.get(position).getAttendanceStatus());
         holder.textViewTotal.setText("Total Students : " + (datumList.get(position).getAbsent() + datumList.get(position).getPresent()));
-        holder.textViewPresent.setText( datumList.get(position).getPresent() + "");
+        holder.textViewPresent.setText(datumList.get(position).getPresent() + "");
         holder.textViewAbsent.setText(datumList.get(position).getAbsent() + "");
 
         holder.linearLayoutMainItemLecture.setOnClickListener(new View.OnClickListener() {
@@ -122,8 +100,8 @@ public class AttendanceDetailsAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, AttendanceFragment.class);
-                intent.putExtra(Constants.BATCH_ID,id);
-                intent.putExtra(Constants.DATE,datumList.get(position).getDate());
+                intent.putExtra(Constants.BATCH_ID, id);
+                intent.putExtra(Constants.DATE, datumList.get(position).getDate());
                 context.startActivity(intent);
             }
         });

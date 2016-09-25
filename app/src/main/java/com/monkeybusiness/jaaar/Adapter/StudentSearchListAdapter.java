@@ -5,12 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.monkeybusiness.jaaar.R;
-import com.monkeybusiness.jaaar.objectClasses.eventResponse.Event;
 import com.monkeybusiness.jaaar.objectClasses.studentSearchdata.Student;
 
 import java.util.ArrayList;
@@ -28,8 +26,8 @@ public class StudentSearchListAdapter extends ArrayAdapter<Student> {
     LayoutInflater inflater;
     List<Student> students = new ArrayList<>();
 
-    public StudentSearchListAdapter(Context context,List<Student> students) {
-        super(context,R.layout.item_search_event);
+    public StudentSearchListAdapter(Context context, List<Student> students) {
+        super(context, R.layout.item_search_event);
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.students = students;

@@ -3,11 +3,6 @@ package com.monkeybusiness.jaaar.Adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.monkeybusiness.jaaar.Fragment.AttendanceReviewFragment;
-import com.monkeybusiness.jaaar.Fragment.RandomFragment;
-import com.monkeybusiness.jaaar.Fragment.StudentAttendanceCardFargment;
 
 /**
  * Created by rakesh on 1/1/16.
