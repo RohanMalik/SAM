@@ -99,29 +99,30 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AddEventsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.MyClassExamActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.MyClassExamsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AllExamsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ExamGroupActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.FillMarksForExamsCategoryActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AnnouncementsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.HomeWorkActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activity.HomeWorkListActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.HomeWorkListActivity" />
+        <activity android:name=".Activity.ExamTypeActivity"></activity>
     </application>
 
 </manifest>

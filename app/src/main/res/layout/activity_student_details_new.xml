@@ -333,6 +333,7 @@
                         android:layout_marginBottom="12px"
                         android:layout_marginRight="24px"
                         android:layout_marginTop="16px"
+                        android:layout_marginLeft="70dp"
                         android:text="6279 Larkin Haven"
                         android:textColor="@color/black_grey"
                         android:textSize="29px" />

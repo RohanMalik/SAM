@@ -201,7 +201,7 @@ public class AllExamsActivity extends BaseActivity implements View.OnClickListen
 //        });
 //    }
 
-    private void setUiData(ExamData examData, int id) {
+    private void setUiData(ExamData examData) {
 
         Log.d("list", "before : " + new Gson().toJson(examData));
 
@@ -325,20 +325,37 @@ public class AllExamsActivity extends BaseActivity implements View.OnClickListen
         String xCookies = Prefs.with(this).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this).getString(PrefsKeys.A_COOKIES, "");
 
-        String gradeId = Prefs.with(this).getString(Constants.GRADE_ID, "");
+        boolean fromLecture = Prefs.with(this).getBoolean(Constants.FROM_LECTURES,false);
 
-        RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamsByBatch(String.valueOf(examGrpId), String.valueOf(gradeId), new Callback<ExamData>() {
-            @Override
-            public void success(ExamData examData, Response response) {
-                Log.d(TAG, "Response : " + new Gson().toJson(examData));
-                setUiData(examData, Integer.parseInt(gradeId));
-            }
+        if (fromLecture)
+        {
+            String lectureId = Prefs.with(this).getString(Constants.LECTURE_ID_EXAMS,"");
+            RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamsByLecture(String.valueOf(examGrpId), String.valueOf(lectureId), new Callback<ExamData>() {
+                @Override
+                public void success(ExamData examData, Response response) {
+                    Log.d(TAG, "Response : " + new Gson().toJson(examData));
+                    setUiData(examData);
+                }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "Response : " + error.toString());
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG, "Response : " + error.toString());
+                }
+            });
+        }else {
+            String gradeId = Prefs.with(this).getString(Constants.GRADE_ID, "");
+            RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamsByBatch(String.valueOf(examGrpId), String.valueOf(gradeId), new Callback<ExamData>() {
+                @Override
+                public void success(ExamData examData, Response response) {
+                    Log.d(TAG, "Response : " + new Gson().toJson(examData));
+                    setUiData(examData);
+                }
 
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG, "Response : " + error.toString());
+                }
+            });
+        }
     }
 }

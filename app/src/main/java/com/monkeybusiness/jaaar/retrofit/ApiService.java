@@ -143,6 +143,9 @@ public interface ApiService {
     @GET("/exam_groups/{group_id}/exams")
     void apiCallGetExamsByBatch(@Path("group_id") String grpId,@Query("grade_id") String gradeId,Callback<ExamData> callback);
 
+    @GET("/exam_groups/{group_id}/exams")
+    void apiCallGetExamsByLecture(@Path("group_id") String grpId,@Query("lecture_id") String lectureId,Callback<ExamData> callback);
+
     @GET("/exams/{exam_id}/batch/{batch_id}/students")
     void apiCallGetExamStudents(@Path("exam_id") String examId,@Path("batch_id") String batchId, Callback<StudentDetailsForMarksResponse> callback);
 

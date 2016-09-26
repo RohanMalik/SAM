@@ -103,6 +103,10 @@ public class ExamGroupActivity extends BaseActivity {
 
         String lectureId = Prefs.with(this).getString(Constants.LECTURE_ID_EXAMS,"");
 
+        if (lectureId.isEmpty())
+        {
+            lectureId = null;
+        }
         RestClient.getApiServicePojo(xCookies, aCookies).apiCallGetExamGroupByLecture(lectureId,new Callback<ExamGroupData>() {
             @Override
             public void success(ExamGroupData examGroupData, Response response) {

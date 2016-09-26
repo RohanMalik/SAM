@@ -34,7 +34,7 @@ public class Constants {
     public static final String TEST_STATUS = "testStatus";
 
     public static final String FROM_MAIN = "fromMain";
-
+    public static final String FROM_LECTURES = "fromLectures";
 
 
 }

@@ -91,6 +91,7 @@ public class ExamsAdapter extends BaseAdapter {
                 Prefs.with(context).save(Constants.GRADE_ID, String.valueOf(batchesResponseData.getData().getBatches().get(position).getGradeId()));
                 Prefs.with(context).save(Constants.BATCH_ID, String.valueOf(batchesResponseData.getData().getBatches().get(position).getId()));
                 Prefs.with(context).save(Constants.CLASS_ALIAS, batchesResponseData.getData().getBatches().get(position).getClassAlias());
+                Prefs.with(context).save(Constants.FROM_LECTURES,false);
                 context.startActivity(intent);
             }
         });

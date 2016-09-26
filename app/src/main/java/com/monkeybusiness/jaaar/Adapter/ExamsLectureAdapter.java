@@ -97,6 +97,7 @@ public class ExamsLectureAdapter extends BaseAdapter {
                 Prefs.with(context).save(Constants.LECTURE_ID_EXAMS, String.valueOf(lectureResponseData.getData().getLectures().get(position).getId()));
                 Prefs.with(context).save(Constants.CLASS_ALIAS, lectureResponseData.getData().getLectures().get(position).getBatches().get(0).getClassAlias());
                 Prefs.with(context).save(Constants.BATCH_ID, String.valueOf(lectureResponseData.getData().getLectures().get(position).getBatches().get(0).getId()));
+                Prefs.with(context).save(Constants.FROM_LECTURES, true);
                 context.startActivity(intent);
 //                getTestByLectureIdServerCall(lectureResponseData.getData().getLectures().get(position).getId());
             }

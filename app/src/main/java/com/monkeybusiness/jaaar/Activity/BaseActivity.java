@@ -35,7 +35,6 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
     public LinearLayout linearlayoutMyclassDown;
     public LinearLayout linearlayoutMyclassExams;
 
-
     public TextView textViewDashboard;
     public TextView textViewAttendance;
     public TextView textViewMyclass;
@@ -81,6 +80,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
         textViewMyclassExams.setTypeface(FontClass.proximaBold(this));
         textViewNotification.setTypeface(FontClass.proximaBold(this));
         username.setTypeface(FontClass.proximaBold(this));
+
     }
 
     void initializationMenu() {
@@ -203,7 +203,7 @@ public class BaseActivity extends SlidingFragmentActivity implements View.OnClic
                 if (Utils.classFlag != 5) {
 
                     toggleLayouts(linearlayoutMyclassExams, textViewMyclassExams);
-                    Intent intent = new Intent(BaseActivity.this, MyClassExamsActivity.class);
+                    Intent intent = new Intent(BaseActivity.this, ExamTypeActivity.class);
                     startActivity(intent);
                     finish();
 //                    overridePendingTransition(R.anim.slide_in_right,
