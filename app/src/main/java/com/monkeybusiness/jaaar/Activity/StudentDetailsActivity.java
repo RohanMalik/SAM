@@ -114,6 +114,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
     TextView textViewClassTitle;
     TextView textViewDOJTitle;
     TextView textViewRemarksTitle;
+    TextView textViewSSSMIDTitle;
+    TextView textViewSSSMID;
+
+    TextView textViewAadharTitle;
+    TextView textViewAadhar;
 
     ImageView imageViewEditNumber;
     RelativeLayout relativeLayoutEditPic;
@@ -195,6 +200,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         textViewClassTitle.setTypeface(FontClass.proximaRegular(this));
         textViewDOJTitle.setTypeface(FontClass.proximaRegular(this));
         textViewRemarksTitle.setTypeface(FontClass.proximaBold(this));
+        textViewSSSMIDTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewSSSMID.setTypeface(FontClass.proximaRegular(this));
+
+        textViewAadharTitle.setTypeface(FontClass.proximaRegular(this));
+        textViewAadhar.setTypeface(FontClass.proximaRegular(this));
     }
 
     public void initialization() {
@@ -235,6 +245,11 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
         textViewClassTitle = (TextView) findViewById(R.id.textViewClassTitle);
         textViewDOJTitle = (TextView) findViewById(R.id.textViewDOJTitle);
         textViewRemarksTitle = (TextView) findViewById(R.id.textViewRemarksTitle);
+
+        textViewSSSMIDTitle = (TextView) findViewById(R.id.textViewSSSMIDTitle);
+        textViewSSSMID = (TextView) findViewById(R.id.textViewSSSMID);
+        textViewAadharTitle = (TextView) findViewById(R.id.textViewAadharTitle);
+        textViewAadhar = (TextView) findViewById(R.id.textViewAadhar);
 
         imageViewEditNumber = (ImageView) findViewById(R.id.imageViewEditNumber);
 
@@ -316,6 +331,14 @@ public class StudentDetailsActivity extends BaseActivity implements ImageChooser
                 Picasso.with(this).load(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()).fit().into(imageViewProfilePicStudent);
 //                imageViewProfilePicStudent.setImageBitmap(getDecodedPhotos(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));4
 //                executorService.submit(new imageDownload(studentsDetailsResponseData.getData().getStudent().getPicture().getUrl()));
+            }
+
+            if (studentsDetailsResponseData.getData().getStudent().getSssmId() != null) {
+                textViewSSSMID.setText(studentsDetailsResponseData.getData().getStudent().getSssmId());
+            }
+
+            if (studentsDetailsResponseData.getData().getStudent().getAadharNo() != null) {
+                textViewAadhar.setText(studentsDetailsResponseData.getData().getStudent().getAadharNo());
             }
         }
 

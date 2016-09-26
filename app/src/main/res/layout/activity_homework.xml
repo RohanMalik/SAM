@@ -41,7 +41,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <com.rey.material.widget.Spinner
                     android:id="@+id/busListSpinner"
@@ -62,24 +63,34 @@
                     app:spn_labelTextColor="@color/black_grey"
                     app:spn_labelTextSize="32px" />
 
-                <com.rey.material.widget.Spinner
-                    android:id="@+id/spinnerLecture"
-                    style="@style/Material.Widget.Spinner"
+                <!--<com.rey.material.widget.Spinner-->
+                    <!--android:id="@+id/spinnerLecture"-->
+                    <!--style="@style/Material.Widget.Spinner"-->
+                    <!--android:layout_width="0px"-->
+                    <!--android:layout_height="60px"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_margin="16px"-->
+                    <!--app:rd_style="@style/Material.Drawable.Ripple.Wave"-->
+                    <!--app:spn_arrowAnimDuration="500"-->
+                    <!--app:spn_arrowColor="@color/add_button_purple"-->
+                    <!--app:spn_arrowSize="24px"-->
+                    <!--app:spn_arrowSwitchMode="true"-->
+                    <!--app:spn_dividerAnimDuration="100"-->
+                    <!--app:spn_dividerColor="@color/add_button_purple"-->
+                    <!--app:spn_dividerHeight="5px"-->
+                    <!--app:spn_dividerPadding="10px"-->
+                    <!--app:spn_labelTextColor="@color/black_grey"-->
+                    <!--app:spn_labelTextSize="32px" />-->
+                
+                <TextView
+                    android:id="@+id/textViewLectureList"
                     android:layout_width="0px"
-                    android:layout_height="60px"
+                    android:layout_height="wrap_content"
+                    android:text="SELECT LECTURE"
                     android:layout_weight="1"
-                    android:layout_margin="16px"
-                    app:rd_style="@style/Material.Drawable.Ripple.Wave"
-                    app:spn_arrowAnimDuration="500"
-                    app:spn_arrowColor="@color/add_button_purple"
-                    app:spn_arrowSize="24px"
-                    app:spn_arrowSwitchMode="true"
-                    app:spn_dividerAnimDuration="100"
-                    app:spn_dividerColor="@color/add_button_purple"
-                    app:spn_dividerHeight="5px"
-                    app:spn_dividerPadding="10px"
-                    app:spn_labelTextColor="@color/black_grey"
-                    app:spn_labelTextSize="32px" />
+                    android:gravity="center"
+                    android:textSize="29px"
+                    />
 
             </LinearLayout>
 

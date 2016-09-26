@@ -3,6 +3,8 @@ package com.monkeybusiness.jaaar.objectClasses.addHomeWorkObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Hws {
 
     @SerializedName("details")
@@ -13,7 +15,7 @@ public class Hws {
     private String hwDate;
     @SerializedName("lecture_id")
     @Expose
-    private String lectureId;
+    private List<Integer> lectureId;
     @SerializedName("hw_type")
     @Expose
     private String hwType;
@@ -49,14 +51,14 @@ public class Hws {
     /**
      * @return The lectureId
      */
-    public String getLectureId() {
+    public List<Integer> getLectureId() {
         return lectureId;
     }
 
     /**
      * @param lectureId The lecture_id
      */
-    public void setLectureId(String lectureId) {
+    public void setLectureId(List<Integer> lectureId) {
         this.lectureId = lectureId;
     }
 

@@ -1,6 +1,9 @@
 package com.monkeybusiness.jaaar.Adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.homeWorkResponseData.Hw;
@@ -86,6 +90,31 @@ public class HomeWorkAdapter extends BaseAdapter {
         viewHolder.textViewEventDesc.setText(hws.get(position).getHwDate());
 
         viewHolder.textViewEventTime.setText(hws.get(position).getDetails());
+
+        viewHolder.linearLayoutMain.setOnLongClickListener(new View.OnLongClickListener()
+
+                                                            {
+                                                                @Override
+                                                                public boolean onLongClick(View v) {
+
+                                                                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
+                                                                    ClipData clip = ClipData.newPlainText("homeWork", viewHolder.textViewEventTime.getText().toString());
+                                                                    clipboard.setPrimaryClip(clip);
+
+                                                                    try {
+                                                                        Vibrator vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                                                        vib.vibrate(200);
+                                                                    } catch (Exception e) {
+                                                                        e.printStackTrace();
+                                                                    }
+
+
+                                                                    Toast.makeText(context.getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                                                                    return false;
+                                                                }
+                                                            }
+
+        );
 
         return view;
     }

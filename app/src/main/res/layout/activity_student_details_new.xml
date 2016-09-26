@@ -416,6 +416,43 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
+                    android:background="@color/edit_text_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewAadharTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12px"
+                        android:layout_marginLeft="24px"
+                        android:layout_marginTop="16px"
+                        android:text="Aadhar No."
+                        android:textColor="@color/edit_text_grey"
+                        android:textSize="29px" />
+
+
+                    <TextView
+                        android:id="@+id/textViewAadhar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12px"
+                        android:layout_marginRight="24px"
+                        android:layout_marginTop="16px"
+                        android:text="Not Available"
+                        android:textColor="@color/black_grey"
+                        android:textSize="29px" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
                     android:background="@color/edit_text_grey" />
 
                 <TextView
@@ -537,6 +574,44 @@
                         android:layout_marginRight="24px"
                         android:layout_marginTop="16px"
                         android:text="2015-06-28"
+                        android:textColor="@color/black_grey"
+                        android:textSize="29px" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/edit_text_divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewSSSMIDTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12px"
+                        android:layout_marginLeft="24px"
+                        android:layout_marginTop="16px"
+                        android:text="SSSM ID"
+                        android:textColor="@color/edit_text_grey"
+                        android:textSize="29px" />
+
+
+                    <TextView
+                        android:id="@+id/textViewSSSMID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12px"
+                        android:layout_marginRight="24px"
+                        android:layout_marginTop="16px"
+                        android:text="Not Available"
                         android:textColor="@color/black_grey"
                         android:textSize="29px" />
 

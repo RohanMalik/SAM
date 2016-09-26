@@ -77,12 +77,34 @@ public class Student {
     @SerializedName("course")
     @Expose
     private Course course;
+    @SerializedName("sssm_id")
+    @Expose
+    private String sssmId;
+    @SerializedName("aadhar_no")
+    @Expose
+    private String aadharNo;
     @SerializedName("attendances")
     @Expose
     private List<Attendance> attendances = new ArrayList<Attendance>();
     @SerializedName("picture")
     @Expose
     private Picture picture= new Picture();
+
+    public String getSssmId() {
+        return sssmId;
+    }
+
+    public void setSssmId(String sssmId) {
+        this.sssmId = sssmId;
+    }
+
+    public String getAadharNo() {
+        return aadharNo;
+    }
+
+    public void setAadharNo(String aadharNo) {
+        this.aadharNo = aadharNo;
+    }
 
     public Picture getPicture() {
         return picture;

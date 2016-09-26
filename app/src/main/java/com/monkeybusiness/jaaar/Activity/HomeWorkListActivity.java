@@ -1,10 +1,14 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,6 +30,7 @@ import com.monkeybusiness.jaaar.utils.Utils;
 import com.monkeybusiness.jaaar.utils.dialogBox.LoadingBox;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.Spinner;
 
 import java.util.ArrayList;
@@ -52,6 +57,7 @@ public class HomeWorkListActivity extends AppCompatActivity {
     RelativeLayout relativeLayoutNodataFound;
     String type;
     List<Integer> lectureIdslist = new ArrayList<Integer>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,4 +248,5 @@ public class HomeWorkListActivity extends AppCompatActivity {
             }
         });
     }
+
 }
