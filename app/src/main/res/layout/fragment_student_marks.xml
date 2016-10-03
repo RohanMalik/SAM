@@ -135,7 +135,6 @@
                             android:layout_gravity="center"
                             android:layout_margin="20px"
                             android:background="@color/white"
-                            android:inputType="number"
                             android:paddingLeft="10px"
                             android:layout_weight="1"
                             android:text=""

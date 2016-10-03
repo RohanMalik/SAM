@@ -317,7 +317,7 @@ public class AllExamsActivity extends BaseActivity implements View.OnClickListen
     protected void onResume() {
         super.onResume();
 
-        MasterClass.getInstance().getStudentsForMarks().clear();
+        MasterClass.getInstance().getStudentsForMarksExams().clear();
     }
 
     private void getExamsServerCall(int examGrpId) {

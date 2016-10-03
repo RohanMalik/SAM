@@ -2,6 +2,7 @@ package com.monkeybusiness.jaaar.objectClasses.postStudentExamMarks;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
 import com.monkeybusiness.jaaar.objectClasses.addMarksData.Student;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class ExamMarks {
 
     @SerializedName("exam_marks_data")
     @Expose
-    private List<Student> students = new ArrayList<Student>();
+    private List<StudentForMarks> students = new ArrayList<StudentForMarks>();
     @SerializedName("batch_id")
     @Expose
     private Integer batchId;
@@ -19,14 +20,14 @@ public class ExamMarks {
     /**
      * @return The students
      */
-    public List<Student> getStudents() {
+    public List<StudentForMarks> getStudents() {
         return students;
     }
 
     /**
      * @param students The exam_marks_data
      */
-    public void setStudents(List<Student> students) {
+    public void setStudents(List<StudentForMarks> students) {
         this.students = students;
     }
 

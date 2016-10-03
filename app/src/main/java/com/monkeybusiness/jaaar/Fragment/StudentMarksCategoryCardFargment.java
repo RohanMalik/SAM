@@ -19,6 +19,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
+import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
 import com.monkeybusiness.jaaar.objectClasses.examData.Exam;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamMark;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
@@ -73,7 +74,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
 
     boolean marksChanged;
 
-    com.monkeybusiness.jaaar.objectClasses.addMarksData.Student studentForMarks;
+    StudentForMarks studentForMarks;
 
     public static StudentMarksCategoryCardFargment newInstance(int page, String title) {
 
@@ -127,7 +128,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
 //        test = Prefs.with(this.getContext()).getObject(PrefsKeys.TEST_DATA, Test.class);
         exam = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_DATA, Exam.class);
 
-        int marks = 0;
+        String marks = "0";
         String remarks = "";
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -143,11 +144,11 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
 
                 Log.d("abc", "Position : " + position);
                 if (position == 1) {
-                    studentForMarks.setMarks(-777);
+                    studentForMarks.setMarks("-777");
                     editTextRemarks.setEnabled(false);
                     editTextFillMarks.setEnabled(false);
                 } else if (position == 2) {
-                    studentForMarks.setMarks(-999);
+                    studentForMarks.setMarks("-999");
                     editTextRemarks.setEnabled(false);
                     editTextFillMarks.setEnabled(false);
                 } else {
@@ -155,7 +156,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
                     editTextFillMarks.setEnabled(true);
                     if (!editTextFillMarks.getText().toString().equalsIgnoreCase(""))
                     {
-                        studentForMarks.setMarks(Integer.parseInt(editTextFillMarks.getText().toString()));
+                        studentForMarks.setMarks(editTextFillMarks.getText().toString());
                     }
 //
                 }
@@ -172,12 +173,12 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
             }
         }
 
-        if (marks == -777)
+        if (marks.equalsIgnoreCase("-777"))
         {
             testApplicability.setSelection(1);
             editTextRemarks.setEnabled(false);
             editTextFillMarks.setEnabled(false);
-        }else if (marks == -999)
+        }else if (marks.equalsIgnoreCase("-999") )
         {
             testApplicability.setSelection(2);
             editTextRemarks.setEnabled(false);
@@ -216,12 +217,12 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
         textViewRollNo.setText("Roll No " + student.getRollno());
         textViewClass.setText("Class " + classAlias);
 
-        studentForMarks = new com.monkeybusiness.jaaar.objectClasses.addMarksData.Student();
+        studentForMarks = new StudentForMarks();
         studentForMarks.setRemarks(remarks);
         studentForMarks.setStudentId(student.getId());
         studentForMarks.setMarks(marks);
 
-        MasterClass.getInstance().getStudentsForMarks().add(studentForMarks);
+        MasterClass.getInstance().getStudentsForMarksExams().add(studentForMarks);
 
         editTextRemarks.addTextChangedListener(new TextWatcher() {
             @Override
@@ -253,7 +254,7 @@ public class StudentMarksCategoryCardFargment extends Fragment implements View.O
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length()!=0)
                 {
-                    studentForMarks.setMarks(Integer.parseInt(String.valueOf(s)));
+                    studentForMarks.setMarks(s.toString());
                 }
             }
 

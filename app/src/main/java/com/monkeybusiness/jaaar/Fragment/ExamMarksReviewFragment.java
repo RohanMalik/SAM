@@ -20,6 +20,7 @@ import com.monkeybusiness.jaaar.Adapter.ExamsMarksListAdapter;
 import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
+import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
 import com.monkeybusiness.jaaar.objectClasses.addMarksData.Student;
 import com.monkeybusiness.jaaar.objectClasses.examData.Exam;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
@@ -145,7 +146,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
 
         ExamMarks examMarks = new ExamMarks();
         examMarks.setBatchId(Integer.parseInt(Prefs.with(this.getActivity()).getString(Constants.BATCH_ID, "")));
-        examMarks.setStudents(MasterClass.getInstance().getStudentsForMarks());
+        examMarks.setStudents(MasterClass.getInstance().getStudentsForMarksExams());
 
         addMarksrequestObject.setExamMarks(examMarks);
 
@@ -205,7 +206,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
         Log.d("abc", "onResumeFrag");
         setUiData();
 
-        Log.d("MarksReview", "Marks : " + new Gson().toJson(MasterClass.getInstance().getStudentsForMarks()));
+        Log.d("MarksReview", "Marks : " + new Gson().toJson(MasterClass.getInstance().getStudentsForMarksExams()));
 
     }
 
@@ -234,7 +235,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     private void setUiData() {
 //        absentStudents = 0;
 //        studentIds = getAbsentStudents();
-        reviewListAdapter = new ExamsMarksListAdapter(getActivity(), MasterClass.getInstance().getStudentsForMarks());
+        reviewListAdapter = new ExamsMarksListAdapter(getActivity(), MasterClass.getInstance().getStudentsForMarksExams());
         listViewReviewAttd.setAdapter(reviewListAdapter);
     }
 
@@ -265,14 +266,14 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
         ExamStudentMarks examStudentMarks = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_MARKS_DATA, ExamStudentMarks.class);
         Log.d("","exams_marks"+new Gson().toJson(examStudentMarks));
 
-        List<Student> marksListUpdated = MasterClass.getInstance().getStudentsForMarks();
+        List<StudentForMarks> marksListUpdated = MasterClass.getInstance().getStudentsForMarksExams();
 
         for (int i=0; i<marksListUpdated.size(); i++)
         {
             for (com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamMark examMark : examStudentMarks.getData().getExamMarks()){
                 if (marksListUpdated.get(i).getStudentId() == examMark.getStudentId())
                 {
-                    if (marksListUpdated.get(i).getMarks() != examMark.getMarks()){
+                    if (!marksListUpdated.get(i).getMarks().equalsIgnoreCase(examMark.getMarks())){
                         count++;
                         updateMarksServerCall(examMark.getId(),marksListUpdated.get(i).getMarks());
                         marksUpdate = true;
@@ -290,7 +291,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     ProgressDialog pDialog;
     int count = 0;
     int j = 0;
-    private void updateMarksServerCall(int id, int marks) {
+    private void updateMarksServerCall(int id, String marks) {
 
         Log.d("update","updating arks for id : "+id+" "+marks);
         String xCookies = Prefs.with(this.getContext()).getString(PrefsKeys.X_COOKIES, "");

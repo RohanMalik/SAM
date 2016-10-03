@@ -7,6 +7,7 @@ import com.monkeybusiness.jaaar.Activity.FillMarksForExamsCategoryActivity;
 import com.monkeybusiness.jaaar.Fragment.AttendanceFragment;
 import com.monkeybusiness.jaaar.Fragment.FillMarksActivity;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.SingleIdDetail;
 import com.monkeybusiness.jaaar.objectClasses.singleAttdDetailsData.StudentsInfo;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.Student;
@@ -34,6 +35,9 @@ public class MasterClass extends Application {
     List<Student> students;
 
     List<com.monkeybusiness.jaaar.objectClasses.addMarksData.Student> studentsForMarks = new ArrayList<>();
+
+    List<StudentForMarks> studentsForMarksExams = new ArrayList<>();
+
 
     public static MasterClass getInstance()
     {
@@ -116,5 +120,13 @@ public class MasterClass extends Application {
 
     public void setFillMarksForExamsCategoryActivity(FillMarksForExamsCategoryActivity fillMarksForExamsCategoryActivity) {
         this.fillMarksForExamsCategoryActivity = fillMarksForExamsCategoryActivity;
+    }
+
+    public List<StudentForMarks> getStudentsForMarksExams() {
+        return studentsForMarksExams;
+    }
+
+    public void setStudentsForMarksExams(List<StudentForMarks> studentsForMarksExams) {
+        this.studentsForMarksExams = studentsForMarksExams;
     }
 }

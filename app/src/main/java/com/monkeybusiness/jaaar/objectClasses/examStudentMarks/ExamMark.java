@@ -16,7 +16,7 @@ public class ExamMark {
     private int studentId;
     @SerializedName("marks")
     @Expose
-    private int marks;
+    private String marks;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -75,14 +75,14 @@ public class ExamMark {
     /**
      * @return The marks
      */
-    public int getMarks() {
+    public String getMarks() {
         return marks;
     }
 
     /**
      * @param marks The marks
      */
-    public void setMarks(int marks) {
+    public void setMarks(String marks) {
         this.marks = marks;
     }
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
+import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
 import com.monkeybusiness.jaaar.objectClasses.addMarksData.Student;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
@@ -31,10 +32,10 @@ public class ExamsMarksListAdapter extends BaseAdapter {
     Activity activity;
     List<StudentAttdData> studentAttdDatas;
     LayoutInflater inflater;
-    List<Student> studentsForMarks;
+    List<StudentForMarks> studentsForMarks;
     StudentDetailsForMarksResponse studentDetailsForMarksResponse;
 
-    public ExamsMarksListAdapter(Activity activity, List<Student> studentsForMarks) {
+    public ExamsMarksListAdapter(Activity activity, List<StudentForMarks> studentsForMarks) {
 
         Log.d("MarksListAdapter", "Students size : " + studentsForMarks.size());
 
@@ -125,10 +126,10 @@ public class ExamsMarksListAdapter extends BaseAdapter {
             viewHolder.textViewNameListView.setText(studentObj.getStudentName() + "");
             viewHolder.textViewRollnoListView.setText(studentObj.getRollno() + "");
             if (studentsForMarks.get(position).getMarks() != null) {
-                int marks = studentsForMarks.get(position).getMarks();
+                String marks = studentsForMarks.get(position).getMarks();
 
-                if (marks == -777 || marks == -999) {
-                    marks = 0;
+                if (marks.equalsIgnoreCase("-777") ||marks.equalsIgnoreCase("-999")) {
+                    marks = "0";
                 }
 
                 viewHolder.textViewMarksListView.setText(marks + "");
