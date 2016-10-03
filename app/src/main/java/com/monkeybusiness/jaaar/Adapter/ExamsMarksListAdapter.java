@@ -10,9 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.StudentAttdData;
 import com.monkeybusiness.jaaar.objectClasses.addMarksData.Student;
+import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
 import com.monkeybusiness.jaaar.objectClasses.studentDetailsForMarks.StudentDetailsForMarksResponse;
 import com.monkeybusiness.jaaar.utils.preferences.Prefs;
 import com.monkeybusiness.jaaar.utils.preferences.PrefsKeys;
@@ -132,7 +134,6 @@ public class ExamsMarksListAdapter extends BaseAdapter {
                 viewHolder.textViewMarksListView.setText(marks + "");
             }
         }
-
         return view;
     }
 

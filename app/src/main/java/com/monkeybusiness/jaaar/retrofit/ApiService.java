@@ -171,4 +171,6 @@ public interface ApiService {
 
     @POST("/hws")
     void apiCallPOSTCWHW(@Body TypedInput object, Callback<String> callback);
-}
+
+    @PUT("/exams/{exam_id}/exam_marks/{exam_marks_id}")
+    void apiCallPutMarks(@Path("exam_id") String exam_id,@Path("exam_marks_id") String exan_marks_id,@Body TypedInput marksBody, Callback<SimpleResponseData> callback);}
