@@ -21,7 +21,6 @@ import com.monkeybusiness.jaaar.MasterClass;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.interfaces.ReviewAttdInterface;
 import com.monkeybusiness.jaaar.objectClasses.StudentForMarks;
-import com.monkeybusiness.jaaar.objectClasses.addMarksData.Student;
 import com.monkeybusiness.jaaar.objectClasses.examData.Exam;
 import com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamStudentMarks;
 import com.monkeybusiness.jaaar.objectClasses.postStudentExamMarks.ExamMarks;
@@ -68,12 +67,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     TextView textViewPresentStudents;
     Context context;
     Exam exam;
-
-    public static ExamMarksReviewFragment newInstance(int page, String title) {
-
-        ExamMarksReviewFragment attendanceReviewFragment = new ExamMarksReviewFragment();
-        return attendanceReviewFragment;
-    }
+    boolean marksUpdate = false;
 
 //    public void submitAttd(String status)
 //    {
@@ -99,6 +93,37 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
 //        objectData.setStudentAttendance(studentAttendance);
 //
 ////        sendStudentsMarksServerCall(objectData);
+//    }
+    ProgressDialog pDialog;
+    int count = 0;
+    int j = 0;
+
+    public static ExamMarksReviewFragment newInstance(int page, String title) {
+
+        ExamMarksReviewFragment attendanceReviewFragment = new ExamMarksReviewFragment();
+        return attendanceReviewFragment;
+    }
+
+//    int absentStudents = 0;
+//
+//    public List<Integer> getAbsentStudents()
+//    {
+//        singleIdDetails = MasterClass.getInstance().getSingleIdDetails();
+//        List<Integer> studentIds = new ArrayList<>();
+//
+//        for (SingleIdDetail singleIdDetail : singleIdDetails)
+//        {
+//            if (singleIdDetail.getStatus().equalsIgnoreCase("A"))
+//            {
+//                absentStudents++;
+//                studentIds.add(singleIdDetail.getStudentId());
+//            }
+//        }
+//
+//        textViewAbsentStudents.setText(String.valueOf(absentStudents));
+//        textViewPresentStudents.setText(String.valueOf(singleIdDetails.size()-absentStudents));
+//
+//        return studentIds;
 //    }
 
     @Nullable
@@ -210,28 +235,6 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
 
     }
 
-//    int absentStudents = 0;
-//
-//    public List<Integer> getAbsentStudents()
-//    {
-//        singleIdDetails = MasterClass.getInstance().getSingleIdDetails();
-//        List<Integer> studentIds = new ArrayList<>();
-//
-//        for (SingleIdDetail singleIdDetail : singleIdDetails)
-//        {
-//            if (singleIdDetail.getStatus().equalsIgnoreCase("A"))
-//            {
-//                absentStudents++;
-//                studentIds.add(singleIdDetail.getStudentId());
-//            }
-//        }
-//
-//        textViewAbsentStudents.setText(String.valueOf(absentStudents));
-//        textViewPresentStudents.setText(String.valueOf(singleIdDetails.size()-absentStudents));
-//
-//        return studentIds;
-//    }
-
     private void setUiData() {
 //        absentStudents = 0;
 //        studentIds = getAbsentStudents();
@@ -259,41 +262,37 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
         }
     }
 
-    boolean marksUpdate = false;
     private void updateMarksStudent() {
         context = getContext();
 
         ExamStudentMarks examStudentMarks = Prefs.with(this.getContext()).getObject(PrefsKeys.EXAM_MARKS_DATA, ExamStudentMarks.class);
-        Log.d("","exams_marks"+new Gson().toJson(examStudentMarks));
+        Log.d("exams_marks", "exams_marks" + new Gson().toJson(examStudentMarks));
 
         List<StudentForMarks> marksListUpdated = MasterClass.getInstance().getStudentsForMarksExams();
 
-        for (int i=0; i<marksListUpdated.size(); i++)
-        {
-            for (com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamMark examMark : examStudentMarks.getData().getExamMarks()){
-                if (marksListUpdated.get(i).getStudentId() == examMark.getStudentId())
-                {
-                    if (!marksListUpdated.get(i).getMarks().equalsIgnoreCase(examMark.getMarks())){
-                        count++;
-                        updateMarksServerCall(examMark.getId(),marksListUpdated.get(i).getMarks());
-                        marksUpdate = true;
+        if (examStudentMarks.getData().getExamMarks().isEmpty()) {
+            sendStudentsMarksServerCall(exam.getId(), "submit");
+        }else {
+            for (int i = 0; i < marksListUpdated.size(); i++) {
+                for (com.monkeybusiness.jaaar.objectClasses.examStudentMarks.ExamMark examMark : examStudentMarks.getData().getExamMarks()) {
+                    if (marksListUpdated.get(i).getStudentId() == examMark.getStudentId()) {
+                        if (!marksListUpdated.get(i).getMarks().equalsIgnoreCase(examMark.getMarks())) {
+                            count++;
+                            marksUpdate = true;
+                            updateMarksServerCall(examMark.getId(), marksListUpdated.get(i).getMarks());
+                        }
                     }
                 }
             }
-        }
-
-        if (!marksUpdate)
-        {
-            CommonDialog.With(this.getActivity()).Show("Nothing To update");
+            if (!marksUpdate) {
+                CommonDialog.With(this.getActivity()).Show("Nothing To update");
+            }
         }
     }
 
-    ProgressDialog pDialog;
-    int count = 0;
-    int j = 0;
     private void updateMarksServerCall(int id, String marks) {
 
-        Log.d("update","updating arks for id : "+id+" "+marks);
+        Log.d("update", "updating arks for id : " + id + " " + marks);
         String xCookies = Prefs.with(this.getContext()).getString(PrefsKeys.X_COOKIES, "");
         String aCookies = Prefs.with(this.getContext()).getString(PrefsKeys.A_COOKIES, "");
         String examId = String.valueOf(exam.getId());
@@ -308,23 +307,21 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
         String jsonStr = new Gson().toJson(signleMarksUpdate);
         Log.d(TAG, "json : " + jsonStr);
 
-        if (pDialog==null)
-        {
+        if (pDialog == null) {
             pDialog = ProgressDialog.show(context, "Please wait.", "Loading...", false);
         }
 
         try {
             TypedInput typedInput = new TypedByteArray("application/json", jsonStr.getBytes("UTF-8"));
 
-            RestClient.getApiServicePojo(xCookies,aCookies).apiCallPutMarks(examId, marksId,
+            RestClient.getApiServicePojo(xCookies, aCookies).apiCallPutMarks(examId, marksId,
                     typedInput, new Callback<SimpleResponseData>() {
                         @Override
                         public void success(SimpleResponseData simpleResponseData, Response response) {
                             j++;
-                            Log.d(TAG,"Success"+j+" "+count);
+                            Log.d(TAG, "Success" + j + " " + count);
 
-                            if (count == j)
-                            {
+                            if (count == j) {
                                 pDialog.dismiss();
                                 count = 0;
                                 j = 0;
@@ -352,7 +349,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.d(TAG,"failure");
+                            Log.d(TAG, "failure");
                         }
                     });
         } catch (UnsupportedEncodingException e) {
