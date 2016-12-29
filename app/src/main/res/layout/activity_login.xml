@@ -65,6 +65,7 @@
                     android:textSize="32px"
                     android:inputType="text"
                     android:textColor="#000"
+                    android:textCursorDrawable="@null"
                     android:imeOptions="actionNext"
                     android:padding="24px"/>
 
@@ -84,6 +85,7 @@
                     android:textColor="#000"
                     android:padding="24px"
                     android:textSize="32px"
+                    android:textCursorDrawable="@null"
                     android:background="#fff"/>
             </LinearLayout>
             

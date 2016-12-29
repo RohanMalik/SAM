@@ -98,7 +98,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
     int count = 0;
     int j = 0;
 
-    public static ExamMarksReviewFragment newInstance(int page, String title) {
+    public static ExamMarksReviewFragment newInstance() {
 
         ExamMarksReviewFragment attendanceReviewFragment = new ExamMarksReviewFragment();
         return attendanceReviewFragment;
@@ -136,6 +136,8 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
                 false);
 
         initialization();
+        //for uses in FillExamMarks Activity.
+        setUiData();
         return rootView;
     }
 
@@ -203,6 +205,7 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
                         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                getActivity().setResult(RESULT_OK);
                                 getActivity().finish();
                             }
                         });
@@ -225,6 +228,8 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
             e.printStackTrace();
         }
     }
+
+    public final static int RESULT_OK = 200;
 
     @Override
     public void onResumeFragment() {
@@ -359,12 +364,12 @@ public class ExamMarksReviewFragment extends Fragment implements ReviewAttdInter
 
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
-
-        Log.d("abc", "viewCreated");
-    }
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        HollyViewPagerBus.registerScrollView(getActivity(), scrollView);
+//
+//        Log.d("abc", "viewCreated");
+//    }
 }

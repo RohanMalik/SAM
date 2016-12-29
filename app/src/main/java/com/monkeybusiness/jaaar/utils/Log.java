@@ -2,7 +2,7 @@ package com.monkeybusiness.jaaar.utils;
 
 public class Log {
 
-    private static final boolean print = false;    //true for printing and false for not
+    private static final boolean print = true;    //true for printing and false for not
 
     public Log() {
     }

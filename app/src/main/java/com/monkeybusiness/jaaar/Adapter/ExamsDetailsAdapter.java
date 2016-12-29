@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.monkeybusiness.jaaar.Activity.FillExamMarks;
 import com.monkeybusiness.jaaar.Activity.FillMarksForExamsCategoryActivity;
 import com.monkeybusiness.jaaar.R;
 import com.monkeybusiness.jaaar.objectClasses.examData.Exam;
@@ -111,7 +112,11 @@ public class ExamsDetailsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, FillMarksForExamsCategoryActivity.class);
+//                Intent intent = new Intent(context, FillMarksForExamsCategoryActivity.class);
+//                Prefs.with(context).save(PrefsKeys.EXAM_DATA, exams.get(position));
+//                context.startActivity(intent);
+
+                Intent intent = new Intent(context, FillExamMarks.class);
                 Prefs.with(context).save(PrefsKeys.EXAM_DATA, exams.get(position));
                 context.startActivity(intent);
             }

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearlayoutExamItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8px"
+        android:background="@color/white"
+        app:cardCornerRadius="5px"
+        app:cardElevation="5px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewRollNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/thumbnail"
+                    android:maxLines="3"
+                    android:paddingBottom="8px"
+                    android:paddingLeft="16px"
+                    android:paddingRight="8px"
+                    android:paddingTop="8px"
+                    android:text="Roll No. 1"
+                    android:textColor="#222"
+                    android:textSize="32px" />
+
+                <!--<com.rey.material.widget.Spinner-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/testApplicability"-->
+                <!--android:layout_marginTop="16px"-->
+                <!--android:layout_marginLeft="16px"-->
+                <!--android:layout_marginRight="16px"-->
+                <!--android:layout_marginBottom="8px"-->
+                <!--app:spn_labelEnable="true"-->
+                <!--android:paddingBottom="10px"-->
+                <!--android:layout_gravity="center_horizontal" />-->
+
+                <com.rey.material.widget.Spinner
+                    android:id="@+id/testApplicability"
+                    style="@style/Material.Widget.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8px"
+                    android:layout_marginLeft="16px"
+                    android:layout_marginRight="16px"
+                    android:layout_marginTop="8px"
+                    android:paddingBottom="4px"
+                    app:rd_style="@style/Material.Drawable.Ripple.Wave"
+                    app:spn_arrowAnimDuration="500"
+                    app:spn_arrowColor="@color/add_button_purple"
+                    app:spn_arrowSize="24px"
+                    app:spn_arrowSwitchMode="true"
+                    app:spn_dividerAnimDuration="100"
+                    app:spn_dividerColor="@color/add_button_purple"
+                    app:spn_dividerHeight="5px"
+                    app:spn_dividerPadding="10px"
+                    app:spn_labelTextColor="@color/black_grey"
+                    app:spn_labelTextSize="32px" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRollNo"
+                android:maxLines="3"
+                android:paddingBottom="8px"
+                android:paddingLeft="16px"
+                android:paddingRight="8px"
+                android:paddingTop="8px"
+                android:text="Rohan Malik"
+                android:textColor="#222"
+                android:textSize="36px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTitle"
+                android:maxLines="3"
+                android:paddingBottom="8px"
+                android:paddingLeft="16px"
+                android:paddingRight="8px"
+                android:text="Class 10th"
+                android:textColor="#666"
+                android:textSize="32px" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_below="@+id/textViewClass"
+                android:background="@color/primary"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8px"
+                    android:layout_weight="1"
+                    android:background="@color/primary"
+                    android:padding="10px"
+                    android:text="Enter Marks "
+                    android:textColor="@android:color/white"
+                    android:textSize="32px" />
+
+                <EditText
+                    android:id="@+id/editTextFillMarks"
+                    android:layout_width="60px"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="20px"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:gravity="right"
+                    android:paddingLeft="10px"
+                    android:paddingRight="8px"
+                    android:text=""
+                    android:textCursorDrawable="@null"
+                    android:textSize="32px" />
+
+                <TextView
+                    android:id="@+id/textViewMarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/primary"
+                    android:padding="10px"
+                    android:text="/50"
+                    android:textColor="@android:color/white"
+                    android:textSize="32px" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

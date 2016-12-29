@@ -1,5 +1,7 @@
 package com.monkeybusiness.jaaar.Activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -131,8 +134,10 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
 
     }
 
+    Activity context;
     public void setUIData(StudentDetailsForMarksResponse studentDetailsForMarksResponse, List<Student> studentsList) {
 
+        context = this;
         progressBarAttd.setVisibility(View.GONE);
         hollyViewPager.setVisibility(View.VISIBLE);
 
@@ -187,6 +192,21 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.d(TAG, "pageSelected : " + position);
+
+                //Close keyBoard in transition
+//                InputMethodManager inputManager = (InputMethodManager) context.getSystemService(
+//                        Context.INPUT_METHOD_SERVICE);
+//                inputManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(),
+//                        InputMethodManager.HIDE_NOT_ALWAYS);
+
+                try {
+                    if (getCurrentFocus() != null) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if (position == pageCount) {
                     ReviewAttdInterface reviewAttdInterface = (ReviewAttdInterface) adapterHolly.getRegisteredFragment(position);
@@ -285,7 +305,7 @@ public class FillMarksForExamsCategoryActivity extends BaseActivity {
             if (position != pageCount) {
                 return StudentMarksCategoryCardFargment.newInstance(position, (String) getPageTitle(position));
             } else {
-                return ExamMarksReviewFragment.newInstance(position, (String) getPageTitle(position));
+                return ExamMarksReviewFragment.newInstance();
             }
         }
 

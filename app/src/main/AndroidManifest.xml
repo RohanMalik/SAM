@@ -122,7 +122,9 @@
             android:name=".Activity.HomeWorkActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.HomeWorkListActivity" />
-        <activity android:name=".Activity.ExamTypeActivity"></activity>
+        <activity android:name=".Activity.ExamTypeActivity" />
+        <activity android:name=".Activity.FillExamMarks"></activity>
+        <activity android:name=".Activity.MarksReviewActivity"></activity>
     </application>
 
 </manifest>
